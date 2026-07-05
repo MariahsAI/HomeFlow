@@ -252,6 +252,51 @@
   .final .eyebrow{color:var(--gold)}
   .final .btn-primary{background:var(--gold);color:var(--cover-deep);box-shadow:none;font-size:16px;padding:15px 30px}
   .final .btn-primary:hover{background:#d4b16f;transform:translateY(-2px)}
+  .final-sub{color:rgba(251,248,240,.72);max-width:44ch;margin:0 auto 30px;font-size:18px}
+
+  /* waitlist form */
+  .waitlist{max-width:660px;margin:0 auto}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .wl-row{display:flex;gap:12px;align-items:flex-end;justify-content:center;flex-wrap:wrap;text-align:left}
+  .wl-field{display:flex;flex-direction:column;gap:7px;flex:1;min-width:190px}
+  .wl-role{flex:0 0 150px;min-width:130px}
+  .wl-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .waitlist input,.waitlist select{
+    font-family:var(--f-body);font-size:16px;color:var(--white);
+    background:rgba(251,248,240,.06);border:1.5px solid rgba(198,161,91,.4);
+    border-radius:3px;padding:14px 15px;width:100%;transition:border-color .15s,box-shadow .15s;
+  }
+  .waitlist select{appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C6A15B' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:34px}
+  .waitlist option{color:#16221B}
+  .waitlist input::placeholder{color:rgba(251,248,240,.4)}
+  .waitlist input:focus,.waitlist select:focus{outline:none;border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(198,161,91,.22)}
+  .waitlist input[aria-invalid="true"]{border-color:#E8907F;box-shadow:0 0 0 3px rgba(178,58,46,.25)}
+  .wl-submit{white-space:nowrap;padding:14px 26px;height:52px}
+  .wl-submit[disabled]{opacity:.6;cursor:progress}
+  .wl-status{font-family:var(--f-mono);font-size:13px;margin-top:16px;min-height:18px;letter-spacing:.02em}
+  .wl-status.err{color:#F0AE9F}
+  .wl-status.ok{color:var(--gold)}
+
+  .wl-done{max-width:480px;margin:8px auto 0;text-align:center;animation:floatIn .5s ease both}
+  .wl-done h3{font-family:var(--f-display);font-weight:500;font-size:30px;margin:26px 0 10px;color:var(--white)}
+  .wl-done p{color:rgba(251,248,240,.72);font-size:16px}
+  .wl-stamp{
+    width:118px;height:118px;margin:0 auto;border-radius:50%;
+    border:2.5px solid var(--gold);color:var(--gold);
+    display:grid;place-items:center;transform:rotate(-11deg);
+    font-family:var(--f-mono);font-weight:700;font-size:13px;letter-spacing:.1em;line-height:1.25;
+    box-shadow:0 6px 16px -6px rgba(198,161,91,.5);
+    animation:stampIn .5s .15s both;
+  }
+  .wl-stamp small{display:block;font-size:9px;letter-spacing:.18em;opacity:.85;margin-top:4px}
+  @media(max-width:560px){
+    .wl-row{flex-direction:column;align-items:stretch}
+    .wl-field,.wl-role{min-width:0;flex:1 1 auto}
+    .wl-submit{width:100%}
+  }
 
   /* ---------- FOOTER ---------- */
   footer.site{background:var(--cover-deep);color:rgba(251,248,240,.6);padding:56px 0 40px;border-top:1px solid rgba(198,161,91,.22)}
@@ -531,12 +576,42 @@
     </div>
   </section>
 
-  <!-- FINAL CTA -->
+  <!-- WAITLIST -->
   <section class="final" id="signup">
     <div class="wrap">
-      <span class="eyebrow">Start today</span>
-      <h2>Your next home starts with one profile.</h2>
-      <a href="#" class="btn btn-primary">Create your Rental Passport</a>
+      <span class="eyebrow">Join the waitlist</span>
+      <h2>Reserve your Rental Passport.</h2>
+      <p class="final-sub">Be first in line when HomeFlow opens in your area. One email — that's it.</p>
+
+      <form class="waitlist" id="waitlistForm" novalidate>
+        <!-- honeypot: hidden from people, catches bots -->
+        <input type="text" name="company" id="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="wl-row">
+          <label class="wl-field">
+            <span class="wl-label">Email</span>
+            <input type="email" id="wlEmail" name="email" required placeholder="you@email.com" autocomplete="email" />
+          </label>
+          <label class="wl-field wl-role">
+            <span class="wl-label">I'm a</span>
+            <select id="wlRole" name="role">
+              <option value="renter">Renter</option>
+              <option value="landlord">Landlord</option>
+              <option value="agent">Agent</option>
+              <option value="vendor">Vendor</option>
+            </select>
+          </label>
+          <button type="submit" class="btn btn-primary wl-submit" id="wlSubmit">Reserve my spot</button>
+        </div>
+        <p class="wl-status" id="wlStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <!-- success stamp, revealed on submit -->
+      <div class="wl-done" id="wlDone" hidden>
+        <div class="wl-stamp">RESERVED<small>HOMEFLOW</small></div>
+        <h3>You're on the list.</h3>
+        <p id="wlDoneMsg">Your Rental Passport is reserved. We'll email you the moment HomeFlow opens near you.</p>
+      </div>
     </div>
   </section>
 </main>
@@ -580,6 +655,75 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:.14});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ============================================================
+     WAITLIST
+     ------------------------------------------------------------
+     To collect real signups: create a free form endpoint at
+     formspree.io (or getform.io / basin.com), then paste your
+     endpoint URL between the quotes below. Leave it empty to run
+     in demo mode (validates and confirms, but stores nothing).
+     ============================================================ */
+  const FORM_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxxx"
+
+  const form   = document.getElementById('waitlistForm');
+  const email  = document.getElementById('wlEmail');
+  const role   = document.getElementById('wlRole');
+  const submit = document.getElementById('wlSubmit');
+  const status = document.getElementById('wlStatus');
+  const done   = document.getElementById('wlDone');
+  const doneMsg= document.getElementById('wlDoneMsg');
+  const hp     = document.getElementById('hp');
+
+  const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+
+  function setStatus(msg, kind){ status.textContent = msg; status.className = 'wl-status' + (kind ? ' '+kind : ''); }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(hp.value){ return; }                      // bot filled the honeypot — silently drop
+    if(!validEmail(email.value)){
+      email.setAttribute('aria-invalid','true');
+      setStatus('Please enter a valid email address.','err');
+      email.focus();
+      return;
+    }
+    email.removeAttribute('aria-invalid');
+    submit.disabled = true;
+    submit.textContent = 'Reserving…';
+    setStatus('','');
+
+    const payload = { email: email.value.trim(), role: role.value, source: 'landing-waitlist' };
+
+    try{
+      if(FORM_ENDPOINT){
+        const res = await fetch(FORM_ENDPOINT, {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if(!res.ok) throw new Error('Request failed');
+      } else {
+        await new Promise(r=>setTimeout(r, 650));  // demo mode: simulate the round-trip
+      }
+      const line = {
+        renter:  "Your Rental Passport is reserved. We'll email you the moment HomeFlow opens near you.",
+        landlord:"You're on the landlord list. We'll reach out when listings go live in your area.",
+        agent:   "You're on the agent list. We'll be in touch as we open up professional access.",
+        vendor:  "You're on the vendor list. We'll email you when marketplace spots open."
+      }[role.value] || doneMsg.textContent;
+      doneMsg.textContent = line;
+      form.hidden = true;
+      done.hidden = false;
+      done.scrollIntoView({behavior:'smooth', block:'center'});
+    }catch(err){
+      submit.disabled = false;
+      submit.textContent = 'Reserve my spot';
+      setStatus("Something went wrong — please try again, or email hello@homeflow.app.",'err');
+    }
+  });
+
+  email.addEventListener('input', ()=>{ if(email.getAttribute('aria-invalid')){ email.removeAttribute('aria-invalid'); setStatus('',''); }});
 </script>
 </body>
 </html>
