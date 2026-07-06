@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-accent="cyan">
+<html lang="en" data-theme="dark" data-accent="cyan">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,6 +24,13 @@
 }
 html[data-accent="violet"]{ --a1:#A78BFA; --a2:#F472D6; --a1-rgb:167,139,250; --a2-rgb:244,114,214; }
 html[data-accent="aurora"]{ --a1:#38E8C6; --a2:#7C6BFF; --a1-rgb:56,232,198; --a2-rgb:124,107,255; }
+html[data-theme="light"]{
+  --bg:#EEF1F8;
+  --surface:rgba(255,255,255,.75); --surface-2:rgba(20,30,60,.05); --line:rgba(20,30,60,.12);
+  --ink:#0A1024; --muted:#5A6584; --muted-2:#8791A8;
+  --shadow:0 1px 2px rgba(20,30,60,.05),0 12px 30px -14px rgba(20,30,60,.16);
+  --shadow-lg:0 30px 64px -22px rgba(20,30,60,.22);
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);
   font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
@@ -207,7 +214,7 @@ body{background:var(--bg)!important}
 .logo .mark{background:linear-gradient(140deg,var(--a1),var(--a2))!important;color:#04060C!important;box-shadow:0 0 20px -4px rgba(var(--a1-rgb),.8)}
 .topbar{background:color-mix(in srgb,var(--bg) 78%,transparent)!important;border-bottom-color:var(--line)!important}
 .tabbar{background:color-mix(in srgb,var(--bg) 82%,transparent)!important;border-top-color:var(--line)!important}
-.card{background:var(--surface)!important;border-color:var(--line)!important;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
+.card{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
 .roleswitch{background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)!important}
 .roleswitch .dot{background:var(--a1)!important}
 .iconbtn{background:var(--surface)!important;border-color:var(--line)!important}
@@ -230,7 +237,7 @@ body{background:var(--bg)!important}
 .seg{border-color:var(--line)!important}
 .seg button{background:var(--surface)!important;color:var(--muted)}
 .seg button.on{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important}
-#toast{background:#121A2B!important;color:var(--ink)!important;border:1px solid var(--line)}
+#toast{background:#121A2B!important;color:#fff!important;border:1px solid rgba(255,255,255,.12)}
 .banner.info{background:rgba(var(--a1-rgb),.14)!important;color:var(--a1)!important}
 .banner.legal{background:var(--surface)!important;color:var(--muted)!important;border-color:var(--line)!important}
 .chip{background:var(--surface-2)!important;border-color:var(--line)!important;color:var(--ink)}
@@ -253,6 +260,10 @@ a{color:var(--a1)}
 .hf-sw.cyan{background:linear-gradient(135deg,#2FE6F0,#4C8DFF)}
 .hf-sw.violet{background:linear-gradient(135deg,#A78BFA,#F472D6)}
 .hf-sw.aurora{background:linear-gradient(135deg,#38E8C6,#7C6BFF)}
+.hf-sep{width:1px;height:20px;background:var(--line)}
+.hf-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:6px 11px}
+.hf-toggle:hover{border-color:var(--a1)}
 </style>
 </head>
 <body>
@@ -1560,11 +1571,12 @@ function adminBack(title,sub){return `<button class="btn ghost sm" onclick="go('
 /* ---------------- BOOT ---------------- */
 render();
 </script>
-<div class="hf-picker" role="group" aria-label="Accent color">
-  <span>ACCENT</span>
-  <button class="hf-sw cyan"   data-accent="cyan"   aria-label="Cyan"   aria-pressed="true"></button>
-  <button class="hf-sw violet" data-accent="violet" aria-label="Violet" aria-pressed="false"></button>
-  <button class="hf-sw aurora" data-accent="aurora" aria-label="Aurora" aria-pressed="false"></button>
+<div class="hf-picker" role="group" aria-label="Theme">
+  <div class="hf-sw cyan"   data-accent="cyan"   role="button" tabindex="0" aria-label="Cyan"   aria-pressed="true"></div>
+  <div class="hf-sw violet" data-accent="violet" role="button" tabindex="0" aria-label="Violet" aria-pressed="false"></div>
+  <div class="hf-sw aurora" data-accent="aurora" role="button" tabindex="0" aria-label="Aurora" aria-pressed="false"></div>
+  <span class="hf-sep"></span>
+  <button class="hf-toggle" id="hfMode" aria-label="Toggle light or dark"><span id="hfIcon">◐</span><span id="hfText">Dark</span></button>
 </div>
 <script>
 document.querySelectorAll('.hf-sw').forEach(function(sw){
@@ -1572,6 +1584,13 @@ document.querySelectorAll('.hf-sw').forEach(function(sw){
     document.documentElement.dataset.accent=sw.dataset.accent;
     document.querySelectorAll('.hf-sw').forEach(function(s){s.setAttribute('aria-pressed',s===sw);});
   });
+});
+document.getElementById('hfMode').addEventListener('click',function(){
+  var root=document.documentElement;
+  root.dataset.theme = (root.dataset.theme==='light')?'dark':'light';
+  var light = root.dataset.theme==='light';
+  document.getElementById('hfText').textContent = light?'Light':'Dark';
+  document.getElementById('hfIcon').textContent = light?'◑':'◐';
 });
 </script>
 </body>
