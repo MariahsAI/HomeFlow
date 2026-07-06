@@ -90,6 +90,16 @@
   .trust div{display:flex;flex-direction:column;gap:2px}
   .trust .n{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--heading)}
   .trust .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .statband{display:flex;flex-wrap:wrap;margin-top:30px;border:1px solid var(--border);border-radius:14px;
+    background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:hidden;
+    opacity:0;animation:up .8s .75s forwards}
+  .statband .cell{flex:1;min-width:120px;padding:14px 18px;border-right:1px solid var(--border)}
+  .statband .cell:last-child{border-right:none}
+  .statband .n{font-family:var(--f-display);font-weight:700;font-size:23px;color:var(--heading);line-height:1}
+  .statband .n .u{font-size:14px;color:var(--a1)}
+  .statband .k{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+  .stat-note{font-family:var(--f-mono);font-size:10px;color:var(--muted);margin-top:9px;letter-spacing:.04em;opacity:0;animation:up .8s .85s forwards}
+  @media(max-width:520px){.statband .cell{min-width:50%;border-bottom:1px solid var(--border)}.statband .cell:nth-child(even){border-right:none}}
 
   .cred-stage{display:flex;justify-content:center;perspective:1600px}
   .cred{position:relative;width:min(430px,100%);border-radius:22px;padding:26px 26px 20px;
@@ -340,11 +350,13 @@
           <a href="#signup" class="btn btn-glow">Create your Rental Passport</a>
           <a href="HomeFlow-MVP.html" class="btn btn-ghost">See the live demo →</a>
         </div>
-        <div class="trust">
-          <div><span class="n">1</span><span class="k">Profile</span></div>
-          <div><span class="n">Verified</span><span class="k">Once</span></div>
-          <div><span class="n">∞</span><span class="k">Reused everywhere</span></div>
+        <div class="statband">
+          <div class="cell"><span class="n">1</span><span class="k">Passport, not 12 forms</span></div>
+          <div class="cell"><span class="n">$0</span><span class="k">to apply</span></div>
+          <div class="cell"><span class="n">∞</span><span class="k">reused anywhere</span></div>
+          <div class="cell"><span class="n">~4 <span class="u">days</span></span><span class="k">typical approval</span></div>
         </div>
+        <div class="stat-note">Illustrative figures · HomeFlow is pre-launch</div>
       </div>
 
       <div class="cred-stage" id="credStage">
