@@ -1083,46 +1083,94 @@ function rentalPassport(){
 
 /* ---------- Homebuyer readiness ---------- */
 function homebuyerDash(){
-  const u=me();const h=u.homebuyer;
+  const u=me();const h=u.homebuyer;hbInit(h);
+  const sc=readinessScore(u);
   const pct=Math.round(h.savedForDown/h.downTarget*100);
+  const monthsToGoal=h.autoSave>0?Math.ceil(Math.max(0,h.downTarget-h.savedForDown)/h.autoSave):null;
   return `
   <div class="page-h"><p class="eyebrow">From renting to owning</p><h1>Homebuyer readiness</h1>
-    <p>HomeFlow keeps you on one platform — even when you're ready to buy.</p></div>
+    <p>The only rental platform that carries you all the way to owning.</p></div>
 
   <div class="card p" style="background:linear-gradient(155deg,rgba(61,224,160,.16),transparent 60%),#0C1424;color:var(--ink);border:1px solid rgba(61,224,160,.4)">
     <div class="row between"><div><div class="tiny bb" style="opacity:.85;letter-spacing:.05em">READINESS SCORE</div>
-      <div style="font-size:34px;font-weight:800;line-height:1">${h.score}<span style="font-size:18px;opacity:.8">/100</span></div>
-      <div class="small" style="opacity:.9">${h.score>=75?'Mortgage-ready — talk to a lender':'On track — a few steps to go'}</div></div>
-      <div class="ring" style="--v:${h.score};background:conic-gradient(var(--green) calc(${h.score}*1%),rgba(255,255,255,.12) 0)">
-        <span style="background:#0C1424;color:var(--green);font-family:var(--display)">${h.score}</span></div></div>
+      <div style="font-size:34px;font-weight:800;line-height:1">${sc}<span style="font-size:18px;opacity:.8">/100</span></div>
+      <div class="small" style="opacity:.9">${sc>=80?'Mortgage-ready — get pre-approved':sc>=65?'On track — a few steps to go':'Building — keep going'}</div></div>
+      <div class="ring" style="--v:${sc};background:conic-gradient(var(--green) calc(${sc}*1%),rgba(255,255,255,.12) 0)">
+        <span style="background:#0C1424;color:var(--green);font-family:var(--display)">${sc}</span></div></div>
   </div>
 
-  <div class="card p mt"><div class="row between"><div class="b">Down payment savings</div><div class="bb">${money(h.savedForDown)} / ${money(h.downTarget)}</div></div>
-    <div class="bar mt"><i style="width:${pct}%;background:linear-gradient(90deg,var(--green),var(--a1))"></i></div>
-    <div class="muted small mt">${pct}% of your target. Save ${money(Math.max(0,h.downTarget-h.savedForDown))} more to reach 20% down.</div></div>
+  <div class="card p mt2" style="border:1px solid ${h.rentReporting?'rgba(61,224,160,.5)':'var(--line)'}">
+    <div class="row between">
+      <div style="flex:1"><div class="row" style="gap:8px"><span class="bb">Rent reporting</span>${h.rentReporting?'<span class="pill green tiny"><span class="dotb"></span>Active</span>':'<span class="pill amber tiny">Off</span>'}</div>
+        <div class="muted small mt" style="max-width:36ch">Report your on-time rent to all three credit bureaus. Build the credit and history that get you approved to buy — from payments you already make.</div></div>
+      <button class="btn ${h.rentReporting?'':'primary'} sm" onclick="toggleRentReporting()">${h.rentReporting?'Turn off':'Turn on'}</button>
+    </div>
+    ${h.rentReporting?`<div class="grid g3 keep mt" style="gap:8px">
+      <div><div class="tiny muted">Months reported</div><div class="b">${h.reportedMonths}</div></div>
+      <div><div class="tiny muted">On-time rate</div><div class="b" style="color:var(--green)">100%</div></div>
+      <div><div class="tiny muted">Est. credit lift</div><div class="b" style="color:var(--green)">+18 pts</div></div>
+    </div>`:''}
+  </div>
 
-  <div class="grid g3 keep mt">
+  <div class="card p mt2"><div class="row between"><div class="b">Down-payment vault</div><div class="bb">${money(h.savedForDown)} / ${money(h.downTarget)}</div></div>
+    <div class="bar mt"><i style="width:${pct}%;background:linear-gradient(90deg,var(--green),var(--a1))"></i></div>
+    <div class="muted small mt">${pct}% of target.${h.autoSave>0?` Auto-saving ${money(h.autoSave)}/mo → on track in ~${monthsToGoal} mo.`:` Save ${money(Math.max(0,h.downTarget-h.savedForDown))} more to reach your 20% goal.`}</div>
+    <div class="row mt" style="gap:8px">
+      <button class="btn block sm" onclick="vaultSheet()">${h.autoSave>0?'Adjust auto-save':'Set up auto-save'}</button>
+      <button class="btn block sm" onclick="addDeposit(500)">+ Add $500</button>
+    </div>
+  </div>
+
+  <div class="grid g3 keep mt2">
     ${statCard(h.creditBand,'Credit band','','')}
     ${statCard(h.dti+'%','Debt-to-income',h.dti<36?'Healthy':'Watch',h.dti<36?'up':'down')}
     ${statCard(h.preapproved?'Yes':'Not yet','Pre-approved','','')}
   </div>
 
+  ${h.preapproved&&h.preapproval?`
+  <div class="card p mt2" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;border:1px solid rgba(var(--a1-rgb),.4)">
+    <div class="row between"><div class="bb">Pre-approved</div><span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">Anchor Mortgage</span></div>
+    <div class="grid g3 keep mt" style="gap:8px">
+      <div><div class="tiny muted">Buying power</div><div class="bb" style="color:var(--a1)">${money(h.preapproval.amount)}</div></div>
+      <div><div class="tiny muted">Est. rate</div><div class="b">${h.preapproval.rate}%</div></div>
+      <div><div class="tiny muted">Est. payment</div><div class="b">${money(h.preapproval.monthly)}/mo</div></div>
+    </div>
+    <button class="btn block mt2" onclick="go('search')">Browse homes in your range →</button>
+  </div>`:`
+  <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid rgba(var(--a1-rgb),.4)" onclick="preapproveSheet()">
+    <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1)">${svg('key')}</div>
+    <div style="flex:1"><div class="b">Get pre-approved</div><div class="muted small">Anchor Mortgage · uses your verified Passport · results in minutes</div></div>
+    <span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">Start</span></button>`}
+
   <div class="card mt2"><div class="p bb">Your path to ownership</div>
     <div style="padding:0 16px 8px">
       ${stepRow('Build a verified rental history',true,'Your on-time payments strengthen your file')}
+      ${stepRow('Report rent to bureaus',h.rentReporting,h.rentReporting?h.reportedMonths+' months reported':'Turn on rent reporting above')}
       ${stepRow('Reach 720+ credit',h.creditBand==='760+'||h.creditBand==='720–759','Currently '+h.creditBand)}
       ${stepRow('Save 10–20% down payment',pct>=50,money(h.savedForDown)+' saved')}
       ${stepRow('Get pre-approved',h.preapproved,h.preapproved?'Completed':'Connect with a lender partner')}
     </div>
   </div>
 
-  <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('key')}</div>
-    <div style="flex:1"><div class="b">Get pre-approved with a partner lender</div><div class="muted small">Anchor Mortgage · pre-approval in 24 hrs</div></div>
-    <span class="pill brand">Start</span></button>
-  <div class="banner legal mt"><span class="i">§</span><span>Educational readiness estimate only — not a credit decision, loan offer, or financial advice. Lending is provided by independent licensed partners.</span></div>
+  <div class="banner legal mt2"><span class="i">§</span><span>Educational readiness estimate only — not a credit decision, loan offer, or financial advice. Rent reporting and lending are provided by independent licensed partners.</span></div>
   `;
 }
+function hbInit(h){if(h.rentReporting===undefined)h.rentReporting=false;if(h.reportedMonths===undefined)h.reportedMonths=0;if(h.autoSave===undefined)h.autoSave=0;if(h.preapproval===undefined)h.preapproval=null;}
+function readinessScore(u){const h=u.homebuyer;let s=40;if(u.passport.verified)s+=8;if(h.rentReporting)s+=12;const cb=h.creditBand;s+=(cb==='760+'?18:cb==='720–759'?14:cb==='700–719'?10:5);s+=(h.dti<30?8:h.dti<36?5:2);s+=Math.round(Math.min(h.savedForDown/h.downTarget,1)*12);if(h.preapproved)s+=6;return Math.min(100,s);}
+function toggleRentReporting(){const h=me().homebuyer;hbInit(h);h.rentReporting=!h.rentReporting;if(h.rentReporting){h.reportedMonths=Math.max(h.reportedMonths,12);toast('Rent reporting on — 12 months backfilled');}else{toast('Rent reporting turned off');}render();}
+function vaultSheet(){const h=me().homebuyer;hbInit(h);
+  modal(`<h3>Auto-save to your vault</h3><p class="muted small" style="margin:-2px 0 0">Move money to your down-payment vault automatically each month. Adjust or pause anytime.</p>
+   <div class="row wrap mt2" style="gap:0">${[0,200,400,600].map(a=>`<span class="chip ${h.autoSave===a?'on':''}" onclick="setAutoSave(${a})">${a?money(a)+'/mo':'Off'}</span>`).join('')}</div>
+   <div class="banner legal mt2"><span class="i">§</span><span>Demo only — no funds move. Vaults would be held by an independent partner bank.</span></div>`);}
+function setAutoSave(a){const h=me().homebuyer;h.autoSave=a;closeModal();toast(a?('Auto-saving '+money(a)+'/mo'):'Auto-save off');render();}
+function addDeposit(a){const h=me().homebuyer;h.savedForDown=Math.min(h.downTarget,h.savedForDown+a);toast('Added '+money(a)+' to your vault');render();}
+function preapproveSheet(){const u=me();const h=u.homebuyer;const inc=u.passport.incomeMonthly;const maxPay=Math.round(inc*0.28);const loan=Math.round(maxPay/0.00653/1000)*1000;const price=Math.round((loan+h.savedForDown)/1000)*1000;
+  modal(`<h3>Get pre-approved</h3><p class="muted small" style="margin:-2px 0 0">Anchor Mortgage reads your verified Passport — income, employment and history are already confirmed. Soft check, no score impact.</p>
+   <div class="card p mt2" style="background:rgba(var(--a1-rgb),.06)"><div class="tiny muted">Estimated buying power</div><div style="font-family:var(--display);font-size:30px;font-weight:700;color:var(--a1)">${money(price)}</div>
+     <div class="grid g2 keep mt" style="gap:8px"><div><div class="tiny muted">Est. rate</div><div class="b">6.8%</div></div><div><div class="tiny muted">Est. payment</div><div class="b">${money(maxPay)}/mo</div></div></div></div>
+   <button class="btn primary block mt2" onclick="doPreapprove(${price},${maxPay})">Request pre-approval</button>
+   <div class="banner legal mt2"><span class="i">§</span><span>Estimate only — not a commitment to lend. Anchor Mortgage is an independent licensed partner (demo).</span></div>`);}
+function doPreapprove(amount,monthly){const h=me().homebuyer;h.preapproved=true;h.preapproval={amount:amount,rate:6.8,monthly:monthly};closeModal();toast('Pre-approved for '+money(amount)+' (demo)');render();}
 function stepRow(t,done,sub){return `<div class="li"><div class="check ${done?'on':''}">${done?'✓':''}</div>
   <div style="flex:1"><div class="b small">${t}</div><div class="tiny muted">${sub}</div></div>${done?'<span class="pill green tiny">Done</span>':'<span class="pill amber tiny">To do</span>'}</div>`;}
 
