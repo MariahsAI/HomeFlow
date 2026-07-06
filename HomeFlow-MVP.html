@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-accent="cyan">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HomeFlow — Residential Housing OS (MVP Prototype)</title>
+<title>Tenure — Residential Housing OS (MVP Prototype)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2048%2048%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23F0D9A0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23B8912F%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%2744%27%20height%3D%2744%27%20rx%3D%2711%27%20fill%3D%27%230B1526%27%2F%3E%3Cg%20fill%3D%27%235E86C8%27%3E%3Crect%20x%3D%279%27%20y%3D%2710%27%20width%3D%2730%27%20height%3D%276%27%20rx%3D%271.5%27%2F%3E%3Crect%20x%3D%279%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2734%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2720.5%27%20y%3D%2710%27%20width%3D%277%27%20height%3D%2729%27%2F%3E%3Crect%20x%3D%2715%27%20y%3D%2737%27%20width%3D%2718%27%20height%3D%275%27%20rx%3D%271.5%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27url%28%23g%29%27%3E%3Crect%20x%3D%2721.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2724.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2720%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2724%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2728%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2732%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --a1:#2FE6F0; --a2:#4C8DFF; --a1-rgb:47,230,240; --a2-rgb:76,141,255;
-  --bg:#06080F;
+  --a1:#5C93F2; --a2:#2E5AC8; --a1-rgb:92,147,242; --a2-rgb:46,90,200;
+  --bg:#0B1526;
   --surface:rgba(255,255,255,.05); --surface-2:rgba(255,255,255,.09); --line:rgba(255,255,255,.10);
-  --ink:#EAEEF7; --muted:#8B96AE; --muted-2:#6B7488;
+  --ink:#DCE4F2; --muted:#8A96B0; --muted-2:#66718C;
   --brand:var(--a1); --brand-ink:#04060C; --brand-soft:rgba(var(--a1-rgb),.16);
   --green:#3DE0A0; --green-soft:rgba(61,224,160,.16); --amber:#F0B84C; --amber-soft:rgba(240,184,76,.16);
   --red:#F76D6D; --red-soft:rgba(247,109,109,.16); --purple:#A78BFA; --purple-soft:rgba(167,139,250,.16);
@@ -22,8 +23,6 @@
   --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --display:"Space Grotesk","Inter",sans-serif; --mono:"Space Mono",ui-monospace,monospace;
 }
-html[data-accent="violet"]{ --a1:#A78BFA; --a2:#F472D6; --a1-rgb:167,139,250; --a2-rgb:244,114,214; }
-html[data-accent="aurora"]{ --a1:#38E8C6; --a2:#7C6BFF; --a1-rgb:56,232,198; --a2-rgb:124,107,255; }
 html[data-theme="light"]{
   --bg:#EEF1F8;
   --surface:rgba(255,255,255,.75); --surface-2:rgba(20,30,60,.05); --line:rgba(20,30,60,.12);
@@ -211,7 +210,7 @@ table.tbl tr:last-child td{border-bottom:none}
 body{background:var(--bg)!important}
 .logo,.page-h h1,.stat .n,.price,.sheet h3{font-family:var(--display)!important;letter-spacing:-.02em}
 .eyebrow{font-family:var(--mono)!important;letter-spacing:.2em!important;color:var(--a1)!important}
-.logo .mark{background:linear-gradient(140deg,var(--a1),var(--a2))!important;color:#04060C!important;box-shadow:0 0 20px -4px rgba(var(--a1-rgb),.8)}
+.logo .mark{background:transparent!important;color:inherit!important;box-shadow:none!important;display:inline-flex!important;align-items:center;justify-content:center;overflow:visible}
 .topbar{background:color-mix(in srgb,var(--bg) 78%,transparent)!important;border-bottom-color:var(--line)!important}
 .tabbar{background:color-mix(in srgb,var(--bg) 82%,transparent)!important;border-top-color:var(--line)!important}
 .card{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
@@ -294,6 +293,11 @@ a{color:var(--a1)}
   .searchsplit .searchgrid{grid-template-columns:1fr}
   .searchmap #lmap{height:calc(100vh - 120px)}
 }
+
+#app{position:relative;z-index:1}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27112%27%20height%3D%27112%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%236E82AE%27%20stroke-width%3D%271%27%20opacity%3D%270.10%27%3E%3Cpath%20d%3D%27M56%20-4%20L116%2056%20L56%20116%20L-4%2056%20Z%27%2F%3E%3Cpath%20d%3D%27M56%2032%20L80%2056%20L56%2080%20L32%2056%20Z%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27%23C9A24B%27%3E%3Ccircle%20cx%3D%2756%27%20cy%3D%2756%27%20r%3D%272%27%20opacity%3D%270.16%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:112px 112px}
+.logo{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#EAF0FB!important}
+.btn.primary{background:var(--a2)!important;color:#fff!important;box-shadow:0 4px 14px rgba(46,90,200,.35)!important}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -302,13 +306,16 @@ a{color:var(--a1)}
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0D9A0"/><stop offset=".45" stop-color="#D9B85C"/><stop offset="1" stop-color="#B8912F"/></linearGradient><linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E6DB8"/><stop offset="1" stop-color="#1D3F78"/></linearGradient>
+</defs></svg>
 <div id="app"><!-- rendered by JS --></div>
 <div id="toast"></div>
 <div id="modal-root"></div>
 
 <script>
 /* =======================================================================
-   HomeFlow — MVP clickable prototype
+   Tenure — MVP clickable prototype
    Single-file, no dependencies. Mock in-memory data. Not production code.
    ======================================================================= */
 
@@ -387,7 +394,7 @@ const DB = {
 
   vendors:[
     {id:'v9',name:'BrightMove Movers',category:'Moving',rating:4.9,reviews:212,city:'Tampa, FL',featured:true,preferred:true,
-     blurb:'Licensed & insured local movers. HomeFlow members save 10%.',initials:'BM',color:'#dbeafe'},
+     blurb:'Licensed & insured local movers. Tenure members save 10%.',initials:'BM',color:'#dbeafe'},
     {id:'v2',name:'Gulf Coast Home Inspections',category:'Inspection',rating:4.8,reviews:96,city:'Tampa, FL',featured:true,preferred:true,
      blurb:'Same-week inspections with digital reports in 24 hrs.',initials:'GC',color:'#e7f7ee'},
     {id:'v3',name:'Anchor Mortgage',category:'Lender',rating:4.7,reviews:341,city:'FL (statewide)',featured:false,preferred:true,
@@ -584,7 +591,7 @@ function renderLanding(){
   <div style="min-height:100vh;display:flex;flex-direction:column;padding:0">
     <div style="padding:56px 22px 30px;text-align:center;background:linear-gradient(180deg,var(--brand-soft),transparent)">
       <div class="logo" style="justify-content:center;font-size:24px;margin-bottom:10px">
-        <span class="mark" style="width:34px;height:34px;font-size:19px">H</span> HomeFlow</div>
+        <span class="mark" style="width:34px;height:34px"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span> Tenure</div>
       <p class="muted" style="max-width:440px;margin:6px auto 0">The operating system for residential housing. One platform connecting tenants, landlords, agents, and vendors.</p>
       <div class="pill brand" style="margin-top:14px">MVP Prototype · demo data</div>
     </div>
@@ -602,7 +609,7 @@ function renderLanding(){
         <div class="avatar" style="background:var(--surface-2);color:var(--a1)">${svg('cog')}</div>
         <div><div class="bb">Admin console</div><div class="muted small">Manage users, listings, vendors, billing & analytics</div></div>
       </button>
-      <div class="banner legal" style="margin-top:16px"><span class="i">§</span><span>HomeFlow is a technology platform — not a brokerage, property manager, or eviction company. Prototype for demonstration; no real accounts, payments, or legal services are provided.</span></div>
+      <div class="banner legal" style="margin-top:16px"><span class="i">§</span><span>Tenure is a technology platform — not a brokerage, property manager, or eviction company. Prototype for demonstration; no real accounts, payments, or legal services are provided.</span></div>
     </div>
   </div>`;
 }
@@ -632,7 +639,7 @@ function topbar(){
   const notif = state.role==='tenant'?unreadAlerts():0;
   return `
   <div class="topbar">
-    <div class="logo"><span class="mark">H</span> HomeFlow</div>
+    <div class="logo"><span class="mark"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span> Tenure</div>
     <div class="spacer"></div>
     <button class="roleswitch" onclick="openRoleSwitch()"><span class="dot"></span>${roleLabel()}</button>
     ${state.role==='tenant'?`<button class="iconbtn" onclick="go('alerts')">${svg('bell')}${notif?`<span class="badge">${notif}</span>`:''}</button>`:''}
@@ -723,7 +730,7 @@ function renterSheet(i){const r=DB.renterPool[i];
      ${shareStat('Credit band',r.credit)}
      ${shareStat('Move-in',r.moveIn)}
    </div>
-   <div class="mt2" style="font-family:var(--mono);font-size:11px;color:var(--muted)">verified by HomeFlow · looking for ${r.looking}</div>
+   <div class="mt2" style="font-family:var(--mono);font-size:11px;color:var(--muted)">verified by Tenure · looking for ${r.looking}</div>
    <button class="btn primary block mt2" onclick="closeModal();inviteRenter(${i})">Invite to apply</button>
   `);
 }
@@ -797,7 +804,7 @@ function sharePassport(){
   const u=me(),p=u.passport,o=shareOpts(),url=shareURL();
   modal(`
    <h3>Share your Rental Passport</h3>
-   <p class="muted small" style="margin:-2px 0 0">One link. Any landlord — on HomeFlow or not — sees your verified profile instantly. No re-uploading documents, ever.</p>
+   <p class="muted small" style="margin:-2px 0 0">One link. Any landlord — on Tenure or not — sees your verified profile instantly. No re-uploading documents, ever.</p>
    <div class="center mt2">${qrSVG(url,180)}</div>
    <div class="row mt2" style="gap:8px">
      <div class="input" style="flex:1;display:flex;align-items:center;font-family:var(--mono);font-size:13px;overflow:hidden;white-space:nowrap">${url}</div>
@@ -809,7 +816,7 @@ function sharePassport(){
    <div class="kv"><span><span class="b">Contact details</span><br><span class="tiny muted">Email & phone so landlords can reach you</span></span>
      <button class="btn sm ${o.contact?'primary':''}" onclick="toggleShare('contact')">${o.contact?'On':'Off'}</button></div>
    <button class="btn block mt2" onclick="closeModal();go('publicpass')">Preview what landlords see →</button>
-   <div class="banner legal mt2"><span class="i">§</span><span>Identity, income, references and history are verified by HomeFlow. You choose what’s shown and can revoke this link anytime.</span></div>
+   <div class="banner legal mt2"><span class="i">§</span><span>Identity, income, references and history are verified by Tenure. You choose what’s shown and can revoke this link anytime.</span></div>
   `);
 }
 function toggleShare(k){const o=shareOpts();o[k]=!o[k];sharePassport();}
@@ -841,7 +848,7 @@ function publicPassport(){
       ${shareStat('Move-in',p.moveIn)}
     </div>
     <div class="mt2" style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all">
-      verified by HomeFlow · ${new Date().toLocaleDateString()} · sig 0x${_hash(u.name+code).toString(16)}</div>
+      verified by Tenure · ${new Date().toLocaleDateString()} · sig 0x${_hash(u.name+code).toString(16)}</div>
   </div>
   ${o.contact
     ?`<div class="card p mt2"><div class="bb mb">Contact</div><div class="kv"><span class="k">Email</span><span class="b">${u.name.split(' ')[0].toLowerCase()}@example.com</span></div><div class="kv"><span class="k">Phone</span><span class="b">(555) 018-2245</span></div></div>`
@@ -850,7 +857,7 @@ function publicPassport(){
     <button class="btn primary block" onclick="toast('Invitation sent (demo)')">Invite to apply</button>
     <button class="btn block" onclick="toast('Full application requested (demo)')">Request full application</button>
   </div>
-  <div class="center muted tiny mt2">Powered by HomeFlow · authenticity verifiable at homeflow.app/verify</div>
+  <div class="center muted tiny mt2">Powered by Tenure · authenticity verifiable at homeflow.app/verify</div>
   `;
 }
 
@@ -987,7 +994,7 @@ function listingsSearch(){
   <div class="searchsplit ${state.mapView?'showmap':'showlist'}">
     <div class="searchlist">
       <div class="grid g2 searchgrid">${items.length?items.map(listingCard).join(''):'<div class="card p muted center">No matches — widen your filters.</div>'}</div>
-      <div class="banner legal mt2"><span class="i">§</span><span>Listings are shown to all users equally. HomeFlow does not steer, rank, or filter renters or neighborhoods based on any protected class. Fair Housing compliant by design.</span></div>
+      <div class="banner legal mt2"><span class="i">§</span><span>Listings are shown to all users equally. Tenure does not steer, rank, or filter renters or neighborhoods based on any protected class. Fair Housing compliant by design.</span></div>
     </div>
     <div class="searchmap"><div id="lmap"></div></div>
   </div>
@@ -1085,7 +1092,7 @@ function openApply(listingId){
       <input type="checkbox" id="consent" style="margin-top:3px">
       <span class="small muted">I consent to share my Rental Passport and documents with this landlord for this application, and I've reviewed the <a onclick="event.preventDefault()">privacy & document-sharing terms</a>.</span></label>
     <button class="btn primary block mt2" id="applyBtn" onclick="submitApply('${listingId}')">Submit application</button>
-    <div class="banner legal mt"><span class="i">§</span><span>You control your data. You can revoke document access anytime from Applications. HomeFlow never makes tenant-selection decisions.</span></div>
+    <div class="banner legal mt"><span class="i">§</span><span>You control your data. You can revoke document access anytime from Applications. Tenure never makes tenant-selection decisions.</span></div>
   `);
 }
 function shareRow(t,on){return `<div class="li"><div class="check ${on?'on':''}">${on?'✓':''}</div><div class="b small">${t}</div></div>`;}
@@ -1174,7 +1181,7 @@ function rentalPassport(){
     <div style="flex:1"><div class="b small">${h.addr}</div><div class="tiny muted">${h.years} · ${money(h.rent)}/mo</div></div>
     <span class="pill green tiny">${h.landlord}</span></div>`).join('')}</div>
 
-  <div class="banner legal mt2"><span class="i">§</span><span>You own your Passport. Data is shared only with landlords you choose, only when you apply, and can be revoked anytime. HomeFlow does not sell personal data.</span></div>
+  <div class="banner legal mt2"><span class="i">§</span><span>You own your Passport. Data is shared only with landlords you choose, only when you apply, and can be revoked anytime. Tenure does not sell personal data.</span></div>
   `;
 }
 
@@ -1357,7 +1364,7 @@ function membershipView(planRole){
   const currentPlanName = planRole==='tenant'?(me().premium?'Premium':'Free')
     : planRole==='landlord'?DB.landlord.plan : DB.vendorUser.plan;
   return `<div class="page-h"><p class="eyebrow">Recurring membership</p><h1>${planRole==='tenant'?'Tenant plans':planRole==='landlord'?'Landlord plans':'Vendor & advertiser plans'}</h1>
-    <p>Cancel anytime. HomeFlow's revenue comes from memberships & placements — not commissions.</p></div>
+    <p>Cancel anytime. Tenure's revenue comes from memberships & placements — not commissions.</p></div>
   <div class="grid ${plans.length>2?'g3':'g2'} keep">
     ${plans.map(pl=>{const cur=pl.name===currentPlanName;return `
       <div class="card p" style="${pl.tag==='Most popular'||pl.tag==='Recommended'?'border:2px solid var(--brand)':''}">
@@ -1491,7 +1498,7 @@ function landlordEditListing(){
     <span><span class="b small">Promote as Featured listing</span><br><span class="tiny muted">Priority placement in search & homepage — uses 1 featured credit ($25 value)</span></span></label>
 
   <button class="btn primary block mt2" onclick="saveListing('${l?l.id:''}')">${nw?'Publish listing':'Save changes'}</button>
-  <div class="banner legal mt"><span class="i">§</span><span>Advertising must comply with Fair Housing — avoid language expressing preference or limitation based on protected class. HomeFlow scans listings for risky terms in production.</span></div>`;
+  <div class="banner legal mt"><span class="i">§</span><span>Advertising must comply with Fair Housing — avoid language expressing preference or limitation based on protected class. Tenure scans listings for risky terms in production.</span></div>`;
 }
 function saveListing(id){
   const g=k=>el('f_'+k)?el('f_'+k).value:'';
@@ -1509,7 +1516,7 @@ function saveListing(id){
 function landlordApplications(){
   const apps=DB.applications.filter(a=>listing(a.listing)&&listing(a.listing).landlord==='l1');
   return `<div class="page-h"><h1>Applicants</h1><p>Compare verified Rental Passports against your published criteria.</p></div>
-  <div class="banner info mb"><span class="i">✓</span><span>HomeFlow shows completeness & criteria-match — it never ranks or selects applicants for you. The decision is always yours.</span></div>
+  <div class="banner info mb"><span class="i">✓</span><span>Tenure shows completeness & criteria-match — it never ranks or selects applicants for you. The decision is always yours.</span></div>
   ${apps.length?apps.map(a=>{const t=tenant(a.tenant);const l=listing(a.listing);const m=criteriaMatch(t,l);
     return `<button class="card p mb" style="width:100%;text-align:left" onclick="go('appdetail',{id:'${a.id}'})">
       <div class="row"><div class="avatar round">${t.initials}</div>
@@ -1613,7 +1620,7 @@ function simpleAccount(u){
   <div class="card p"><div class="row"><div class="avatar" style="width:56px;height:56px;font-size:18px">${u.initials}</div>
     <div style="flex:1"><div class="bb">${u.name}</div><div class="muted small">${u.email}</div>
     ${u.license?`<div class="tiny muted">License ${u.license} · ${u.brokerage}</div>`:''}${u.company?`<div class="tiny muted">${u.company}</div>`:''}</div></div></div>
-  ${u.license?`<div class="banner legal mt2"><span class="i">§</span><span>Licensed brokerage services are provided by ${esc(u.brokerage)} and kept separate from HomeFlow's technology platform. HomeFlow is not a brokerage.</span></div>`:''}
+  ${u.license?`<div class="banner legal mt2"><span class="i">§</span><span>Licensed brokerage services are provided by ${esc(u.brokerage)} and kept separate from Tenure's technology platform. Tenure is not a brokerage.</span></div>`:''}
   <button class="btn block mt2" onclick="logout()">Sign out</button>`;
 }
 
@@ -1631,7 +1638,7 @@ function agentHome(){
   </div>
   <div class="row between mt2 mb"><div class="bb">Upcoming & open showings</div><a class="small b" onclick="go('showings')">All</a></div>
   ${myShowings.map(showingRow).join('')||'<div class="card p muted center">No showings.</div>'}
-  <div class="banner legal mt2"><span class="i">§</span><span>Showing agents must hold an active real estate license. Agent services are provided under the agent's brokerage — not by HomeFlow.</span></div>`;
+  <div class="banner legal mt2"><span class="i">§</span><span>Showing agents must hold an active real estate license. Agent services are provided under the agent's brokerage — not by Tenure.</span></div>`;
 }
 
 /* =======================================================================
@@ -1685,7 +1692,7 @@ function showingsView(role){
     <button onclick="filterShow(this,'confirmed')">Confirmed</button>
     <button onclick="filterShow(this,'completed')">Completed</button></div>
   <div id="showlist">${list.map(showingRow).join('')||'<div class="card p muted center">No showings.</div>'}</div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Optional licensed-agent workflow keeps brokerage activity separate from HomeFlow's platform services.</span></div>`;
+  <div class="banner legal mt2"><span class="i">§</span><span>Optional licensed-agent workflow keeps brokerage activity separate from Tenure's platform services.</span></div>`;
 }
 function filterShow(btn,f){
   [...btn.parentNode.children].forEach(b=>b.classList.remove('on'));btn.classList.add('on');
@@ -1717,7 +1724,7 @@ function vendorMarketplace(){
     ${DB.vendorCats.map(c=>`<span class="chip ${c===cat?'on':''}" onclick="go('marketplace',{cat:'${c}'})">${c}</span>`).join('')}</div>
   ${vs.filter(v=>v.featured).length&&cat==='All'?`<div class="pill amber mb">★ Featured partners</div>`:''}
   <div class="grid g2 keep">${vs.map(vendorCardBig).join('')}</div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Vendors are independent third parties. Featured & Preferred placements are paid advertising and are labeled as such. HomeFlow does not endorse or guarantee vendor services.</span></div>`;
+  <div class="banner legal mt2"><span class="i">§</span><span>Vendors are independent third parties. Featured & Preferred placements are paid advertising and are labeled as such. Tenure does not endorse or guarantee vendor services.</span></div>`;
 }
 function vendorCardBig(v){
   return `<div class="card p" style="${v.featured?'border:1.5px solid var(--amber)':''}">
@@ -1875,7 +1882,7 @@ function adminSubs(){
   return adminBack('Billing & subscriptions','Manage plans and subscription status (Stripe)')+
   `<div class="card p scrollx"><table class="tbl"><thead><tr><th>Plan</th><th>Price</th><th>Subscribers</th><th>Status</th></tr></thead><tbody>
     ${subs.map(s=>`<tr><td class="b">${s[0]}</td><td>${s[1]}</td><td>${s[2]}</td><td>${s[3]==='Active'?'<span class="pill green tiny">Active</span>':'<span class="pill tiny">'+s[3]+'</span>'}</td></tr>`).join('')}</tbody></table></div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Production billing runs on Stripe — PCI-compliant, with dunning, proration, invoices & tax handling. No card data touches HomeFlow servers.</span></div>`;
+  <div class="banner legal mt2"><span class="i">§</span><span>Production billing runs on Stripe — PCI-compliant, with dunning, proration, invoices & tax handling. No card data touches Tenure servers.</span></div>`;
 }
 function adminLeads(){
   return adminBack('Marketplace leads','View & export vendor lead activity')+
@@ -1898,27 +1905,6 @@ function adminBack(title,sub){return `<button class="btn ghost sm" onclick="go('
 /* ---------------- BOOT ---------------- */
 render();
 </script>
-<div class="hf-picker" role="group" aria-label="Theme">
-  <div class="hf-sw cyan"   data-accent="cyan"   role="button" tabindex="0" aria-label="Cyan"   aria-pressed="true"></div>
-  <div class="hf-sw violet" data-accent="violet" role="button" tabindex="0" aria-label="Violet" aria-pressed="false"></div>
-  <div class="hf-sw aurora" data-accent="aurora" role="button" tabindex="0" aria-label="Aurora" aria-pressed="false"></div>
-  <span class="hf-sep"></span>
-  <button class="hf-toggle" id="hfMode" aria-label="Toggle light or dark"><span id="hfIcon">◐</span><span id="hfText">Dark</span></button>
-</div>
-<script>
-document.querySelectorAll('.hf-sw').forEach(function(sw){
-  sw.addEventListener('click',function(){
-    document.documentElement.dataset.accent=sw.dataset.accent;
-    document.querySelectorAll('.hf-sw').forEach(function(s){s.setAttribute('aria-pressed',s===sw);});
-  });
-});
-document.getElementById('hfMode').addEventListener('click',function(){
-  var root=document.documentElement;
-  root.dataset.theme = (root.dataset.theme==='light')?'dark':'light';
-  var light = root.dataset.theme==='light';
-  document.getElementById('hfText').textContent = light?'Light':'Dark';
-  document.getElementById('hfIcon').textContent = light?'◑':'◐';
-});
-</script>
+
 </body>
 </html>
