@@ -742,7 +742,9 @@ function editPassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!s
    ${spec.fields.map(([label,fld,type])=>type==='toggle'
      ?`<div class="kv"><span class="b">${label}</span><button class="btn sm ${p[fld]?'primary':''}" id="tg_${fld}" data-on="${!!p[fld]}" onclick="togglePF(this)">${p[fld]?'Verified':'Unverified'}</button></div>`
      :`<div class="field"><label>${label}</label><input class="input" id="pf_${fld}" type="${type==='num'?'number':'text'}" value="${esc(String(p[fld]!=null?p[fld]:''))}"></div>`).join('')}
-   <button class="btn primary block mt2" onclick="savePassportItem('${k}')">Save changes</button>
+   <input type="file" id="itemup" style="display:none" onchange="onItemUpload(this,'${k}')">
+   <button class="btn block mt2" onclick="el('itemup').click()">⬆ Upload ${spec.title} file</button>
+   <button class="btn primary block mt" onclick="savePassportItem('${k}')">Save changes</button>
    <div class="banner legal mt"><span class="i">§</span><span>Demo only — changes save to this session. Real verification is performed by licensed partners.</span></div>`);
 }
 function savePassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!spec)return;
@@ -750,6 +752,7 @@ function savePassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!s
   recomputeCompleteness(p);closeModal();toast('Passport updated \u2713');render();}
 function recomputeCompleteness(p){const keys=['id','income','employment','history','references','pets'];p.completeness=Math.round(keys.filter(k=>p[k]).length/keys.length*100);p.verified=!!(p.id&&p.income&&p.employment);return p.completeness;}
 function onDocUpload(input){const f=input.files&&input.files[0];if(!f)return;const p=me().passport;p.docs.push({name:f.name,status:'Verified'});toast('Uploaded '+f.name+' \u2713');render();}
+function onItemUpload(input,k){const f=input.files&&input.files[0];if(!f)return;const p=me().passport;p.docs.push({name:f.name,status:'Verified'});if(k in p)p[k]=true;recomputeCompleteness(p);closeModal();toast('Uploaded '+f.name+' — verified \u2713');render();}
 
 function tabbar(){
   const defs={
