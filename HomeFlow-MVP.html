@@ -728,6 +728,29 @@ function renterSheet(i){const r=DB.renterPool[i];
   `);
 }
 
+function pfSpecs(){return {
+  id:{title:'Government ID',fields:[['Verified','id','toggle']]},
+  income:{title:'Income & pay stubs',fields:[['Monthly income ($)','incomeMonthly','num'],['Credit band','creditBand','text'],['Verified','income','toggle']]},
+  employment:{title:'Employment & income',fields:[['Employer','employer','text'],['Job title','jobTitle','text'],['Years employed','employmentYears','num'],['Household size','householdSize','num'],['Desired move-in','moveIn','text'],['Verified','employment','toggle']]},
+  history:{title:'Rental history',fields:[['Verified','history','toggle']]},
+  references:{title:'References',fields:[['Verified','references','toggle']]},
+  pets:{title:'Pets',fields:[['Has pets','pets','toggle']]}
+};}
+function togglePF(b){const on=b.dataset.on!=='true';b.dataset.on=on;b.classList.toggle('primary',on);b.textContent=on?'Verified':'Unverified';}
+function editPassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!spec)return;
+  modal(`<h3>Edit ${spec.title}</h3>
+   ${spec.fields.map(([label,fld,type])=>type==='toggle'
+     ?`<div class="kv"><span class="b">${label}</span><button class="btn sm ${p[fld]?'primary':''}" id="tg_${fld}" data-on="${!!p[fld]}" onclick="togglePF(this)">${p[fld]?'Verified':'Unverified'}</button></div>`
+     :`<div class="field"><label>${label}</label><input class="input" id="pf_${fld}" type="${type==='num'?'number':'text'}" value="${esc(String(p[fld]!=null?p[fld]:''))}"></div>`).join('')}
+   <button class="btn primary block mt2" onclick="savePassportItem('${k}')">Save changes</button>
+   <div class="banner legal mt"><span class="i">§</span><span>Demo only — changes save to this session. Real verification is performed by licensed partners.</span></div>`);
+}
+function savePassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!spec)return;
+  spec.fields.forEach(([label,fld,type])=>{if(type==='toggle'){const b=el('tg_'+fld);if(b)p[fld]=b.dataset.on==='true';}else{const inp=el('pf_'+fld);if(inp)p[fld]=type==='num'?(+inp.value||0):inp.value;}});
+  recomputeCompleteness(p);closeModal();toast('Passport updated \u2713');render();}
+function recomputeCompleteness(p){const keys=['id','income','employment','history','references','pets'];p.completeness=Math.round(keys.filter(k=>p[k]).length/keys.length*100);p.verified=!!(p.id&&p.income&&p.employment);return p.completeness;}
+function onDocUpload(input){const f=input.files&&input.files[0];if(!f)return;const p=me().passport;p.docs.push({name:f.name,status:'Verified'});toast('Uploaded '+f.name+' \u2713');render();}
+
 function tabbar(){
   const defs={
     tenant:[['home','Home','home'],['search','Search','search'],['apps','Applications','doc'],['messages','Messages','chat'],['passport','Passport','user']],
@@ -1126,9 +1149,9 @@ function rentalPassport(){
   <div class="card mt2"><div class="p"><div class="bb">Your information</div></div>
     <div style="padding:0 16px">${items.map(([k,t,s])=>`<div class="kv">
       <span class="row" style="gap:10px"><span class="check ${p[k]?'on':''}">${p[k]?'✓':''}</span><span><span class="b">${t}</span><br><span class="tiny muted">${s}</span></span></span>
-      <button class="btn sm" onclick="toast('Edit ${t} (demo)')">Edit</button></div>`).join('')}</div></div>
+      <button class="btn sm" onclick="editPassportItem('${k}')">Edit</button></div>`).join('')}</div></div>
 
-  <div class="card p mt2"><div class="bb mb">Employment & income</div>
+  <div class="card p mt2"><div class="row between mb"><div class="bb">Employment & income</div><button class="btn sm" onclick="editPassportItem('employment')">Edit</button></div>
     <div class="kv"><span class="k">Employer</span><span class="b">${p.employer}</span></div>
     <div class="kv"><span class="k">Title</span><span class="b">${p.jobTitle}</span></div>
     <div class="kv"><span class="k">Tenure</span><span class="b">${p.employmentYears} yrs</span></div>
@@ -1138,7 +1161,7 @@ function rentalPassport(){
 
   <div class="card p mt2"><div class="bb mb">Verified documents</div>
     ${p.docs.map(d=>`<div class="kv"><span class="row" style="gap:8px">${svg('doc')} <span class="b">${d.name}</span></span><span class="pill green"><span class="dotb"></span>${d.status}</span></div>`).join('')}
-    <button class="btn block mt" onclick="toast('Upload document (demo)')">+ Upload document</button>
+    <input type="file" id="docup" style="display:none" onchange="onDocUpload(this)"><button class="btn block mt" onclick="el('docup').click()">+ Upload document</button>
   </div>
 
   ${p.petList.length?`<div class="card p mt2"><div class="bb mb">Pets</div>${p.petList.map(pet=>`<div class="kv"><span class="k">${pet.type} · ${pet.breed}</span><span class="b">${pet.weight}</span></div>`).join('')}</div>`:''}
