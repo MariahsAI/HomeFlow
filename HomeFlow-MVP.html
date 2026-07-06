@@ -273,6 +273,18 @@ a{color:var(--a1)}
 .searchsplit.showlist .searchmap{display:none}
 .searchsplit.showmap .searchlist{display:none}
 .mapcluster{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;color:#04060C;background:linear-gradient(135deg,var(--a1),var(--a2));border:2px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.listing-card{overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s}
+.listing-card:hover{transform:translateY(-4px);border-color:rgba(var(--a1-rgb),.4);box-shadow:0 26px 50px -30px rgba(0,0,0,.85)}
+.listing-card .heart{background:rgba(8,12,18,.5)!important;backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.listing-card .heart.on{color:var(--a1);border-color:var(--a1)}
+.matchbadge{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;backdrop-filter:blur(6px)}
+.matchbadge.ok{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C}
+.matchbadge.partial{background:rgba(8,12,18,.62);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.listing-card .lid{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none;padding-left:8px}
+.listing-card .cardfoot{display:flex;border-top:1px solid var(--line);margin-top:12px}
+.listing-card .cardfoot>div{flex:1;padding-top:10px}
+.listing-card .cardfoot>div+div{border-left:1px solid var(--line);padding-left:12px}
+.listing-card .stats{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:10px}
 .marker-cluster,.marker-cluster div{background:transparent!important}
 @media(min-width:900px){
   .searchtoggle{display:none}
@@ -876,19 +888,34 @@ function quickAction(view,label,ic){return `<button class="card p center" style=
   <div class="small b">${label}</div></button>`;}
 
 function listingCard(l){
+  const saved=savedSet().includes(l.id);
+  let match='';
+  if(state.role==='tenant'){const m=criteriaMatch(me(),l);
+    match=m.metCount===4?`<span class="matchbadge ok">✓ You qualify</span>`:`<span class="matchbadge partial">Meets ${m.metCount}/4</span>`;}
   return `<button class="card listing-card" style="text-align:left;padding:0;width:100%" onclick="go('listing',{id:'${l.id}'})">
-    ${l.featured?`<span class="pill amber featured">★ Featured</span>`:''}
-    <span class="heart" onclick="event.stopPropagation();toast('Saved to favorites')">♡</span>
-    <img class="thumb" style="border-radius:16px 16px 0 0;aspect-ratio:16/10" src="${listingImg(l)}" alt="">
+    <div style="position:relative">
+      ${l.featured?`<span class="pill amber featured">★ Featured</span>`:''}
+      <span class="heart ${saved?'on':''}" onclick="toggleSave('${l.id}',event)">${saved?'♥':'♡'}</span>
+      ${match}
+      <img class="thumb" style="border-radius:16px 16px 0 0;aspect-ratio:16/10" src="${listingImg(l)}" alt="">
+    </div>
     <div class="body">
-      <div class="row between"><div class="price">${money(l.rent)}<span class="muted small bb">/mo</span></div>
-        <span class="pill">${l.beds===0?'Studio':l.beds+' bd'} · ${l.baths} ba</span></div>
-      <div class="b" style="margin-top:4px">${l.title}</div>
+      <div class="row between" style="align-items:flex-start">
+        <div class="b" style="line-height:1.25">${l.title}</div>
+        <span class="lid">#${l.id.toUpperCase()}</span>
+      </div>
       <div class="muted small" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.addr}</div>
-      <div class="row wrap" style="margin-top:8px;gap:6px">
-        <span class="pill tiny">🐾 ${l.pets.split('(')[0]}</span><span class="pill tiny">Avail ${l.avail}</span></div>
+      <div class="cardfoot">
+        <div><div class="tiny muted">Rent</div><div class="price" style="font-size:20px">${money(l.rent)}<span class="muted small bb">/mo</span></div></div>
+        <div><div class="tiny muted">Available</div><div class="b small" style="padding-top:2px">${l.avail}</div></div>
+      </div>
+      <div class="stats">
+        <span>${l.beds===0?'Studio':l.beds+' bd'}</span><span>·</span><span>${l.baths} ba</span><span>·</span><span>${l.sqft} ft²</span><span>·</span><span>🐾 ${l.pets.split('(')[0].trim()}</span>
+      </div>
     </div></button>`;
 }
+function savedSet(){if(!state.saved)state.saved=[];return state.saved;}
+function toggleSave(id,ev){if(ev)ev.stopPropagation();const s=savedSet();const i=s.indexOf(id);if(i>=0){s.splice(i,1);toast('Removed from saved');}else{s.push(id);toast('Saved to favorites ♥');}render();}
 
 /* ---------- Listings search ---------- */
 function listingsSearch(){
