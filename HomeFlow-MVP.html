@@ -1,48 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-accent="cyan">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>HomeFlow — Residential Housing OS (MVP Prototype)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Rental Passport identity ------------------------------------------------ */
-  --bg:#F3EDDF;            /* parchment page */
-  --surface:#FBF8F0;       /* warm-white cards */
-  --surface-2:#ECE3CE;     /* sunk fills, chips, inputs */
-  --line:#DBCFB0;          /* paper rule */
-  --ink:#16221B;           /* near-black green-ink */
-  --muted:#6A7468; --muted-2:#9AA090;
-
-  --brand:#0F3B2E;         /* passport pine — primary */
-  --brand-ink:#092820; --brand-soft:#E2EBE0;
-  --green:#2E7D57;         /* verified / success */    --green-soft:#E3EFE7;
-  --amber:#A8823C;         /* gold foil accent */       --amber-soft:#F1E7CD;
-  --red:#B23A2E;           /* stamp ink */              --red-soft:#F3E1DC;
-  --purple:#35606B;        /* agent slate-teal */       --purple-soft:#E1EAEC;
-
+  --a1:#2FE6F0; --a2:#4C8DFF; --a1-rgb:47,230,240; --a2-rgb:76,141,255;
+  --bg:#06080F;
+  --surface:rgba(255,255,255,.05); --surface-2:rgba(255,255,255,.09); --line:rgba(255,255,255,.10);
+  --ink:#EAEEF7; --muted:#8B96AE; --muted-2:#6B7488;
+  --brand:var(--a1); --brand-ink:#04060C; --brand-soft:rgba(var(--a1-rgb),.16);
+  --green:#3DE0A0; --green-soft:rgba(61,224,160,.16); --amber:#F0B84C; --amber-soft:rgba(240,184,76,.16);
+  --red:#F76D6D; --red-soft:rgba(247,109,109,.16); --purple:#A78BFA; --purple-soft:rgba(167,139,250,.16);
   --radius:16px; --radius-sm:11px;
-  --shadow:0 1px 2px rgba(9,40,32,.05),0 10px 26px -12px rgba(9,40,32,.22);
-  --shadow-lg:0 20px 48px -18px rgba(9,40,32,.5);
-  --font:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --display:"Fraunces",Georgia,"Times New Roman",serif;
-  --mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px -14px rgba(0,0,0,.7);
+  --shadow-lg:0 30px 64px -22px rgba(0,0,0,.8);
+  --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --display:"Space Grotesk","Inter",sans-serif; --mono:"Space Mono",ui-monospace,monospace;
 }
-/* --- Passport typographic layer (applied on top of base rules) --- */
-.logo,.page-h h1,.price,.stat .n,.sheet h3,.stat .t{font-family:var(--display)!important}
-.logo{font-weight:600!important;letter-spacing:-.01em!important}
-.page-h h1{font-weight:600!important;letter-spacing:-.02em!important}
-.eyebrow{font-family:var(--mono)!important;font-weight:700!important;letter-spacing:.22em!important;color:var(--amber)!important}
-.logo .mark{background:linear-gradient(140deg,#D4B270,#A8823C)!important;color:#0C2E23!important;
-  border-radius:8px!important;box-shadow:inset 0 0 0 1.5px rgba(9,40,32,.25)}
-.bar > i{background:linear-gradient(90deg,var(--amber),var(--brand))!important}
-.roleswitch .dot,.timeline .ev:before{background:var(--amber)!important}
-.btn.primary{box-shadow:0 1px 0 var(--amber),0 8px 18px -8px rgba(9,40,32,.5)!important}
-.tabbar button.on{color:var(--brand)!important}
-.input:focus{box-shadow:0 0 0 3px var(--brand-soft)!important}
+html[data-accent="violet"]{ --a1:#A78BFA; --a2:#F472D6; --a1-rgb:167,139,250; --a2-rgb:244,114,214; }
+html[data-accent="aurora"]{ --a1:#38E8C6; --a2:#7C6BFF; --a1-rgb:56,232,198; --a2-rgb:124,107,255; }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);
   font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
@@ -101,7 +82,7 @@ img{max-width:100%;display:block}
   font-weight:600;font-size:14px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);transition:.15s}
 .btn:active{transform:scale(.98)}
 .btn.primary{background:var(--brand);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(20,99,255,.28)}
-.btn.dark{background:var(--ink);color:#fff;border-color:transparent}
+.btn.dark{background:var(--surface-2);color:var(--a1);border-color:transparent}
 .btn.ghost{background:transparent}
 .btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
 .btn.block{width:100%}
@@ -112,7 +93,7 @@ img{max-width:100%;display:block}
 /* Pills / badges */
 .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;
   background:var(--surface-2);border:1px solid var(--line)}
-.pill.brand{background:var(--brand-soft);color:var(--brand-ink);border-color:transparent}
+.pill.brand{background:var(--brand-soft);color:var(--a1);border-color:transparent}
 .pill.green{background:var(--green-soft);color:var(--green);border-color:transparent}
 .pill.amber{background:var(--amber-soft);color:var(--amber);border-color:transparent}
 .pill.red{background:var(--red-soft);color:var(--red);border-color:transparent}
@@ -130,7 +111,7 @@ img{max-width:100%;display:block}
 .list{display:flex;flex-direction:column}
 .li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
 .li:last-child{border-bottom:none}
-.avatar{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);color:var(--brand-ink);
+.avatar{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);color:var(--a1);
   display:grid;place-items:center;font-weight:700;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
 .avatar.round{border-radius:50%}
 .thumb{width:100%;aspect-ratio:16/10;border-radius:12px;object-fit:cover;background:var(--surface-2)}
@@ -175,13 +156,13 @@ textarea.input{resize:vertical;min-height:70px}
 
 /* Toast */
 #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);z-index:80;opacity:0;
-  background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:600;
+  background:var(--surface-2);color:var(--a1);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:600;
   box-shadow:var(--shadow-lg);transition:.3s;max-width:88%;text-align:center;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* Banner */
 .banner{border-radius:14px;padding:13px 15px;font-size:13px;display:flex;gap:10px;align-items:flex-start}
-.banner.info{background:var(--brand-soft);color:var(--brand-ink)}
+.banner.info{background:var(--brand-soft);color:var(--a1)}
 .banner.warn{background:var(--amber-soft);color:var(--amber)}
 .banner.legal{background:#f4f6f9;color:var(--muted);border:1px solid var(--line)}
 .banner .i{flex-shrink:0;font-weight:800}
@@ -219,6 +200,59 @@ table.tbl tr:last-child td{border-bottom:none}
 .timeline .ev{position:relative;padding:0 0 16px}
 .timeline .ev:before{content:"";position:absolute;left:-16px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
 .timeline:before{content:"";position:absolute;left:-11px;top:6px;bottom:6px;width:2px;background:var(--line)}
+/* ===== FUTURISTIC DARK OVERRIDES (match landing) ===== */
+body{background:var(--bg)!important}
+.logo,.page-h h1,.stat .n,.price,.sheet h3{font-family:var(--display)!important;letter-spacing:-.02em}
+.eyebrow{font-family:var(--mono)!important;letter-spacing:.2em!important;color:var(--a1)!important}
+.logo .mark{background:linear-gradient(140deg,var(--a1),var(--a2))!important;color:#04060C!important;box-shadow:0 0 20px -4px rgba(var(--a1-rgb),.8)}
+.topbar{background:color-mix(in srgb,var(--bg) 78%,transparent)!important;border-bottom-color:var(--line)!important}
+.tabbar{background:color-mix(in srgb,var(--bg) 82%,transparent)!important;border-top-color:var(--line)!important}
+.card{background:var(--surface)!important;border-color:var(--line)!important;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
+.roleswitch{background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)!important}
+.roleswitch .dot{background:var(--a1)!important}
+.iconbtn{background:var(--surface)!important;border-color:var(--line)!important}
+.btn{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+.btn.primary{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important;border-color:transparent!important;box-shadow:0 8px 24px -10px rgba(var(--a1-rgb),.8)!important}
+.btn.dark{background:var(--surface-2)!important;color:var(--ink)!important}
+.btn.green{background:var(--green)!important;color:#04060C!important}
+.btn.danger{background:var(--red)!important;color:#04060C!important}
+.bar{background:var(--surface-2)!important}
+.bar>i{background:linear-gradient(90deg,var(--a1),var(--a2))!important}
+.avatar{background:rgba(var(--a1-rgb),.14);color:var(--a1)}
+.input{background:var(--surface)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.input:focus{border-color:var(--a1)!important;box-shadow:0 0 0 3px rgba(var(--a1-rgb),.25)!important}
+.input::placeholder{color:var(--muted-2)}
+.tabs{background:var(--surface)!important}
+.tabs button.on{background:var(--surface-2)!important;color:var(--ink)!important;box-shadow:none!important}
+.tabbar button.on{color:var(--a1)!important}
+.pill{background:var(--surface-2);border-color:var(--line)}
+.pill.brand{background:rgba(var(--a1-rgb),.16)!important;color:var(--a1)!important}
+.seg{border-color:var(--line)!important}
+.seg button{background:var(--surface)!important;color:var(--muted)}
+.seg button.on{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important}
+#toast{background:#121A2B!important;color:var(--ink)!important;border:1px solid var(--line)}
+.banner.info{background:rgba(var(--a1-rgb),.14)!important;color:var(--a1)!important}
+.banner.legal{background:var(--surface)!important;color:var(--muted)!important;border-color:var(--line)!important}
+.chip{background:var(--surface-2)!important;border-color:var(--line)!important;color:var(--ink)}
+.chip.on{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important;border-color:transparent!important}
+.thumb{background:var(--surface-2)}
+.check.on{background:var(--green)!important;color:#04060C!important}
+.timeline .ev:before{background:var(--a1)!important;box-shadow:0 0 0 3px rgba(var(--a1-rgb),.25)!important}
+.timeline:before{background:var(--line)!important}
+.li,.kv{border-bottom-color:var(--line)!important}
+table.tbl th,table.tbl td{border-bottom-color:var(--line)!important}
+a{color:var(--a1)}
+/* accent picker */
+.hf-picker{position:fixed;right:16px;bottom:84px;z-index:100;display:flex;align-items:center;gap:9px;
+  padding:10px 14px;border-radius:30px;background:var(--surface-2);border:1px solid var(--line);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-lg)}
+.hf-picker span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+.hf-sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s}
+.hf-sw:hover{transform:scale(1.12)}
+.hf-sw[aria-pressed="true"]{border-color:var(--ink)}
+.hf-sw.cyan{background:linear-gradient(135deg,#2FE6F0,#4C8DFF)}
+.hf-sw.violet{background:linear-gradient(135deg,#A78BFA,#F472D6)}
+.hf-sw.aurora{background:linear-gradient(135deg,#38E8C6,#7C6BFF)}
 </style>
 </head>
 <body>
@@ -508,7 +542,7 @@ function renderLanding(){
           </button>`).join('')}
       </div>
       <button class="card p" style="text-align:left;width:100%;margin-top:12px;display:flex;align-items:center;gap:12px" onclick="login('admin')">
-        <div class="avatar" style="background:var(--ink);color:#fff">${svg('cog')}</div>
+        <div class="avatar" style="background:var(--surface-2);color:var(--a1)">${svg('cog')}</div>
         <div><div class="bb">Admin console</div><div class="muted small">Manage users, listings, vendors, billing & analytics</div></div>
       </button>
       <div class="banner legal" style="margin-top:16px"><span class="i">§</span><span>HomeFlow is a technology platform — not a brokerage, property manager, or eviction company. Prototype for demonstration; no real accounts, payments, or legal services are provided.</span></div>
@@ -593,13 +627,13 @@ function tenantHome(){
   <div class="page-h"><p class="eyebrow">Good morning</p><h1>Hi ${u.name.split(' ')[0]} 👋</h1>
     <p>Your Rental Passport is ready to reuse across every listing.</p></div>
 
-  <div class="card p" style="background:linear-gradient(150deg,#12402F,#0A2B20);color:#F7F2E6;border:1px solid rgba(198,161,91,.35);box-shadow:inset 0 0 0 1px rgba(198,161,91,.18),0 18px 40px -20px rgba(9,40,32,.6)">
+  <div class="card p" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;color:var(--ink);border:1px solid rgba(var(--a1-rgb),.4);box-shadow:0 0 46px -18px rgba(var(--a1-rgb),.6),inset 0 1px 0 rgba(255,255,255,.08)">
     <div class="row between">
       <div><div class="tiny" style="opacity:.85;font-weight:700;letter-spacing:.05em">RENTAL PASSPORT</div>
         <div style="font-size:20px;font-weight:750;margin-top:2px">${p.completeness}% complete</div>
         <div class="small" style="opacity:.9">${verifyBadgeWhite(p.verified)} · reuse on every application</div></div>
-      <div class="ring" style="--v:${p.completeness};background:conic-gradient(#C6A15B calc(${p.completeness}*1%),rgba(247,242,230,.22) 0)">
-        <span style="background:#0F3B2E;color:#C6A15B;font-family:var(--display)">${p.completeness}%</span></div>
+      <div class="ring" style="--v:${p.completeness};background:conic-gradient(var(--a1) calc(${p.completeness}*1%),rgba(255,255,255,.12) 0)">
+        <span style="background:#0C1424;color:var(--a1);font-family:var(--display)">${p.completeness}%</span></div>
     </div>
     <div class="row mt" style="gap:8px">
       <button class="btn block" style="background:rgba(255,255,255,.16);color:#fff" onclick="go('passport')">View / edit Passport</button>
@@ -630,14 +664,14 @@ function tenantHome(){
 
   <div class="row between mt2 mb"><div class="bb">Saved searches</div><a onclick="go('search')" class="small b">Manage</a></div>
   <div class="card">${DB.savedSearches.map(s=>`<div class="li" style="padding:13px 16px">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--brand-ink)">${svg('search')}</div>
+    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('search')}</div>
     <div style="flex:1"><div class="b">${s.name}</div><div class="muted small">${s.filters}</div></div>
     ${s.newCount?`<span class="pill green">${s.newCount} new</span>`:''}</div>`).join('')}</div>
   `;
 }
 function verifyBadgeWhite(v){return v?'✓ Verified':'Unverified';}
 function quickAction(view,label,ic){return `<button class="card p center" style="width:100%" onclick="go('${view}')">
-  <div class="avatar" style="margin:0 auto 6px;background:var(--brand-soft);color:var(--brand-ink)">${svg(ic)}</div>
+  <div class="avatar" style="margin:0 auto 6px;background:var(--brand-soft);color:var(--a1)">${svg(ic)}</div>
   <div class="small b">${label}</div></button>`;}
 
 function listingCard(l){
@@ -867,16 +901,16 @@ function homebuyerDash(){
   <div class="page-h"><p class="eyebrow">From renting to owning</p><h1>Homebuyer readiness</h1>
     <p>HomeFlow keeps you on one platform — even when you're ready to buy.</p></div>
 
-  <div class="card p" style="background:linear-gradient(150deg,#2E7D57,#1C5C3E);color:#F7F2E6;border:1px solid rgba(198,161,91,.3)">
+  <div class="card p" style="background:linear-gradient(155deg,rgba(61,224,160,.16),transparent 60%),#0C1424;color:var(--ink);border:1px solid rgba(61,224,160,.4)">
     <div class="row between"><div><div class="tiny bb" style="opacity:.85;letter-spacing:.05em">READINESS SCORE</div>
       <div style="font-size:34px;font-weight:800;line-height:1">${h.score}<span style="font-size:18px;opacity:.8">/100</span></div>
       <div class="small" style="opacity:.9">${h.score>=75?'Mortgage-ready — talk to a lender':'On track — a few steps to go'}</div></div>
-      <div class="ring" style="--v:${h.score};background:conic-gradient(#C6A15B calc(${h.score}*1%),rgba(247,242,230,.22) 0)">
-        <span style="background:#2E7D57;color:#F7F2E6;font-family:var(--display)">${h.score}</span></div></div>
+      <div class="ring" style="--v:${h.score};background:conic-gradient(var(--green) calc(${h.score}*1%),rgba(255,255,255,.12) 0)">
+        <span style="background:#0C1424;color:var(--green);font-family:var(--display)">${h.score}</span></div></div>
   </div>
 
   <div class="card p mt"><div class="row between"><div class="b">Down payment savings</div><div class="bb">${money(h.savedForDown)} / ${money(h.downTarget)}</div></div>
-    <div class="bar mt"><i style="width:${pct}%;background:linear-gradient(90deg,var(--amber),var(--green))"></i></div>
+    <div class="bar mt"><i style="width:${pct}%;background:linear-gradient(90deg,var(--green),var(--a1))"></i></div>
     <div class="muted small mt">${pct}% of your target. Save ${money(Math.max(0,h.downTarget-h.savedForDown))} more to reach 20% down.</div></div>
 
   <div class="grid g3 keep mt">
@@ -895,7 +929,7 @@ function homebuyerDash(){
   </div>
 
   <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--brand-ink)">${svg('key')}</div>
+    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('key')}</div>
     <div style="flex:1"><div class="b">Get pre-approved with a partner lender</div><div class="muted small">Anchor Mortgage · pre-approval in 24 hrs</div></div>
     <span class="pill brand">Start</span></button>
   <div class="banner legal mt"><span class="i">§</span><span>Educational readiness estimate only — not a credit decision, loan offer, or financial advice. Lending is provided by independent licensed partners.</span></div>
@@ -1041,7 +1075,7 @@ function landlordHome(){
   </div>
 
   ${pending?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid var(--brand)" onclick="go('applications')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--brand-ink)">${svg('doc')}</div>
+    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('doc')}</div>
     <div style="flex:1"><div class="b">${pending} application${pending>1?'s':''} awaiting review</div><div class="muted small">Verified Rental Passports ready to compare</div></div>
     <span class="pill brand">Review</span></button>`:''}
 
@@ -1389,7 +1423,7 @@ function vendorHome(){
     ${statCard(v.rating+'★','Rating','('+v.reviews+')','')}
   </div>
   ${nw?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid var(--brand)" onclick="go('leads')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--brand-ink)">${svg('doc')}</div>
+    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('doc')}</div>
     <div style="flex:1"><div class="b">${nw} new lead${nw>1?'s':''} to respond</div><div class="muted small">Respond fast to win the booking</div></div>
     <span class="pill brand">View</span></button>`:''}
   <div class="card p mt2"><div class="row between"><div class="bb">Marketplace visibility</div>${v.featured?'<span class="pill amber">★ Featured</span>':'<span class="pill">Standard</span>'}</div>
@@ -1462,7 +1496,7 @@ function adminHome(){
   <div class="banner legal mt2"><span class="i">§</span><span>Admin actions are logged. Platform enforces Fair Housing, privacy consent, and separation of brokerage services from technology services.</span></div>`;
 }
 function adminTile(view,t,ic,sub){return `<button class="card p" style="text-align:left;width:100%" onclick="go('${view}')">
-  <div class="avatar" style="background:var(--ink);color:#fff;margin-bottom:8px">${svg(ic)}</div>
+  <div class="avatar" style="background:var(--surface-2);color:var(--a1);margin-bottom:8px">${svg(ic)}</div>
   <div class="b">${t}</div><div class="tiny muted">${sub}</div></button>`;}
 
 function adminUsers(){
@@ -1525,6 +1559,20 @@ function adminBack(title,sub){return `<button class="btn ghost sm" onclick="go('
 
 /* ---------------- BOOT ---------------- */
 render();
+</script>
+<div class="hf-picker" role="group" aria-label="Accent color">
+  <span>ACCENT</span>
+  <button class="hf-sw cyan"   data-accent="cyan"   aria-label="Cyan"   aria-pressed="true"></button>
+  <button class="hf-sw violet" data-accent="violet" aria-label="Violet" aria-pressed="false"></button>
+  <button class="hf-sw aurora" data-accent="aurora" aria-label="Aurora" aria-pressed="false"></button>
+</div>
+<script>
+document.querySelectorAll('.hf-sw').forEach(function(sw){
+  sw.addEventListener('click',function(){
+    document.documentElement.dataset.accent=sw.dataset.accent;
+    document.querySelectorAll('.hf-sw').forEach(function(s){s.setAttribute('aria-pressed',s===sw);});
+  });
+});
 </script>
 </body>
 </html>
