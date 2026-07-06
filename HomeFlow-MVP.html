@@ -481,6 +481,7 @@ function routeView(){
       if(v==='marketplace')return vendorMarketplace();
       if(v==='alerts')return alertsView();
       if(v==='membership')return membershipView('tenant');
+      if(v==='publicpass')return publicPassport();
       if(v==='account')return tenantAccount();
     }
     if(R==='landlord'){
@@ -625,6 +626,81 @@ function tabbar(){
 /* small shared UI bits */
 function statCard(n,l,trend,cls){return `<div class="card stat"><div class="n">${n}</div><div class="l">${l}</div>${trend?`<div class="t ${cls||'up'}">${trend}</div>`:''}</div>`;}
 function verifyPill(v){return v?`<span class="pill green"><span class="dotb"></span>Verified</span>`:`<span class="pill amber"><span class="dotb"></span>Unverified</span>`;}
+
+/* ===== PORTABLE PASSPORT — shareable verified profile ===== */
+function _hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function shareOpts(){ if(!state.share) state.share={income:true,contact:false}; return state.share; }
+function shareCode(){ return 'HF-'+(1000+_hash(me().name)%9000)+'-092'; }
+function shareURL(){ return 'homeflow.app/p/'+shareCode(); }
+/* QR-style graphic (demo placeholder — encodes nothing; production would use a QR lib to encode the URL) */
+function qrSVG(text,px){
+  px=px||168;const N=25,q=1,total=N+q*2,cell=px/total;
+  let seed=_hash(text);const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+  const finder=(r,c)=>{const boxes=[[0,0],[0,N-7],[N-7,0]];for(const[br,bc]of boxes){if(r>=br&&r<br+7&&c>=bc&&c<bc+7){const rr=r-br,cc=c-bc;return(rr===0||rr===6||cc===0||cc===6)||(rr>=2&&rr<=4&&cc>=2&&cc<=4);}}return null;};
+  let rects='';
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){const f=finder(r,c);const on=(f!==null)?f:rnd()>.5;if(on)rects+=`<rect x="${(c+q)*cell}" y="${(r+q)*cell}" width="${cell*1.04}" height="${cell*1.04}" rx="${cell*0.2}"/>`;}
+  return `<svg width="${px}" height="${px}" viewBox="0 0 ${px} ${px}" style="background:#fff;border-radius:14px"><g fill="#0C1424">${rects}</g></svg>`;
+}
+function sharePassport(){
+  const u=me(),p=u.passport,o=shareOpts(),url=shareURL();
+  modal(`
+   <h3>Share your Rental Passport</h3>
+   <p class="muted small" style="margin:-2px 0 0">One link. Any landlord — on HomeFlow or not — sees your verified profile instantly. No re-uploading documents, ever.</p>
+   <div class="center mt2">${qrSVG(url,180)}</div>
+   <div class="row mt2" style="gap:8px">
+     <div class="input" style="flex:1;display:flex;align-items:center;font-family:var(--mono);font-size:13px;overflow:hidden;white-space:nowrap">${url}</div>
+     <button class="btn primary" onclick="copyShare()">Copy</button>
+   </div>
+   <div class="bb mt2 mb">What landlords can see</div>
+   <div class="kv"><span><span class="b">Exact income amount</span><br><span class="tiny muted">Off shows “Income verified” only</span></span>
+     <button class="btn sm ${o.income?'primary':''}" onclick="toggleShare('income')">${o.income?'On':'Off'}</button></div>
+   <div class="kv"><span><span class="b">Contact details</span><br><span class="tiny muted">Email & phone so landlords can reach you</span></span>
+     <button class="btn sm ${o.contact?'primary':''}" onclick="toggleShare('contact')">${o.contact?'On':'Off'}</button></div>
+   <button class="btn block mt2" onclick="closeModal();go('publicpass')">Preview what landlords see →</button>
+   <div class="banner legal mt2"><span class="i">§</span><span>Identity, income, references and history are verified by HomeFlow. You choose what’s shown and can revoke this link anytime.</span></div>
+  `);
+}
+function toggleShare(k){const o=shareOpts();o[k]=!o[k];sharePassport();}
+function copyShare(){try{navigator.clipboard.writeText('https://'+shareURL());}catch(e){}toast('Passport link copied');}
+function shareStat(k,v){return `<div class="card p" style="background:rgba(255,255,255,.05);padding:12px 14px">
+  <div class="tiny muted" style="font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase">${k}</div>
+  <div class="b" style="margin-top:2px">${v}</div></div>`;}
+function publicPassport(){
+  const u=me(),p=u.passport,o=shareOpts(),code=shareCode();
+  return `
+  <button class="btn sm" onclick="go('passport')">← Back to my Passport</button>
+  <div class="banner info mt"><span class="i">◎</span><span>This is the public page a landlord opens at <b>${shareURL()}</b> — no account or login needed.</span></div>
+  <div class="card p mt2" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;border:1px solid rgba(var(--a1-rgb),.4);box-shadow:0 0 46px -18px rgba(var(--a1-rgb),.6)">
+    <div class="row between">
+      <div class="row" style="gap:12px">
+        <div class="avatar" style="width:54px;height:54px;background:rgba(var(--a1-rgb),.2);color:var(--a1);font-family:var(--display);font-size:20px">${initialsFor(u.name)}</div>
+        <div><div class="tiny" style="color:var(--a1);font-family:var(--mono);letter-spacing:.14em">RENTAL PASSPORT</div>
+          <div style="font-family:var(--display);font-size:20px;font-weight:700">${u.name}</div>
+          <div class="tiny muted">ID ${code}</div></div>
+      </div>
+      <span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">✓ VERIFIED</span>
+    </div>
+    <div class="grid g2 keep mt2" style="gap:10px">
+      ${shareStat('Identity','Verified')}
+      ${shareStat('Income', o.income?money(p.incomeMonthly)+'/mo · verified':'Verified')}
+      ${shareStat('References', p.references?'Checked · positive':'—')}
+      ${shareStat('Rental history','Clean · on-time')}
+      ${shareStat('Credit band',p.creditBand)}
+      ${shareStat('Move-in',p.moveIn)}
+    </div>
+    <div class="mt2" style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all">
+      verified by HomeFlow · ${new Date().toLocaleDateString()} · sig 0x${_hash(u.name+code).toString(16)}</div>
+  </div>
+  ${o.contact
+    ?`<div class="card p mt2"><div class="bb mb">Contact</div><div class="kv"><span class="k">Email</span><span class="b">${u.name.split(' ')[0].toLowerCase()}@example.com</span></div><div class="kv"><span class="k">Phone</span><span class="b">(555) 018-2245</span></div></div>`
+    :`<div class="banner legal mt2"><span class="i">§</span><span>This renter has hidden contact details. Invite them to apply to open a conversation.</span></div>`}
+  <div class="row mt2" style="gap:8px">
+    <button class="btn primary block" onclick="toast('Invitation sent (demo)')">Invite to apply</button>
+    <button class="btn block" onclick="toast('Full application requested (demo)')">Request full application</button>
+  </div>
+  <div class="center muted tiny mt2">Powered by HomeFlow · authenticity verifiable at homeflow.app/verify</div>
+  `;
+}
 
 /* === VIEWS INSERTED BELOW === */
 
@@ -869,6 +945,8 @@ function rentalPassport(){
   <div class="card p mb"><div class="row between"><div class="b">Profile completeness</div><div class="bb">${p.completeness}%</div></div>
     <div class="bar mt"><i style="width:${p.completeness}%"></i></div>
     <div class="muted small mt">A complete, verified Passport helps landlords review you faster — and lets you apply in one click.</div></div>
+
+  <button class="btn primary block mb" onclick="sharePassport()" style="display:flex;align-items:center;justify-content:center;gap:8px">${svg('search')?'':''}↗ Share Passport — apply anywhere</button>
 
   <div class="grid g2 keep">
     ${statCard(money(p.incomeMonthly),'Monthly income','','')}
