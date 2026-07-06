@@ -1,1910 +1,620 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Tenure — Residential Housing OS (MVP Prototype)</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2048%2048%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23F0D9A0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23B8912F%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%2744%27%20height%3D%2744%27%20rx%3D%2711%27%20fill%3D%27%230B1526%27%2F%3E%3Cg%20fill%3D%27%238090B4%27%3E%3Crect%20x%3D%279%27%20y%3D%2710%27%20width%3D%2730%27%20height%3D%276%27%20rx%3D%271.5%27%2F%3E%3Crect%20x%3D%279%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2734%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2720.5%27%20y%3D%2710%27%20width%3D%277%27%20height%3D%2729%27%2F%3E%3Crect%20x%3D%2715%27%20y%3D%2737%27%20width%3D%2718%27%20height%3D%275%27%20rx%3D%271.5%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27url%28%23g%29%27%3E%3Crect%20x%3D%2721.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2724.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2720%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2724%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2728%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2732%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tenure — Your Rental Passport</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2048%2048%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23F0D9A0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23B8912F%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%2744%27%20height%3D%2744%27%20rx%3D%2711%27%20fill%3D%27%230B1526%27%2F%3E%3Cg%20fill%3D%27%235E86C8%27%3E%3Crect%20x%3D%279%27%20y%3D%2710%27%20width%3D%2730%27%20height%3D%276%27%20rx%3D%271.5%27%2F%3E%3Crect%20x%3D%279%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2734%27%20y%3D%2715.5%27%20width%3D%275%27%20height%3D%274%27%20rx%3D%271%27%2F%3E%3Crect%20x%3D%2720.5%27%20y%3D%2710%27%20width%3D%277%27%20height%3D%2729%27%2F%3E%3Crect%20x%3D%2715%27%20y%3D%2737%27%20width%3D%2718%27%20height%3D%275%27%20rx%3D%271.5%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27url%28%23g%29%27%3E%3Crect%20x%3D%2721.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2724.8%27%20y%3D%2718%27%20width%3D%271.4%27%20height%3D%2720%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2720%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2724%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2728%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3Crect%20x%3D%2721.5%27%20y%3D%2732%27%20width%3D%275%27%20height%3D%271.2%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-:root{
-  --a1:#5C93F2; --a2:#2E5AC8; --a1-rgb:92,147,242; --a2-rgb:46,90,200;
-  --bg:#0B1526;
-  --surface:rgba(255,255,255,.05); --surface-2:rgba(255,255,255,.09); --line:rgba(255,255,255,.10);
-  --ink:#DCE4F2; --muted:#8A96B0; --muted-2:#66718C;
-  --brand:var(--a1); --brand-ink:#04060C; --brand-soft:rgba(var(--a1-rgb),.16);
-  --green:#3DE0A0; --green-soft:rgba(61,224,160,.16); --amber:#F0B84C; --amber-soft:rgba(240,184,76,.16);
-  --red:#F76D6D; --red-soft:rgba(247,109,109,.16); --purple:#A78BFA; --purple-soft:rgba(167,139,250,.16);
-  --radius:16px; --radius-sm:11px;
-  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px -14px rgba(0,0,0,.7);
-  --shadow-lg:0 30px 64px -22px rgba(0,0,0,.8);
-  --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --display:"Space Grotesk","Inter",sans-serif; --mono:"Space Mono",ui-monospace,monospace;
-}
-html[data-theme="light"]{
-  --bg:#EEF1F8;
-  --surface:rgba(255,255,255,.75); --surface-2:rgba(20,30,60,.05); --line:rgba(20,30,60,.12);
-  --ink:#0A1024; --muted:#5A6584; --muted-2:#8791A8;
-  --shadow:0 1px 2px rgba(20,30,60,.05),0 12px 30px -14px rgba(20,30,60,.16);
-  --shadow-lg:0 30px 64px -22px rgba(20,30,60,.22);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);
-  font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,select,textarea{font-family:inherit;font-size:15px}
-a{color:var(--brand);text-decoration:none}
-img{max-width:100%;display:block}
+  :root{
+    --bg:#0B1526; --bg-2:#0A1120;
+    --panel:rgba(255,255,255,.045); --panel-2:rgba(255,255,255,.07);
+    --border:rgba(255,255,255,.11); --border-str:rgba(255,255,255,.20);
+    --text:#DCE4F2; --heading:#F3F7FF; --muted:#8A96B0;
+    --grid:rgba(255,255,255,.03);
+    --a1:#5C93F2; --a2:#2E5AC8; --a1-rgb:92,147,242; --a2-rgb:46,90,200;
+    --f-display:"Space Grotesk",system-ui,sans-serif;
+    --f-body:"Inter",system-ui,sans-serif;
+    --f-mono:"Space Mono",ui-monospace,monospace;
+    --maxw:1180px;
+  }
+  html[data-theme="light"]{
+    --bg:#EEF1F8; --bg-2:#E4E9F4;
+    --panel:rgba(255,255,255,.7); --panel-2:rgba(255,255,255,.85);
+    --border:rgba(20,30,60,.10); --border-str:rgba(20,30,60,.2);
+    --text:#1B2440; --heading:#0A1024; --muted:#5A6584;
+    --grid:rgba(20,30,60,.035);
+  }
 
-/* App frame — phone-first, expands on desktop */
-#app{max-width:1120px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:96px}
-.hide{display:none!important}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27112%27%20height%3D%27112%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%236E82AE%27%20stroke-width%3D%271%27%20opacity%3D%270.10%27%3E%3Cpath%20d%3D%27M56%20-4%20L116%2056%20L56%20116%20L-4%2056%20Z%27%2F%3E%3Cpath%20d%3D%27M56%2032%20L80%2056%20L56%2080%20L32%2056%20Z%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27%23C9A24B%27%3E%3Ccircle%20cx%3D%2756%27%20cy%3D%2756%27%20r%3D%272%27%20opacity%3D%270.16%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:112px 112px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  .mono{font-family:var(--f-mono)}
 
-/* Top bar */
-.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(14px);
-  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:12px 16px}
-.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:-.02em}
-.logo .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand),#3b82f6);
-  display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px}
-.topbar .spacer{flex:1}
-.roleswitch{display:flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);
-  border-radius:999px;padding:5px 10px 5px 12px;font-size:13px;font-weight:600;color:var(--ink)}
-.roleswitch .dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
-.iconbtn{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface-2);
-  border:1px solid var(--line);position:relative}
-.iconbtn .badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border-radius:999px;
-  min-width:17px;height:17px;font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px}
+  .fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;
+    background:radial-gradient(circle,rgba(var(--a1-rgb),.9),transparent 65%);animation:drift 18s ease-in-out infinite}
+  .blob.b2{background:radial-gradient(circle,rgba(var(--a2-rgb),.85),transparent 65%);animation-duration:22s;animation-delay:-6s}
+  .blob.b3{background:radial-gradient(circle,rgba(var(--a1-rgb),.55),transparent 65%);animation-duration:26s;animation-delay:-11s}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6vw,4vh) scale(1.12)}66%{transform:translate(-4vw,-3vh) scale(.95)}}
+  .fx .grid{position:absolute;inset:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:56px 56px;-webkit-mask-image:radial-gradient(circle at 50% 20%,#000,transparent 85%);mask-image:radial-gradient(circle at 50% 20%,#000,transparent 85%)}
+  main,header,footer{position:relative;z-index:1}
 
-/* Content */
-.view{padding:16px 16px 20px;animation:fade .25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.page-h{margin:2px 0 14px}
-.page-h h1{font-size:24px;letter-spacing:-.03em;margin:0}
-.page-h p{margin:4px 0 0;color:var(--muted)}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)}
+  .eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--a1)}
+  .holo{background:linear-gradient(100deg,var(--a1),var(--a2) 55%,var(--a1));background-size:200% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:holo 6s linear infinite}
+  @keyframes holo{to{background-position:-200% 0}}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-.card.p{padding:16px}
-.grid{display:grid;gap:12px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:1fr 1fr 1fr}
-.g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:720px){.g2,.g3,.g4{grid-template-columns:1fr}.g2.keep,.g4.keep{grid-template-columns:1fr 1fr}}
+  .glass{background:var(--panel);backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--border);border-radius:16px}
 
-.row{display:flex;align-items:center;gap:12px}
-.wrap{flex-wrap:wrap}
-.between{justify-content:space-between}
-.muted{color:var(--muted)}
-.small{font-size:13px}
-.tiny{font-size:12px}
-.b{font-weight:600}.bb{font-weight:700}
-.center{text-align:center}
-.mt{margin-top:12px}.mt2{margin-top:20px}.mb{margin-bottom:12px}
+  header.nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 72%,transparent);
+    backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--heading)}
+  .brand .seal{width:32px;height:32px;display:grid;place-items:center}
+  .nav-links{display:flex;gap:30px;align-items:center}
+  .nav-links a{font-size:15px;color:var(--muted);font-weight:500;transition:color .15s}
+  .nav-links a:hover{color:var(--text)}
+  .btn{font-family:var(--f-display);font-weight:600;font-size:15px;cursor:pointer;border:none;border-radius:10px;
+    padding:12px 22px;transition:transform .16s,box-shadow .16s,background .16s,color .16s,border-color .16s;letter-spacing:-.01em}
+  .btn-glow{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;
+    box-shadow:0 8px 30px -10px rgba(var(--a1-rgb),.9)}
+  .btn-glow:hover{transform:translateY(-2px);box-shadow:0 10px 36px -8px rgba(var(--a1-rgb),1)}
+  .btn-ghost{background:transparent;border:1px solid var(--border-str);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-2px);box-shadow:0 0 24px -12px var(--a1)}
+  .nav .btn{padding:10px 18px}
+  @media(max-width:880px){.nav-links a:not(.btn){display:none}}
 
-/* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:12px;
-  font-weight:600;font-size:14px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);transition:.15s}
-.btn:active{transform:scale(.98)}
-.btn.primary{background:var(--brand);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(20,99,255,.28)}
-.btn.dark{background:var(--surface-2);color:var(--a1);border-color:transparent}
-.btn.ghost{background:transparent}
-.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
-.btn.block{width:100%}
-.btn.green{background:var(--green);color:#fff;border-color:transparent}
-.btn.danger{background:var(--red);color:#fff;border-color:transparent}
-.btn[disabled]{opacity:.5;pointer-events:none}
+  .hero{padding:76px 0 104px}
+  .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}
+  .hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(44px,7vw,80px);line-height:1;
+    letter-spacing:-.035em;color:var(--heading);margin:24px 0 24px}
+  .hero h1 .l{display:block;opacity:0;transform:translateY(18px);animation:up .8s forwards}
+  .hero h1 .l:nth-child(2){animation-delay:.1s}.hero h1 .l:nth-child(3){animation-delay:.2s}
+  @keyframes up{to{opacity:1;transform:none}}
+  .hero p.lead{font-size:19px;color:var(--muted);max-width:37ch;margin-bottom:34px;opacity:0;animation:up .8s .45s forwards}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .8s .6s forwards}
+  .trust{margin-top:30px;display:flex;gap:22px;flex-wrap:wrap;opacity:0;animation:up .8s .75s forwards}
+  .trust div{display:flex;flex-direction:column;gap:2px}
+  .trust .n{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--heading)}
+  .trust .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .statband{display:flex;flex-wrap:wrap;margin-top:30px;border:1px solid var(--border);border-radius:14px;
+    background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:hidden;
+    opacity:0;animation:up .8s .75s forwards}
+  .statband .cell{flex:1;min-width:120px;padding:14px 18px;border-right:1px solid var(--border)}
+  .statband .cell:last-child{border-right:none}
+  .statband .n{font-family:var(--f-display);font-weight:700;font-size:23px;color:var(--heading);line-height:1}
+  .statband .n .u{font-size:14px;color:var(--a1)}
+  .statband .k{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+  .stat-note{font-family:var(--f-mono);font-size:10px;color:var(--muted);margin-top:9px;letter-spacing:.04em;opacity:0;animation:up .8s .85s forwards}
+  @media(max-width:520px){.statband .cell{min-width:50%;border-bottom:1px solid var(--border)}.statband .cell:nth-child(even){border-right:none}}
 
-/* Pills / badges */
-.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;
-  background:var(--surface-2);border:1px solid var(--line)}
-.pill.brand{background:var(--brand-soft);color:var(--a1);border-color:transparent}
-.pill.green{background:var(--green-soft);color:var(--green);border-color:transparent}
-.pill.amber{background:var(--amber-soft);color:var(--amber);border-color:transparent}
-.pill.red{background:var(--red-soft);color:var(--red);border-color:transparent}
-.pill.purple{background:var(--purple-soft);color:var(--purple);border-color:transparent}
-.dotb{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+  .cred-stage{display:flex;justify-content:center;perspective:1600px}
+  .cred{position:relative;width:min(430px,100%);border-radius:22px;padding:26px 26px 20px;
+    background:linear-gradient(160deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.10) 55%,transparent),var(--panel-2);
+    backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);
+    border:1px solid var(--border-str);overflow:hidden;transform-style:preserve-3d;transition:transform .2s ease-out;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.7),0 0 60px -26px rgba(var(--a1-rgb),.6),inset 0 1px 0 rgba(255,255,255,.14);
+    opacity:0;animation:credIn 1s .25s cubic-bezier(.2,.8,.2,1) forwards;will-change:transform}
+  @keyframes credIn{from{opacity:0;transform:translateY(38px) scale(.94)}to{opacity:1;transform:none}}
+  .cred::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;
+    background:linear-gradient(140deg,rgba(var(--a1-rgb),.9),transparent 40%,transparent 60%,rgba(var(--a2-rgb),.9));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .cred .scan{position:absolute;left:0;right:0;height:120px;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(var(--a1-rgb),.16),transparent);animation:scan 4s ease-in-out infinite;mix-blend-mode:screen}
+  @keyframes scan{0%{top:-120px}55%,100%{top:110%}}
+  .cred-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;position:relative}
+  .cred-head .type{font-family:var(--f-mono);font-size:10px;letter-spacing:.24em;color:var(--a1)}
+  .cred-head .title{font-family:var(--f-display);font-weight:700;font-size:21px;color:var(--heading);margin-top:3px}
+  .cred-chip{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:#04060C;
+    background:linear-gradient(135deg,var(--a1),var(--a2));padding:6px 11px;border-radius:20px;
+    box-shadow:0 0 18px -4px rgba(var(--a1-rgb),.9);display:flex;align-items:center;gap:6px}
+  .cred-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:#04060C}
+  .cred-body{display:flex;gap:18px;margin-bottom:16px;position:relative}
+  .cred-photo{width:92px;height:112px;border-radius:12px;flex:none;display:grid;place-items:center;
+    font-family:var(--f-display);font-weight:700;font-size:40px;color:var(--a1);
+    background:linear-gradient(160deg,rgba(var(--a1-rgb),.22),rgba(var(--a2-rgb),.12));border:1px solid var(--border-str)}
+  .cred-fields{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:13px 14px;align-content:start}
+  .cred-field{opacity:0;animation:fin .5s forwards}
+  .cred-field:nth-child(1){animation-delay:.65s}.cred-field:nth-child(2){animation-delay:.73s}
+  .cred-field:nth-child(3){animation-delay:.81s}.cred-field:nth-child(4){animation-delay:.89s}
+  .cred-field:nth-child(5){animation-delay:.97s}.cred-field:nth-child(6){animation-delay:1.05s}
+  @keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .cred-field .k{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+  .cred-field .v{font-family:var(--f-mono);font-size:13px;color:var(--heading);font-weight:700;margin-top:2px}
+  .cred-field .v.ok{color:var(--a1)}
+  .cred-hash{margin-top:6px;border-top:1px solid var(--border);padding-top:12px;font-family:var(--f-mono);
+    font-size:11.5px;letter-spacing:.05em;color:var(--muted);word-break:break-all;line-height:1.55;min-height:34px;position:relative}
 
-/* Stat */
-.stat{padding:14px 16px}
-.stat .n{font-size:26px;font-weight:750;letter-spacing:-.03em}
-.stat .l{color:var(--muted);font-size:13px;margin-top:2px}
-.stat .t{font-size:12px;font-weight:700;margin-top:6px}
-.up{color:var(--green)}.down{color:var(--red)}
+  .sec{padding:98px 0}
+  .divider{display:flex;align-items:center;gap:14px;color:var(--muted);font-family:var(--f-mono);font-size:11px;letter-spacing:.2em}
+  .divider .rule{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border-str),transparent)}
+  .sec-head{max-width:680px;margin:26px 0 54px}
+  .sec-head h2{font-family:var(--f-display);font-weight:700;font-size:clamp(32px,4.8vw,50px);line-height:1.05;
+    letter-spacing:-.03em;color:var(--heading);margin:14px 0 16px}
+  .sec-head p{color:var(--muted);font-size:18px}
 
-/* Lists */
-.list{display:flex;flex-direction:column}
-.li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.li:last-child{border-bottom:none}
-.avatar{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);color:var(--a1);
-  display:grid;place-items:center;font-weight:700;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
-.avatar.round{border-radius:50%}
-.thumb{width:100%;aspect-ratio:16/10;border-radius:12px;object-fit:cover;background:var(--surface-2)}
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .feat{padding:30px 26px;transition:transform .2s,border-color .2s,box-shadow .2s}
+  .feat:hover{transform:translateY(-6px);border-color:rgba(var(--a1-rgb),.5);box-shadow:0 30px 60px -34px rgba(0,0,0,.8),0 0 40px -22px var(--a1)}
+  .feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;
+    color:var(--a1);background:rgba(var(--a1-rgb),.12);border:1px solid rgba(var(--a1-rgb),.3);font-size:15px}
+  .feat h3{font-family:var(--f-display);font-weight:600;font-size:22px;color:var(--heading);margin:18px 0 10px}
+  .feat p{color:var(--muted);font-size:15px}
+  @media(max-width:820px){.feats{grid-template-columns:1fr}}
 
-/* Progress */
-.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
-.bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),#4f8bff)}
-.ring{--v:0;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
-  background:conic-gradient(var(--green) calc(var(--v)*1%),var(--surface-2) 0)}
-.ring > span{width:50px;height:50px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-weight:750;font-size:15px}
+  .aud-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .aud{position:relative;overflow:hidden;padding:32px;transition:transform .2s,border-color .2s}
+  .aud:hover{transform:translateY(-4px);border-color:rgba(var(--a1-rgb),.45)}
+  .aud .tag{position:absolute;top:26px;right:26px;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+    color:var(--a1);border:1px solid rgba(var(--a1-rgb),.4);border-radius:20px;padding:4px 10px}
+  .aud h3{font-family:var(--f-display);font-weight:700;font-size:25px;color:var(--heading);margin-bottom:5px}
+  .aud .role{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--a1);text-transform:uppercase;margin-bottom:18px}
+  .aud ul{list-style:none;display:grid;gap:10px}
+  .aud li{font-size:15px;color:var(--muted);padding-left:24px;position:relative}
+  .aud li::before{content:"→";position:absolute;left:0;color:var(--a1);font-family:var(--f-mono)}
+  @media(max-width:760px){.aud-grid{grid-template-columns:1fr}}
 
-/* Inputs */
-.field{margin-bottom:12px}
-.field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
-.input{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:var(--surface);outline:none;transition:.15s}
-.input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
-textarea.input{resize:vertical;min-height:70px}
+  .track{display:grid;grid-template-columns:repeat(4,1fr);position:relative;margin-top:24px}
+  .track::before{content:"";position:absolute;left:9%;right:9%;top:29px;height:2px;
+    background:linear-gradient(90deg,rgba(var(--a1-rgb),.5),rgba(var(--a2-rgb),.5))}
+  .stop{text-align:center;padding:0 14px;position:relative}
+  .stop .pin{width:58px;height:58px;margin:0 auto 20px;border-radius:16px;display:grid;place-items:center;
+    font-family:var(--f-mono);font-weight:700;font-size:16px;color:var(--a1);position:relative;z-index:1;
+    background:var(--panel-2);border:1px solid rgba(var(--a1-rgb),.4);backdrop-filter:blur(10px)}
+  .stop:last-child .pin{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;border-color:transparent;
+    box-shadow:0 0 30px -6px var(--a1)}
+  .stop h4{font-family:var(--f-display);font-weight:600;font-size:20px;color:var(--heading);margin-bottom:6px}
+  .stop p{font-size:14px;color:var(--muted)}
+  @media(max-width:760px){
+    .track{grid-template-columns:1fr;gap:26px}
+    .track::before{left:28px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(180deg,rgba(var(--a1-rgb),.5),rgba(var(--a2-rgb),.5))}
+    .stop{text-align:left;display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:center;padding:0}
+    .stop .pin{margin:0}
+  }
 
-/* Tabs */
-.tabs{display:flex;gap:6px;background:var(--surface-2);border-radius:12px;padding:4px;overflow-x:auto}
-.tabs button{flex:1;white-space:nowrap;padding:8px 12px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted)}
-.tabs button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+  .vendors{display:flex;flex-wrap:wrap;gap:12px}
+  .vchip{font-family:var(--f-mono);font-size:13px;color:var(--text);background:var(--panel);border:1px solid var(--border);
+    border-radius:40px;padding:10px 18px;transition:.16s;backdrop-filter:blur(8px)}
+  .vchip:hover{color:var(--a1);border-color:var(--a1);box-shadow:0 0 22px -10px var(--a1);transform:translateY(-2px)}
 
-/* Bottom nav */
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(255,255,255,.9);
-  backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:8px 6px 14px}
-.tabbar .max{max-width:1120px;margin:0 auto;width:100%;display:flex}
-.tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted-2);font-size:10.5px;font-weight:600;padding:4px 2px}
-.tabbar button.on{color:var(--brand)}
-.tabbar svg{width:23px;height:23px}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .plan{padding:34px 30px;position:relative}
+  .plan.feature{border-color:rgba(var(--a1-rgb),.5);box-shadow:0 0 0 1px rgba(var(--a1-rgb),.25),0 30px 70px -30px rgba(var(--a1-rgb),.4)}
+  .plan .tier{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--a1)}
+  .plan .price{font-family:var(--f-display);font-weight:700;font-size:46px;color:var(--heading);margin:10px 0 4px;line-height:1}
+  .plan .per{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+  .plan ul{list-style:none;margin:24px 0 28px;display:grid;gap:12px}
+  .plan li{font-size:15px;padding-left:26px;position:relative;color:var(--muted)}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--a1);font-weight:700}
+  .plan .btn{width:100%;text-align:center}
+  .plan .flag{position:absolute;top:-13px;right:24px;background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;padding:5px 12px;border-radius:20px;text-transform:uppercase;font-weight:700}
+  @media(max-width:820px){.price-grid{grid-template-columns:1fr;max-width:430px;margin:0 auto}}
 
-/* Modal / sheet */
-.overlay{position:fixed;inset:0;z-index:60;background:rgba(11,18,32,.42);display:flex;align-items:flex-end;
-  justify-content:center;animation:fade .2s}
-@media(min-width:720px){.overlay{align-items:center}}
-.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:8px 18px 24px;
-  max-height:92vh;overflow:auto;box-shadow:var(--shadow-lg);animation:slideup .28s cubic-bezier(.2,.9,.3,1)}
-@media(min-width:720px){.sheet{border-radius:22px}}
-@keyframes slideup{from{transform:translateY(30px);opacity:.6}to{transform:none;opacity:1}}
-.sheet .grip{width:38px;height:5px;border-radius:999px;background:var(--line);margin:6px auto 12px}
-.sheet h3{margin:2px 0 4px;font-size:19px;letter-spacing:-.02em}
+  .final{padding:110px 0;text-align:center;position:relative}
+  .final h2{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5.4vw,58px);line-height:1.03;
+    letter-spacing:-.03em;color:var(--heading);max-width:16ch;margin:16px auto 18px}
+  .final-sub{color:var(--muted);max-width:46ch;margin:0 auto 34px;font-size:18px}
+  .waitlist{max-width:660px;margin:0 auto}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .wl-row{display:flex;gap:12px;align-items:flex-end;justify-content:center;flex-wrap:wrap;text-align:left}
+  .wl-field{display:flex;flex-direction:column;gap:8px;flex:1;min-width:190px}
+  .wl-role{flex:0 0 150px;min-width:130px}
+  .wl-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--a1)}
+  .waitlist input,.waitlist select{font-family:var(--f-body);font-size:16px;color:var(--heading);
+    background:var(--panel);border:1px solid var(--border-str);border-radius:10px;padding:14px 15px;width:100%;
+    transition:border-color .15s,box-shadow .15s;backdrop-filter:blur(8px)}
+  .waitlist select{appearance:none;cursor:pointer;padding-right:34px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%232FE6F0' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center}
+  .waitlist option{color:#16223a}
+  .waitlist input::placeholder{color:var(--muted)}
+  .waitlist input:focus,.waitlist select:focus{outline:none;border-color:var(--a1);box-shadow:0 0 0 3px rgba(var(--a1-rgb),.25)}
+  .waitlist input[aria-invalid="true"]{border-color:#F76D6D;box-shadow:0 0 0 3px rgba(247,109,109,.22)}
+  .wl-submit{white-space:nowrap;padding:14px 26px;height:52px}
+  .wl-submit[disabled]{opacity:.6;cursor:progress}
+  .wl-status{font-family:var(--f-mono);font-size:13px;margin-top:16px;min-height:18px}
+  .wl-status.err{color:#F79A9A}.wl-status.ok{color:var(--a1)}
+  .wl-done{max-width:480px;margin:8px auto 0;animation:credIn .5s ease both}
+  .wl-done .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-weight:700;font-size:13px;
+    letter-spacing:.1em;color:#04060C;background:linear-gradient(135deg,var(--a1),var(--a2));padding:10px 18px;border-radius:24px;
+    box-shadow:0 0 30px -8px var(--a1)}
+  .wl-done h3{font-family:var(--f-display);font-weight:600;font-size:30px;color:var(--heading);margin:22px 0 10px}
+  .wl-done p{color:var(--muted);font-size:16px}
+  @media(max-width:560px){.wl-row{flex-direction:column;align-items:stretch}.wl-field,.wl-role{min-width:0;flex:1 1 auto}.wl-submit{width:100%}}
 
-/* Toast */
-#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);z-index:80;opacity:0;
-  background:var(--surface-2);color:var(--a1);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:600;
-  box-shadow:var(--shadow-lg);transition:.3s;max-width:88%;text-align:center;pointer-events:none}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer.site{border-top:1px solid var(--border);padding:58px 0 40px;color:var(--muted);margin-top:20px}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px;margin-bottom:40px}
+  .foot-brand{font-family:var(--f-display);font-weight:700;font-size:22px;color:var(--heading);display:flex;align-items:center;gap:11px;margin-bottom:14px}
+  .foot-brand .seal{width:28px;height:28px}
+  .foot-note{max-width:40ch;font-size:14px;line-height:1.6}
+  .foot-col h5{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a1);margin-bottom:14px}
+  .foot-col a{display:block;font-size:14.5px;padding:5px 0;color:var(--muted)}
+  .foot-col a:hover{color:var(--text)}
+  .compliance{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:var(--f-mono);font-size:12px}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid .foot-about{grid-column:1/-1}}
 
-/* Banner */
-.banner{border-radius:14px;padding:13px 15px;font-size:13px;display:flex;gap:10px;align-items:flex-start}
-.banner.info{background:var(--brand-soft);color:var(--a1)}
-.banner.warn{background:var(--amber-soft);color:var(--amber)}
-.banner.legal{background:#f4f6f9;color:var(--muted);border:1px solid var(--line)}
-.banner .i{flex-shrink:0;font-weight:800}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
 
-/* Hero cards for listings */
-.listing-card{overflow:hidden;position:relative}
-.listing-card .featured{position:absolute;top:10px;left:10px;z-index:2}
-.listing-card .heart{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.92);display:grid;place-items:center}
-.listing-card .body{padding:12px 14px 14px}
-.price{font-size:20px;font-weight:750;letter-spacing:-.02em}
+  /* scrollytelling */
+  .scrolly{position:relative;height:360vh}
+  .scrolly-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+  .scrolly-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  .scrolly-steps{display:flex;flex-direction:column;gap:26px}
+  .ss{opacity:.24;transition:opacity .4s ease,transform .4s ease;transform:translateX(-6px)}
+  .ss.on{opacity:1;transform:none}
+  .ss .n{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;color:var(--a1)}
+  .ss h3{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,3vw,36px);letter-spacing:-.025em;color:var(--heading);margin:6px 0 6px;line-height:1.05}
+  .ss p{color:var(--muted);font-size:15px;max-width:34ch}
+  .scrolly-stage{display:flex;flex-direction:column;align-items:center;gap:20px}
+  .sc-ring{width:158px;height:158px;border-radius:50%;display:grid;place-items:center;
+    background:conic-gradient(var(--a1) 45%,rgba(130,140,160,.2) 0);box-shadow:0 0 50px -18px rgba(var(--a1-rgb),.7)}
+  .sc-ring .in{width:126px;height:126px;border-radius:50%;background:var(--bg);display:grid;place-items:center;text-align:center}
+  .sc-ring .rv{font-family:var(--f-display);font-weight:700;font-size:38px;color:var(--heading);line-height:1}
+  .sc-ring .rl{font-family:var(--f-mono);font-size:9px;letter-spacing:.16em;color:var(--muted);margin-top:3px}
+  .sc-status{font-family:var(--f-display);font-weight:600;font-size:19px;color:var(--a1);min-height:24px;text-align:center;transition:color .3s}
+  .sc-card{width:min(360px,100%);border-radius:16px;padding:18px;background:var(--panel-2);border:1px solid var(--border-str);backdrop-filter:blur(16px)}
+  .sc-card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .sc-card .ty{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;color:var(--a1)}
+  .sc-chip{font-family:var(--f-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:#04060C;background:linear-gradient(135deg,var(--a1),var(--a2));padding:4px 9px;border-radius:14px;opacity:0;transition:opacity .4s}
+  .sc-f{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border)}
+  .sc-f i{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--border-str);display:grid;place-items:center;font-size:11px;color:transparent;transition:.3s;font-style:normal}
+  .sc-f.ok{color:var(--text)}
+  .sc-f.ok i{background:linear-gradient(135deg,var(--a1),var(--a2));border-color:transparent;color:#04060C}
+  .sc-rent{margin-top:12px;font-family:var(--f-mono);font-size:12px;color:var(--a1);opacity:0;transition:opacity .4s}
+  .sc-pre{margin-top:12px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,rgba(var(--a1-rgb),.18),rgba(var(--a2-rgb),.1));border:1px solid rgba(var(--a1-rgb),.4);opacity:0;transform:translateY(8px);transition:.5s}
+  .sc-pre.on{opacity:1;transform:none}
+  .sc-pre .k{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .sc-pre .amt{font-family:var(--f-display);font-weight:700;font-size:26px;color:var(--heading)}
+  @media(max-width:820px){
+    .scrolly{height:300vh}
+    .scrolly-grid{grid-template-columns:1fr;gap:18px;justify-items:center;text-align:center}
+    .scrolly-stage{order:-1}
+    .scrolly-steps{position:relative;height:140px;width:100%}
+    .ss{position:absolute;inset:0;opacity:0;transform:none}
+    .ss.on{opacity:1}
+    .ss p{margin:0 auto}
+  }
 
-.seg{display:flex;gap:0;border:1px solid var(--line);border-radius:11px;overflow:hidden}
-.seg button{flex:1;padding:9px;font-size:13px;font-weight:600;color:var(--muted);background:var(--surface)}
-.seg button.on{background:var(--brand);color:#fff}
+  .picker{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:14px;
+    padding:12px 16px;border-radius:40px;background:var(--panel-2);border:1px solid var(--border-str);
+    backdrop-filter:blur(20px);box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+  .picker .lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .swatches{display:flex;gap:8px}
+  .sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s}
+  .sw:hover{transform:scale(1.12)}
+  .sw[aria-pressed="true"]{border-color:var(--heading)}
+  .sw.cyan{background:linear-gradient(135deg,#2FE6F0,#4C8DFF)}
+  .sw.violet{background:linear-gradient(135deg,#A78BFA,#F472D6)}
+  .sw.aurora{background:linear-gradient(135deg,#38E8C6,#7C6BFF)}
+  .toggle{display:flex;align-items:center;gap:7px;cursor:pointer;font-family:var(--f-mono);font-size:11px;color:var(--text);
+    background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:6px 12px;transition:.15s}
+  .toggle:hover{border-color:var(--a1)}
+  .picker .sep{width:1px;height:22px;background:var(--border)}
+  @media(max-width:560px){.picker{right:12px;bottom:12px;padding:10px 12px;gap:10px}.picker .lbl{display:none}}
 
-table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-table.tbl th{text-align:left;color:var(--muted);font-weight:600;font-size:12px;padding:8px 10px;border-bottom:1px solid var(--line)}
-table.tbl td{padding:11px 10px;border-bottom:1px solid var(--line)}
-table.tbl tr:last-child td{border-bottom:none}
-.scrollx{overflow-x:auto}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:background .3s,color .3s,border-color .2s!important}
+    .hero h1 .l,.hero p.lead,.hero-cta,.trust,.cred,.cred-field,.wl-done{opacity:1;transform:none}
+    .reveal{opacity:1;transform:none}.blob{opacity:.35}html{scroll-behavior:auto}
+  }
 
-.chip{display:inline-flex;padding:6px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);
-  font-size:13px;font-weight:600;margin:0 6px 8px 0;white-space:nowrap}
-.chip.on{background:var(--brand);color:#fff;border-color:transparent}
-
-.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
-.kv:last-child{border:none}
-.kv .k{color:var(--muted)}
-
-.check{width:20px;height:20px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center;flex-shrink:0}
-.check.on{background:var(--green);border-color:transparent;color:#fff}
-
-.timeline{position:relative;padding-left:22px}
-.timeline .ev{position:relative;padding:0 0 16px}
-.timeline .ev:before{content:"";position:absolute;left:-16px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
-.timeline:before{content:"";position:absolute;left:-11px;top:6px;bottom:6px;width:2px;background:var(--line)}
-/* ===== FUTURISTIC DARK OVERRIDES (match landing) ===== */
-body{background:var(--bg)!important}
-.logo,.page-h h1,.stat .n,.price,.sheet h3{font-family:var(--display)!important;letter-spacing:-.02em}
-.eyebrow{font-family:var(--mono)!important;letter-spacing:.2em!important;color:var(--a1)!important}
-.logo .mark{background:transparent!important;color:inherit!important;box-shadow:none!important;display:inline-flex!important;align-items:center;justify-content:center;overflow:visible}
-.topbar{background:color-mix(in srgb,var(--bg) 78%,transparent)!important;border-bottom-color:var(--line)!important}
-.tabbar{background:color-mix(in srgb,var(--bg) 82%,transparent)!important;border-top-color:var(--line)!important}
-.card{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
-.roleswitch{background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)!important}
-.roleswitch .dot{background:var(--a1)!important}
-.iconbtn{background:var(--surface)!important;border-color:var(--line)!important}
-.btn{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
-.btn.primary{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important;border-color:transparent!important;box-shadow:0 8px 24px -10px rgba(var(--a1-rgb),.8)!important}
-.btn.dark{background:var(--surface-2)!important;color:var(--ink)!important}
-.btn.green{background:var(--green)!important;color:#04060C!important}
-.btn.danger{background:var(--red)!important;color:#04060C!important}
-.bar{background:var(--surface-2)!important}
-.bar>i{background:linear-gradient(90deg,var(--a1),var(--a2))!important}
-.avatar{background:rgba(var(--a1-rgb),.14);color:var(--a1)}
-.input{background:var(--surface)!important;color:var(--ink)!important;border-color:var(--line)!important}
-.input:focus{border-color:var(--a1)!important;box-shadow:0 0 0 3px rgba(var(--a1-rgb),.25)!important}
-.input::placeholder{color:var(--muted-2)}
-.tabs{background:var(--surface)!important}
-.tabs button.on{background:var(--surface-2)!important;color:var(--ink)!important;box-shadow:none!important}
-.tabbar button.on{color:var(--a1)!important}
-.pill{background:var(--surface-2);border-color:var(--line)}
-.pill.brand{background:rgba(var(--a1-rgb),.16)!important;color:var(--a1)!important}
-.seg{border-color:var(--line)!important}
-.seg button{background:var(--surface)!important;color:var(--muted)}
-.seg button.on{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important}
-#toast{background:#121A2B!important;color:#fff!important;border:1px solid rgba(255,255,255,.12)}
-.banner.info{background:rgba(var(--a1-rgb),.14)!important;color:var(--a1)!important}
-.banner.legal{background:var(--surface)!important;color:var(--muted)!important;border-color:var(--line)!important}
-.chip{background:var(--surface-2)!important;border-color:var(--line)!important;color:var(--ink)}
-.chip.on{background:linear-gradient(135deg,var(--a1),var(--a2))!important;color:#04060C!important;border-color:transparent!important}
-.thumb{background:var(--surface-2)}
-.check.on{background:var(--green)!important;color:#04060C!important}
-.timeline .ev:before{background:var(--a1)!important;box-shadow:0 0 0 3px rgba(var(--a1-rgb),.25)!important}
-.timeline:before{background:var(--line)!important}
-.li,.kv{border-bottom-color:var(--line)!important}
-table.tbl th,table.tbl td{border-bottom-color:var(--line)!important}
-a{color:var(--a1)}
-/* accent picker */
-.hf-picker{position:fixed;right:16px;bottom:84px;z-index:100;display:flex;align-items:center;gap:9px;
-  padding:10px 14px;border-radius:30px;background:var(--surface-2);border:1px solid var(--line);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-lg)}
-.hf-picker span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted)}
-.hf-sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s}
-.hf-sw:hover{transform:scale(1.12)}
-.hf-sw[aria-pressed="true"]{border-color:var(--ink)}
-.hf-sw.cyan{background:linear-gradient(135deg,#2FE6F0,#4C8DFF)}
-.hf-sw.violet{background:linear-gradient(135deg,#A78BFA,#F472D6)}
-.hf-sw.aurora{background:linear-gradient(135deg,#38E8C6,#7C6BFF)}
-.hf-sep{width:1px;height:20px;background:var(--line)}
-.hf-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
-  color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:6px 11px}
-.hf-toggle:hover{border-color:var(--a1)}
-.mappin{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-family:var(--mono);font-weight:700;font-size:11px;padding:4px 9px;border-radius:20px;white-space:nowrap;border:1.5px solid rgba(255,255,255,.55);box-shadow:0 4px 12px rgba(0,0,0,.5)}
-.leaflet-container{background:var(--surface-2)!important;font-family:var(--font)}
-.leaflet-control-attribution{background:rgba(0,0,0,.45)!important;color:var(--muted)!important;font-size:10px}
-.leaflet-control-attribution a{color:var(--muted)!important}
-.leaflet-bar a{background:var(--surface-2)!important;color:var(--ink)!important;border-color:var(--line)!important}
-.searchmap #lmap{height:64vh;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-.searchsplit.showlist .searchmap{display:none}
-.searchsplit.showmap .searchlist{display:none}
-.mapcluster{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;color:#04060C;background:linear-gradient(135deg,var(--a1),var(--a2));border:2px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(0,0,0,.5)}
-.listing-card{overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s}
-.listing-card:hover{transform:translateY(-4px);border-color:rgba(var(--a1-rgb),.4);box-shadow:0 26px 50px -30px rgba(0,0,0,.85)}
-.listing-card .heart{background:rgba(8,12,18,.5)!important;backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.25)}
-.listing-card .heart.on{color:var(--a1);border-color:var(--a1)}
-.matchbadge{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;backdrop-filter:blur(6px)}
-.matchbadge.ok{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C}
-.matchbadge.partial{background:rgba(8,12,18,.62);color:#fff;border:1px solid rgba(255,255,255,.22)}
-.listing-card .lid{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none;padding-left:8px}
-.listing-card .cardfoot{display:flex;border-top:1px solid var(--line);margin-top:12px}
-.listing-card .cardfoot>div{flex:1;padding-top:10px}
-.listing-card .cardfoot>div+div{border-left:1px solid var(--line);padding-left:12px}
-.listing-card .stats{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:10px}
-.marker-cluster,.marker-cluster div{background:transparent!important}
-@media(min-width:900px){
-  .searchtoggle{display:none}
-  .searchsplit{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:start}
-  .searchsplit.showlist .searchlist,.searchsplit.showmap .searchlist{display:block}
-  .searchsplit.showlist .searchmap,.searchsplit.showmap .searchmap{display:block;position:sticky;top:88px}
-  .searchsplit .searchgrid{grid-template-columns:1fr}
-  .searchmap #lmap{height:calc(100vh - 120px)}
-}
-
-#app{position:relative;z-index:1}
-body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27112%27%20height%3D%27112%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%236E82AE%27%20stroke-width%3D%271%27%20opacity%3D%270.10%27%3E%3Cpath%20d%3D%27M56%20-4%20L116%2056%20L56%20116%20L-4%2056%20Z%27%2F%3E%3Cpath%20d%3D%27M56%2032%20L80%2056%20L56%2080%20L32%2056%20Z%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27%23C9A24B%27%3E%3Ccircle%20cx%3D%2756%27%20cy%3D%2756%27%20r%3D%272%27%20opacity%3D%270.16%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%270%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3Ccircle%20cx%3D%27112%27%20cy%3D%27112%27%20r%3D%271.6%27%20opacity%3D%270.12%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:112px 112px}
-.logo{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#EAF0FB!important}
-.btn.primary{background:var(--a2)!important;color:#fff!important;box-shadow:0 4px 14px rgba(46,90,200,.35)!important}
+  .brand{font-family:'Cormorant Garamond',Georgia,serif!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#EAF0FB!important;font-size:22px}
+  .foot-brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#EAF0FB}
+  .btn-glow{color:#fff}
 </style>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0D9A0"/><stop offset=".45" stop-color="#D9B85C"/><stop offset="1" stop-color="#B8912F"/></linearGradient><linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4E628C"/><stop offset="1" stop-color="#26344F"/></linearGradient>
+  <linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0D9A0"/><stop offset=".45" stop-color="#D9B85C"/><stop offset="1" stop-color="#B8912F"/></linearGradient><linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E6DB8"/><stop offset="1" stop-color="#1D3F78"/></linearGradient>
 </defs></svg>
-<div id="app"><!-- rendered by JS --></div>
-<div id="toast"></div>
-<div id="modal-root"></div>
+
+<div class="fx" aria-hidden="true">
+  <div class="blob b1" style="width:520px;height:520px;top:-120px;right:-80px"></div>
+  <div class="blob b2" style="width:460px;height:460px;top:30%;left:-140px"></div>
+  <div class="blob b3" style="width:400px;height:400px;bottom:-120px;right:20%"></div>
+  <div class="grid"></div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="seal"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span>Tenure</div>
+    <nav class="nav-links">
+      <a href="#passport">Rental Passport</a>
+      <a href="#who">Who it's for</a>
+      <a href="#pricing">Pricing</a>
+      <a href="Tenure-MVP.html">Live demo</a>
+      <a href="#signup" class="btn btn-glow">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">For renters who are done moving</span>
+        <h1>
+          <span class="l">Rent like you</span>
+          <span class="l holo">mean to stay.</span>
+        </h1>
+        <p class="lead">Apply once. Rent anywhere. Own one day. One verified Rental Passport that turns every on-time rent payment into a step toward your own front door.</p>
+        <div class="hero-cta">
+          <a href="#signup" class="btn btn-glow">Create your Rental Passport</a>
+          <a href="Tenure-MVP.html" class="btn btn-ghost">See the live demo →</a>
+        </div>
+        <div class="statband">
+          <div class="cell"><span class="n">1</span><span class="k">Passport, not 12 forms</span></div>
+          <div class="cell"><span class="n">$0</span><span class="k">to apply</span></div>
+          <div class="cell"><span class="n">∞</span><span class="k">reused anywhere</span></div>
+          <div class="cell"><span class="n">~4 <span class="u">days</span></span><span class="k">typical approval</span></div>
+        </div>
+        <div class="stat-note">Illustrative figures · Tenure is pre-launch</div>
+      </div>
+
+      <div class="cred-stage" id="credStage">
+        <div class="cred" id="cred">
+          <div class="scan"></div>
+          <div class="cred-head">
+            <div><div class="type">RENTAL PASSPORT</div><div class="title">Tenure</div></div>
+            <div class="cred-chip">VERIFIED</div>
+          </div>
+          <div class="cred-body">
+            <div class="cred-photo">A</div>
+            <div class="cred-fields">
+              <div class="cred-field"><div class="k">Holder</div><div class="v">A. RIVERA</div></div>
+              <div class="cred-field"><div class="k">Passport ID</div><div class="v">HF-4471-092</div></div>
+              <div class="cred-field"><div class="k">Income</div><div class="v ok">CONFIRMED</div></div>
+              <div class="cred-field"><div class="k">References</div><div class="v ok">3 / 3</div></div>
+              <div class="cred-field"><div class="k">History</div><div class="v ok">CLEAN</div></div>
+              <div class="cred-field"><div class="k">Buyer score</div><div class="v">682 ↑</div></div>
+            </div>
+          </div>
+          <div class="cred-hash" id="hash"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="passport">
+    <div class="wrap">
+      <div class="divider reveal"><span>01</span><span class="rule"></span><span>THE PASSPORT</span></div>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Fill it out once</span>
+        <h2>Your whole renting life, in one verified profile.</h2>
+        <p>Documents, income, references, and history — confirmed up front, ready to share the second you find a place.</p>
+      </div>
+      <div class="feats">
+        <div class="feat glass reveal"><div class="ic">01</div><h3>Secure document vault</h3><p>ID, proof of income, employment, references, and rental history stored once and encrypted.</p></div>
+        <div class="feat glass reveal"><div class="ic">02</div><h3>One-click applications</h3><p>Send a verified profile to any listing instantly. No re-uploading, no re-typing, no delays.</p></div>
+        <div class="feat glass reveal"><div class="ic">03</div><h3>Homebuyer readiness</h3><p>A dashboard that tracks where you stand today and the steps that move you toward owning.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="who">
+    <div class="wrap">
+      <div class="divider reveal"><span>02</span><span class="rule"></span><span>ONE ECOSYSTEM</span></div>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Four sides, one platform</span>
+        <h2>Everyone in the same place.</h2>
+        <p>Tenants, landlords, agents, and vendors connected by the profiles they already trust.</p>
+      </div>
+      <div class="aud-grid">
+        <div class="aud glass reveal"><span class="tag">01</span><h3>Tenants</h3><div class="role">Free & Premium</div>
+          <ul><li>Reusable Rental Passport</li><li>Saved searches and rental alerts</li><li>One-click applications</li><li>Homebuyer readiness dashboard</li><li>Message landlords and agents directly</li></ul></div>
+        <div class="aud glass reveal"><span class="tag">02</span><h3>Landlords</h3><div class="role">Membership</div>
+          <ul><li>Property listings and applications</li><li>View verified Passport profiles</li><li>Objective, consistent screening</li><li>Showing scheduler</li><li>Occupancy and performance analytics</li></ul></div>
+        <div class="aud glass reveal"><span class="tag">03</span><h3>Agents</h3><div class="role">Professional</div>
+          <ul><li>Represent landlords and renters</li><li>Coordinate showings and messaging</li><li>MLS / IDX ready for the future</li><li>Clear line between tech and brokerage</li></ul></div>
+        <div class="aud glass reveal"><span class="tag">04</span><h3>Vendors</h3><div class="role">Marketplace</div>
+          <ul><li>Reach renters and landlords at the right moment</li><li>Featured partner placements</li><li>Qualified lead routing</li><li>Advertise across the whole journey</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY — scrollytelling -->
+  <section class="scrolly" id="journey">
+    <div class="scrolly-inner">
+      <div class="scrolly-grid">
+        <div class="scrolly-steps" id="scSteps">
+          <div class="ss" data-i="0"><div class="n">01 · RENT</div><h3>Every payment starts counting.</h3><p>Move in and build one verified Rental Passport — the record that follows you everywhere.</p></div>
+          <div class="ss" data-i="1"><div class="n">02 · VERIFY</div><h3>Verified once, trusted anywhere.</h3><p>Identity, income, references and history — confirmed and reusable across every landlord and city.</p></div>
+          <div class="ss" data-i="2"><div class="n">03 · BUILD</div><h3>Rent becomes credit.</h3><p>Report on-time rent to the bureaus and your readiness climbs — the years you rent finally add up.</p></div>
+          <div class="ss" data-i="3"><div class="n">04 · OWN</div><h3>The keys are yours.</h3><p>The same Passport that got you the rental gets you pre-approved to buy. Rent, and arrive.</p></div>
+        </div>
+        <div class="scrolly-stage">
+          <div class="sc-ring" id="scRing"><div class="in"><div><div class="rv" id="scRv">45</div><div class="rl">READINESS</div></div></div></div>
+          <div class="sc-status" id="scStatus">Building your Passport…</div>
+          <div class="sc-card">
+            <div class="hd"><span class="ty">RENTAL PASSPORT</span><span class="sc-chip" id="scChip">✓ VERIFIED</span></div>
+            <div id="scFields">
+              <div class="sc-f"><span>Identity</span><i>✓</i></div>
+              <div class="sc-f"><span>Income &amp; employment</span><i>✓</i></div>
+              <div class="sc-f"><span>References</span><i>✓</i></div>
+              <div class="sc-f"><span>Rental history</span><i>✓</i></div>
+            </div>
+            <div class="sc-rent" id="scRent">✓ Rent reporting active · +18 pts credit</div>
+            <div class="sc-pre" id="scPre"><div class="k">Pre-approved buying power</div><div class="amt">$304,000</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="marketplace">
+    <div class="wrap">
+      <div class="divider reveal"><span>04</span><span class="rule"></span><span>MARKETPLACE</span></div>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Vendor marketplace</span>
+        <h2>Every service a home needs, in one directory.</h2>
+        <p>Trusted partners reach renters and landlords exactly when they're needed — with featured placements and qualified leads.</p>
+      </div>
+      <div class="vendors reveal">
+        <span class="vchip">Lenders</span><span class="vchip">Title companies</span><span class="vchip">Inspectors</span>
+        <span class="vchip">Movers</span><span class="vchip">Insurance</span><span class="vchip">HVAC</span>
+        <span class="vchip">Locksmiths</span><span class="vchip">Cleaners</span><span class="vchip">Contractors</span>
+        <span class="vchip">Mortgage pre-approval</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pricing">
+    <div class="wrap">
+      <div class="divider reveal"><span>05</span><span class="rule"></span><span>MEMBERSHIP</span></div>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Simple plans, powered by Stripe</span>
+        <h2>Start free. Upgrade when it's worth it.</h2>
+        <p>Renters start free. Landlords and vendors pay for the tools that fill vacancies and win business.</p>
+      </div>
+      <div class="price-grid">
+        <div class="plan glass reveal"><div class="tier">Tenant</div><div class="price">Free</div><div class="per">to start renting</div>
+          <ul><li>Rental Passport</li><li>Search and saved listings</li><li>One application per listing</li><li>Message landlords</li></ul>
+          <a href="#signup" class="btn btn-ghost">Create passport</a></div>
+        <div class="plan glass feature reveal"><span class="flag">Most popular</span><div class="tier">Tenant Premium</div>
+          <div class="price">$12<span class="per" style="font-size:16px"> /mo</span></div><div class="per">for serious movers</div>
+          <ul><li>Everything in Free</li><li>Priority rental alerts</li><li>Unlimited one-click applies</li><li>Homebuyer readiness dashboard</li><li>Featured applicant status</li></ul>
+          <a href="#signup" class="btn btn-glow">Go Premium</a></div>
+        <div class="plan glass reveal"><div class="tier">Landlord & Vendor</div><div class="price">$29<span class="per" style="font-size:16px"> /mo</span></div><div class="per">per active account</div>
+          <ul><li>Unlimited listings or a partner profile</li><li>Verified applicant screening</li><li>Showing scheduler & analytics</li><li>Featured placement & lead routing</li></ul>
+          <a href="#signup" class="btn btn-ghost">List with us</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="signup">
+    <div class="wrap">
+      <span class="eyebrow">Join the waitlist</span>
+      <h2>Reserve your Rental Passport.</h2>
+      <p class="final-sub">Be first in line when Tenure opens in your area. One email — that's it.</p>
+      <form class="waitlist" id="waitlistForm" novalidate>
+        <input type="text" name="company" id="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="wl-row">
+          <label class="wl-field"><span class="wl-label">Email</span>
+            <input type="email" id="wlEmail" name="email" required placeholder="you@email.com" autocomplete="email" /></label>
+          <label class="wl-field wl-role"><span class="wl-label">I'm a</span>
+            <select id="wlRole" name="role"><option value="renter">Renter</option><option value="landlord">Landlord</option><option value="agent">Agent</option><option value="vendor">Vendor</option></select></label>
+          <button type="submit" class="btn btn-glow wl-submit" id="wlSubmit">Reserve my spot</button>
+        </div>
+        <p class="wl-status" id="wlStatus" role="status" aria-live="polite"></p>
+      </form>
+      <div class="wl-done" id="wlDone" hidden>
+        <div class="chip">✓ RESERVED</div>
+        <h3>You're on the list.</h3>
+        <p id="wlDoneMsg">Your Rental Passport is reserved. We'll email you the moment Tenure opens near you.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <div class="foot-brand"><span class="seal"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span>Tenure</div>
+        <p class="foot-note">The operating system for residential housing — where tenants rent, landlords lease efficiently, vendors advertise, and renters move toward owning.</p>
+      </div>
+      <div class="foot-col"><h5>Product</h5><a href="#passport">Rental Passport</a><a href="#who">For landlords</a><a href="#marketplace">Marketplace</a><a href="Tenure-MVP.html">Live demo</a></div>
+      <div class="foot-col"><h5>Company</h5><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a></div>
+      <div class="foot-col"><h5>Trust</h5><a href="#">Fair housing</a><a href="#">Privacy controls</a><a href="#">Security</a></div>
+    </div>
+    <div class="compliance">
+      <span style="color:var(--muted)">© 2026 Tenure. Built for fair housing &amp; objective screening.</span>
+      <span style="color:var(--muted)">Technology services only — not a licensed brokerage.</span>
+    </div>
+  </div>
+</footer>
+
+
 
 <script>
-/* =======================================================================
-   Tenure — MVP clickable prototype
-   Single-file, no dependencies. Mock in-memory data. Not production code.
-   ======================================================================= */
-
-/* ---------------- MOCK DATABASE ---------------- */
-const DB = {
-  users:[
-    {id:'t1',role:'tenant',name:'Maya Chen',email:'maya@example.com',premium:false,initials:'MC',
-     passport:{completeness:82,verified:true,id:true,income:true,employment:true,history:true,references:true,pets:true,
-       incomeMonthly:6800,employer:'Northwind Health',jobTitle:'RN, Charge Nurse',employmentYears:3.5,
-       creditBand:'720–759',moveIn:'Aug 15, 2026',householdSize:2,
-       petList:[{type:'Dog',breed:'Goldendoodle',weight:'45 lb'}],
-       rentalHistory:[{addr:'812 Palm Ave, Tampa FL',years:'2023–2026',rent:2100,landlord:'Verified · on-time'}],
-       references:[{name:'Dr. A. Rivera',rel:'Supervisor',phone:'(813) 555-0110'}],
-       docs:[{name:'Government ID',status:'Verified'},{name:'Pay stubs (2mo)',status:'Verified'},{name:'Proof of employment',status:'Verified'}]},
-     homebuyer:{score:64,savedForDown:12400,downTarget:24000,creditBand:'720–759',dti:31,preapproved:false}},
-    {id:'t2',role:'tenant',name:'Jordan Blake',email:'jordan@example.com',premium:true,initials:'JB',
-     passport:{completeness:100,verified:true,id:true,income:true,employment:true,history:true,references:true,pets:false,
-       incomeMonthly:9200,employer:'Atlas Logistics',jobTitle:'Ops Manager',employmentYears:5,creditBand:'760+',
-       moveIn:'Jul 20, 2026',householdSize:1,petList:[],
-       rentalHistory:[{addr:'44 Bay St, St. Pete FL',years:'2021–2026',rent:1850,landlord:'Verified · on-time'}],
-       references:[{name:'K. Osei',rel:'Prior landlord',phone:'(727) 555-0190'}],
-       docs:[{name:'Government ID',status:'Verified'},{name:'Pay stubs (2mo)',status:'Verified'},{name:'Proof of employment',status:'Verified'}]},
-     homebuyer:{score:78,savedForDown:31000,downTarget:35000,creditBand:'760+',dti:24,preapproved:true}},
-  ],
-  landlord:{id:'l1',role:'landlord',name:'Priya Nair',company:'Nair Property Holdings',email:'priya@example.com',initials:'PN',plan:'Pro'},
-  agent:{id:'a1',role:'agent',name:'Marcus Reed',license:'FL SL#3487201',brokerage:'Coastline Realty',email:'marcus@example.com',initials:'MR'},
-  vendorUser:{id:'v9',role:'vendor',name:'BrightMove Movers',category:'Moving',email:'ops@brightmove.com',initials:'BM',plan:'Preferred'},
-
-  listings:[
-    {id:'p1',title:'Sunlit 2BR in Hyde Park',addr:'318 W Azeele St, Tampa, FL 33606',rent:2450,deposit:2450,beds:2,baths:2,sqft:1120,
-     type:'Apartment',pets:'Cats & dogs OK (≤50 lb)',avail:'Aug 1, 2026',featured:true,status:'Active',landlord:'l1',
-     views:1284,leads:34,apps:6,color:'#dbeafe',
-     desc:'Renovated corner unit with quartz counters, in-unit laundry, and a walkable Hyde Park location. Assigned parking included.',
-     amenities:['In-unit laundry','Assigned parking','Central A/C','Dishwasher','Balcony','Pet-friendly'],
-     criteria:{income:3,credit:640,history:'12+ mo verified',evictions:'None in 5 yrs'}},
-    {id:'p2',title:'Modern 1BR Loft Downtown',addr:'500 Channelside Dr #904, Tampa, FL 33602',rent:1975,deposit:1975,beds:1,baths:1,sqft:760,
-     type:'Loft',pets:'Cats OK',avail:'Jul 15, 2026',featured:false,status:'Active',landlord:'l1',
-     views:842,leads:19,apps:3,color:'#e7f7ee',
-     desc:'High-floor loft with skyline views, floor-to-ceiling windows, and building gym + rooftop pool.',
-     amenities:['Rooftop pool','Fitness center','Concierge','EV charging','In-unit laundry'],
-     criteria:{income:3,credit:660,history:'12+ mo verified',evictions:'None in 5 yrs'}},
-    {id:'p3',title:'Spacious 3BR Family Home',addr:'2210 Bayshore Blvd, Tampa, FL 33629',rent:3600,deposit:3600,beds:3,baths:2.5,sqft:1980,
-     type:'House',pets:'Dogs OK',avail:'Sep 1, 2026',featured:true,status:'Active',landlord:'l1',
-     views:2011,leads:52,apps:9,color:'#fdf3e0',
-     desc:'Single-family home with fenced yard, 2-car garage, updated kitchen, and top-rated school zone.',
-     amenities:['Fenced yard','2-car garage','Updated kitchen','Screened patio','Washer/dryer'],
-     criteria:{income:3,credit:680,history:'24+ mo verified',evictions:'None in 7 yrs'}},
-    {id:'p4',title:'Cozy Studio Near USF',addr:'134 Fletcher Ave, Tampa, FL 33612',rent:1250,deposit:1000,beds:0,baths:1,sqft:480,
-     type:'Studio',pets:'No pets',avail:'Aug 10, 2026',featured:false,status:'Active',landlord:'l1',
-     views:604,leads:12,apps:2,color:'#efe9fb',
-     desc:'Efficient studio steps from campus and transit. Utilities included. Ideal for students or first renters.',
-     amenities:['Utilities included','On bus line','Furnished option','Laundry on-site'],
-     criteria:{income:2.5,credit:600,history:'None required (guarantor OK)',evictions:'None in 3 yrs'}},
-  ],
-
-  applications:[
-    {id:'ap1',listing:'p1',tenant:'t2',status:'reviewed',submitted:'Jul 1, 2026',
-     audit:[['Jul 1, 2026 · 9:12a','Application submitted with Rental Passport'],['Jul 1, 2026 · 9:12a','Documents shared: ID, income, employment'],['Jul 2, 2026 · 2:40p','Landlord opened application']]},
-    {id:'ap2',listing:'p3',tenant:'t1',status:'submitted',submitted:'Jul 3, 2026',
-     audit:[['Jul 3, 2026 · 6:05p','Application submitted with Rental Passport'],['Jul 3, 2026 · 6:05p','Documents shared: ID, income, employment, references']]},
-  ],
-
-  threads:[
-    {id:'th1',parties:['t1','l1'],listing:'p3',subject:'318 Bayshore — availability',
-     msgs:[{from:'t1',t:'Hi! Is the 3BR still available for an Aug 1 move-in?',at:'Jul 3 · 5:58p'},
-           {from:'l1',t:'Hi Maya — yes it is. I saw your Passport is 82% complete and verified. Want to schedule a showing?',at:'Jul 3 · 7:20p'}]},
-    {id:'th2',parties:['l1','a1'],listing:'p1',subject:'Showing coverage — Hyde Park',
-     msgs:[{from:'l1',t:'Marcus, can you cover a showing Saturday at the Azeele unit?',at:'Jul 2 · 11:00a'},
-           {from:'a1',t:'Absolutely. I have 10a–2p open. Send me the lockbox code via secure share.',at:'Jul 2 · 11:15a'}]},
-  ],
-
-  showings:[
-    {id:'sh1',listing:'p1',tenant:'t2',date:'Sat Jul 11, 2026',time:'10:30 AM',status:'confirmed',agent:'a1'},
-    {id:'sh2',listing:'p3',tenant:'t1',date:'Sun Jul 12, 2026',time:'1:00 PM',status:'requested',agent:null},
-  ],
-
-  vendors:[
-    {id:'v9',name:'BrightMove Movers',category:'Moving',rating:4.9,reviews:212,city:'Tampa, FL',featured:true,preferred:true,
-     blurb:'Licensed & insured local movers. Tenure members save 10%.',initials:'BM',color:'#dbeafe'},
-    {id:'v2',name:'Gulf Coast Home Inspections',category:'Inspection',rating:4.8,reviews:96,city:'Tampa, FL',featured:true,preferred:true,
-     blurb:'Same-week inspections with digital reports in 24 hrs.',initials:'GC',color:'#e7f7ee'},
-    {id:'v3',name:'Anchor Mortgage',category:'Lender',rating:4.7,reviews:341,city:'FL (statewide)',featured:false,preferred:true,
-     blurb:'Pre-approval in 24 hrs. Rent-to-own readiness programs.',initials:'AM',color:'#fdf3e0'},
-    {id:'v4',name:'ClearTitle Partners',category:'Title',rating:4.9,reviews:58,city:'Tampa, FL',featured:false,preferred:false,
-     blurb:'Fast, transparent title & escrow for FL closings.',initials:'CT',color:'#efe9fb'},
-    {id:'v5',name:'SafeLock Locksmiths',category:'Locksmith',rating:4.6,reviews:77,city:'Tampa, FL',featured:false,preferred:false,
-     blurb:'Turnover re-keys and smart-lock installs for landlords.',initials:'SL',color:'#fde8ef'},
-    {id:'v6',name:'FreshStart Cleaning Co.',category:'Cleaning',rating:4.8,reviews:150,city:'Tampa, FL',featured:false,preferred:true,
-     blurb:'Move-in/move-out deep cleans, flat-rate pricing.',initials:'FS',color:'#e0f2fe'},
-    {id:'v7',name:'CoolBreeze HVAC',category:'HVAC',rating:4.7,reviews:203,city:'Tampa, FL',featured:false,preferred:false,
-     blurb:'24/7 repair. Landlord maintenance plans available.',initials:'CB',color:'#e7f7ee'},
-    {id:'v8',name:'Peninsula Insurance',category:'Insurance',rating:4.8,reviews:118,city:'FL (statewide)',featured:false,preferred:true,
-     blurb:'Renters & landlord policies. Instant quotes.',initials:'PI',color:'#fef3c7'},
-  ],
-  vendorCats:['All','Moving','Inspection','Lender','Title','Locksmith','Cleaning','HVAC','Plumber','Insurance'],
-
-  leads:[
-    {id:'ld1',vendor:'v9',name:'Maya Chen',need:'2BR move, Aug 15',city:'Tampa',at:'Jul 3, 2026',status:'New'},
-    {id:'ld2',vendor:'v3',name:'Jordan Blake',need:'Pre-approval — first home',city:'St. Pete',at:'Jul 2, 2026',status:'Contacted'},
-    {id:'ld3',vendor:'v2',name:'Priya Nair',need:'Pre-listing inspection',city:'Tampa',at:'Jul 1, 2026',status:'New'},
-  ],
-
-  renterPool:[
-    {name:'Maya Chen',code:'HF-9775-092',initials:'MC',income:6800,credit:'720–759',moveIn:'Aug 15',beds:2,pets:true,history:'Clean · on-time',refs:'3/3',looking:'2BR · Hyde Park / SoHo',score:96},
-    {name:'Daniel Osei',code:'HF-3120-114',initials:'DO',income:9200,credit:'760+',moveIn:'Jul 20',beds:1,pets:false,history:'Clean · on-time',refs:'2/2',looking:'1BR · Downtown / Channelside',score:99},
-    {name:'Sofia Ramos',code:'HF-2048-231',initials:'SR',income:5400,credit:'700–719',moveIn:'Sep 1',beds:1,pets:false,history:'Clean · on-time',refs:'2/2',looking:'Studio–1BR · Seminole Heights',score:88},
-    {name:'Marcus Bell',code:'HF-6611-077',initials:'MB',income:7600,credit:'740–759',moveIn:'Aug 1',beds:2,pets:true,history:'Clean · on-time',refs:'3/3',looking:'2BR · pet-friendly',score:93},
-    {name:'Aisha Khan',code:'HF-5290-160',initials:'AK',income:8800,credit:'760+',moveIn:'Jul 28',beds:3,pets:false,history:'Clean · on-time',refs:'3/3',looking:'3BR · Westchase',score:91},
-    {name:'Leo Martins',code:'HF-4417-203',initials:'LM',income:4900,credit:'660–699',moveIn:'Sep 15',beds:1,pets:false,history:'Verified · guarantor',refs:'1/1',looking:'1BR · budget-friendly',score:79},
-  ],
-  savedSearches:[
-    {id:'ss1',name:'Hyde Park 2BR under $2.6k',filters:'2+ bd · ≤$2,600 · pets OK',newCount:3},
-    {id:'ss2',name:'Downtown loft, move Jul',filters:'1 bd · Downtown · ≤$2,100',newCount:1},
-  ],
-  alerts:[
-    {id:'al1',t:'New match: Sunlit 2BR in Hyde Park',sub:'Fits "Hyde Park 2BR under $2.6k"',at:'2h ago',unread:true},
-    {id:'al2',t:'Price drop on Modern 1BR Loft',sub:'$2,050 → $1,975',at:'1d ago',unread:true},
-    {id:'al3',t:'Your application was opened by the landlord',sub:'Spacious 3BR Family Home',at:'2d ago',unread:false},
-  ],
-
-  plans:{
-    tenant:[
-      {name:'Free',price:0,tag:'Get started',feats:['Rental Passport profile','Apply to listings','Save searches & 3 alerts','Message landlords']},
-      {name:'Premium',price:9,tag:'Most popular',feats:['Everything in Free','Priority applicant flag','Unlimited alerts + instant match','Homebuyer readiness coaching','Reusable verified screening','Application boost']},
-    ],
-    landlord:[
-      {name:'Starter',price:0,tag:'1 unit',feats:['1 active listing','Receive applications','Basic messaging','Objective screening criteria']},
-      {name:'Pro',price:29,tag:'Growing portfolios',feats:['Up to 25 listings','Verified Passport applicants','Showing + agent assignment','Analytics dashboard','Featured listing credits']},
-      {name:'Enterprise',price:0,tag:'Communities · custom',feats:['Unlimited listings & seats','MLS/IDX + API access','Dedicated success manager','Bulk import & CRM sync']},
-    ],
-    vendor:[
-      {name:'Listed',price:19,tag:'Be discoverable',feats:['Marketplace profile','Category search placement','Lead inbox']},
-      {name:'Preferred',price:99,tag:'Recommended',feats:['Everything in Listed','Preferred Partner badge','3x lead volume','Featured category slot','Analytics']},
-      {name:'Featured',price:249,tag:'Max exposure',feats:['Everything in Preferred','Homepage + checkout placement','Sponsored alerts','Priority lead routing']},
-    ],
-  },
-};
-
-/* ---------------- APP STATE ---------------- */
-const state = {
-  role:null,           // 'tenant' | 'landlord' | 'agent' | 'vendor' | 'admin'
-  uid:null,            // active user id
-  view:'home',         // current view key
-  params:{},           // view params
-  tenantId:'t1',       // which tenant profile is "me"
-};
-
-/* ---------------- HELPERS ---------------- */
-const $ = sel => document.querySelector(sel);
-const el = id => document.getElementById(id);
-function money(n){return '$'+Number(n).toLocaleString('en-US');}
-function listing(id){return DB.listings.find(l=>l.id===id);}
-function tenant(id){return DB.users.find(u=>u.id===id);}
-function me(){return tenant(state.tenantId);}
-function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function toast(msg){const t=el('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2400);}
-function go(view,params){state.view=view;state.params=params||{};render();window.scrollTo({top:0,behavior:'instant'});}
-function closeModal(){el('modal-root').innerHTML='';}
-function modal(html){el('modal-root').innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div class="sheet"><div class="grip"></div>${html}</div></div>`;}
-
-function statusPill(s){
-  const map={submitted:['amber','Submitted'],reviewed:['brand','Under review'],approved:['green','Approved'],denied:['red','Not selected'],leased:['purple','Leased'],
-    requested:['amber','Requested'],confirmed:['green','Confirmed'],completed:['brand','Completed'],New:['green','New'],Contacted:['amber','Contacted']};
-  const [c,l]=map[s]||['','',s];return `<span class="pill ${c}"><span class="dotb"></span>${l||s}</span>`;
-}
-
-/* SVG icons */
-const IC={
-  home:'<path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
-  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>',
-  doc:'<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/>',
-  chat:'<path d="M4 5h16v11H8l-4 4z"/>',
-  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
-  building:'<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/>',
-  key:'<circle cx="8" cy="8" r="4"/><path d="m11 11 9 9M17 17l2-2M15 15l2-2"/>',
-  cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.4A2 2 0 0 0 9.4 17H18l3-9H6"/>',
-  chart:'<path d="M4 20V4M4 20h16M8 20v-6M13 20v-10M18 20v-4"/>',
-  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>',
-  cog:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
-  bell:'<path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/>',
-  logout:'<path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4M6 12h9"/>',
-};
-function svg(name){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${IC[name]||''}</svg>`;}
-
-/* placeholder listing image (SVG gradient with house) */
-function listingImg(l){
-  const c1=l.color||'#dbeafe';
-  return `data:image/svg+xml;utf8,`+encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${c1}'/><stop offset='1' stop-color='#ffffff'/></linearGradient></defs><rect width='400' height='250' fill='url(#g)'/><g fill='none' stroke='#0b1220' stroke-opacity='0.18' stroke-width='6' stroke-linejoin='round'><path d='M120 150 L200 92 L280 150 Z'/><rect x='140' y='150' width='120' height='70'/><rect x='185' y='180' width='30' height='40' fill='#0b1220' fill-opacity='0.10'/></g></svg>`);
-}
-
-/* =======================================================================
-   RENDER ROOT
-   ======================================================================= */
-function render(){
-  if(!state.role){el('app').innerHTML=renderLanding();return;}
-  el('app').innerHTML = topbar() + `<div class="view">${routeView()}</div>` + tabbar();
-  if(state.role==='tenant'&&state.view==='search')setTimeout(initSearchMap,40);
-}
-
-function routeView(){
-  const v=state.view;
-  const R=state.role;
-  try{
-    if(R==='tenant'){
-      if(v==='home')return tenantHome();
-      if(v==='search')return listingsSearch();
-      if(v==='listing')return listingDetail();
-      if(v==='passport')return rentalPassport();
-      if(v==='apps')return tenantApps();
-      if(v==='messages')return messagesList();
-      if(v==='thread')return threadView();
-      if(v==='homebuyer')return homebuyerDash();
-      if(v==='marketplace')return vendorMarketplace();
-      if(v==='alerts')return alertsView();
-      if(v==='membership')return membershipView('tenant');
-      if(v==='publicpass')return publicPassport();
-      if(v==='account')return tenantAccount();
-    }
-    if(R==='landlord'){
-      if(v==='home')return landlordHome();
-      if(v==='listings')return landlordListings();
-      if(v==='listing')return listingDetail();
-      if(v==='editlisting')return landlordEditListing();
-      if(v==='applications')return landlordApplications();
-      if(v==='appdetail')return landlordAppDetail();
-      if(v==='showings')return showingsView('landlord');
-      if(v==='messages')return messagesList();
-      if(v==='thread')return threadView();
-      if(v==='findrenters')return findRenters();
-      if(v==='analytics')return landlordAnalytics();
-      if(v==='marketplace')return vendorMarketplace();
-      if(v==='membership')return membershipView('landlord');
-      if(v==='account')return simpleAccount(DB.landlord);
-    }
-    if(R==='agent'){
-      if(v==='home')return agentHome();
-      if(v==='showings')return showingsView('agent');
-      if(v==='messages')return messagesList();
-      if(v==='thread')return threadView();
-      if(v==='listing')return listingDetail();
-      if(v==='account')return simpleAccount(DB.agent);
-    }
-    if(R==='vendor'){
-      if(v==='home')return vendorHome();
-      if(v==='leads')return vendorLeads();
-      if(v==='profile')return vendorProfile();
-      if(v==='membership')return membershipView('vendor');
-      if(v==='messages')return messagesList();
-      if(v==='thread')return threadView();
-    }
-    if(R==='admin'){
-      if(v==='home')return adminHome();
-      if(v==='users')return adminUsers();
-      if(v==='listings')return adminListings();
-      if(v==='vendors')return adminVendors();
-      if(v==='subs')return adminSubs();
-      if(v==='leads')return adminLeads();
-    }
-  }catch(e){return `<div class="card p"><b>View error</b><p class="muted small">${esc(e.message)}</p></div>`;}
-  return `<div class="card p">Coming soon.</div>`;
-}
-
-/* ---------------- LANDING / ROLE PICKER ---------------- */
-function renderLanding(){
-  const roles=[
-    ['tenant','Tenant','Find a home & apply in one click','user','var(--brand)'],
-    ['landlord','Landlord','List units & find qualified renters','building','var(--green)'],
-    ['agent','Showing Agent','Cover showings & assist landlords','key','var(--purple)'],
-    ['vendor','Vendor','Advertise services to the ecosystem','cart','var(--amber)'],
-  ];
-  return `
-  <div style="min-height:100vh;display:flex;flex-direction:column;padding:0">
-    <div style="padding:56px 22px 30px;text-align:center;background:linear-gradient(180deg,var(--brand-soft),transparent)">
-      <div class="logo" style="justify-content:center;font-size:24px;margin-bottom:10px">
-        <span class="mark" style="width:34px;height:34px"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span> Tenure</div>
-      <p class="muted" style="max-width:440px;margin:6px auto 0">The operating system for residential housing. One platform connecting tenants, landlords, agents, and vendors.</p>
-      <div class="pill brand" style="margin-top:14px">MVP Prototype · demo data</div>
-    </div>
-    <div style="padding:6px 18px 24px;max-width:640px;margin:0 auto;width:100%">
-      <p class="eyebrow" style="margin:14px 4px 10px">Choose how you want to explore</p>
-      <div class="grid g2 keep">
-        ${roles.map(([r,t,d,ic,col])=>`
-          <button class="card p" style="text-align:left;display:block" onclick="login('${r}')">
-            <div class="avatar" style="background:${col};color:#fff;margin-bottom:10px">${svg(ic)}</div>
-            <div class="bb">${t}</div>
-            <div class="muted small" style="margin-top:2px">${d}</div>
-          </button>`).join('')}
-      </div>
-      <button class="card p" style="text-align:left;width:100%;margin-top:12px;display:flex;align-items:center;gap:12px" onclick="login('admin')">
-        <div class="avatar" style="background:var(--surface-2);color:var(--a1)">${svg('cog')}</div>
-        <div><div class="bb">Admin console</div><div class="muted small">Manage users, listings, vendors, billing & analytics</div></div>
-      </button>
-      <div class="banner legal" style="margin-top:16px"><span class="i">§</span><span>Tenure is a technology platform — not a brokerage, property manager, or eviction company. Prototype for demonstration; no real accounts, payments, or legal services are provided.</span></div>
-    </div>
-  </div>`;
-}
-
-function login(role){
-  state.role=role;
-  state.uid = role==='tenant'?state.tenantId : role==='landlord'?'l1' : role==='agent'?'a1' : role==='vendor'?'v9':'admin';
-  state.view='home';state.params={};
-  render();window.scrollTo(0,0);
-}
-function logout(){state.role=null;state.view='home';render();}
-
-/* =======================================================================
-   SHARED CHROME
-   ======================================================================= */
-function roleLabel(){return {tenant:'Tenant',landlord:'Landlord',agent:'Showing Agent',vendor:'Vendor',admin:'Admin'}[state.role];}
-function currentName(){
-  if(state.role==='tenant')return me().name;
-  if(state.role==='landlord')return DB.landlord.name;
-  if(state.role==='agent')return DB.agent.name;
-  if(state.role==='vendor')return DB.vendorUser.name;
-  return 'Administrator';
-}
-function unreadAlerts(){return DB.alerts.filter(a=>a.unread).length;}
-
-function topbar(){
-  const notif = state.role==='tenant'?unreadAlerts():0;
-  return `
-  <div class="topbar">
-    <div class="logo"><span class="mark"><svg viewBox="0 0 120 132" width="100%" height="100%" style="display:block"><rect x="12" y="16" width="96" height="18" rx="2" fill="url(#steel)"/><rect x="12" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="95" y="33" width="13" height="11" rx="1.5" fill="url(#steel)"/><rect x="51" y="16" width="18" height="97" fill="url(#steel)"/><rect x="34" y="112" width="52" height="13" rx="2" fill="url(#steel)"/><g fill="url(#goldgrad)"><rect x="53.5" y="40" width="3" height="70" rx="1.4"/><rect x="63.5" y="40" width="3" height="70" rx="1.4"/><rect x="53" y="46" width="14" height="2.8" rx="1.3"/><rect x="53" y="56" width="14" height="2.8" rx="1.3"/><rect x="53" y="66" width="14" height="2.8" rx="1.3"/><rect x="53" y="76" width="14" height="2.8" rx="1.3"/><rect x="53" y="86" width="14" height="2.8" rx="1.3"/><rect x="53" y="96" width="14" height="2.8" rx="1.3"/></g></svg></span> Tenure</div>
-    <div class="spacer"></div>
-    <button class="roleswitch" onclick="openRoleSwitch()"><span class="dot"></span>${roleLabel()}</button>
-    ${state.role==='tenant'?`<button class="iconbtn" onclick="go('alerts')">${svg('bell')}${notif?`<span class="badge">${notif}</span>`:''}</button>`:''}
-    <button class="iconbtn" onclick="logout()" title="Sign out">${svg('logout')}</button>
-  </div>`;
-}
-function openRoleSwitch(){
-  const roles=[['tenant','Tenant','user'],['landlord','Landlord','building'],['agent','Showing Agent','key'],['vendor','Vendor','cart'],['admin','Admin','cog']];
-  modal(`<h3>Switch role</h3><p class="muted small" style="margin:0 0 12px">Explore the same platform from any perspective.</p>
-    <div class="list">${roles.map(([r,t,ic])=>`<button class="li" style="width:100%;text-align:left;background:none" onclick="closeModal();login('${r}')">
-      <div class="avatar">${svg(ic)}</div><div style="flex:1"><div class="b">${t}</div></div>${state.role===r?'<span class="pill brand">Current</span>':''}</button>`).join('')}</div>`);
-}
-
-/* bottom tab bar per role */
-/* ===== SEARCH MAP (Leaflet) ===== */
-function setMapView(b){state.mapView=b;render();}
-function coordFor(l){const h=_hash(l.id+(l.addr||''));const dx=((h%1000)/1000-.5)*.09;const dy=(((h>>>10)%1000)/1000-.5)*.07;return [27.95+dy,-82.46+dx];}
-function initSearchMap(){
-  const c=document.getElementById('lmap'); if(!c||c.offsetParent===null) return;
-  if(!window.L){c.innerHTML='<div class="muted center" style="padding:60px 20px">Map loads on the live site (Leaflet + OpenStreetMap).</div>';return;}
-  if(c._map){c._map.remove();c._map=null;}
-  const items=window._mapItems||[];
-  const light=document.documentElement.dataset.theme==='light';
-  const tiles=light?'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  const map=L.map(c,{scrollWheelZoom:false}).setView([27.95,-82.46],11); c._map=map;
-  L.tileLayer(tiles,{maxZoom:19,attribution:'\u00a9 OpenStreetMap \u00a9 CARTO'}).addTo(map);
-  const useCluster=typeof L.markerClusterGroup==='function';
-  const layer=useCluster?L.markerClusterGroup({showCoverageOnHover:false,maxClusterRadius:48,
-    iconCreateFunction:function(cl){return L.divIcon({html:'<div class="mapcluster">'+cl.getChildCount()+'</div>',className:'',iconSize:[38,38]});}}):L.layerGroup();
-  const b=[];
-  items.forEach(l=>{const co=coordFor(l);b.push(co);
-    const icon=L.divIcon({html:`<div class="mappin">${money(l.rent)}</div>`,className:'',iconSize:[54,24],iconAnchor:[27,24]});
-    layer.addLayer(L.marker(co,{icon}).on('click',()=>go('listing',{id:l.id})));});
-  layer.addTo(map);
-  if(b.length){try{map.fitBounds(b,{padding:[42,42],maxZoom:14});}catch(e){}}
-  setTimeout(()=>{try{map.invalidateSize();}catch(e){}},60);
-}
-
-/* ===== REVERSE MARKETPLACE — landlords browse & invite verified renters ===== */
-function findRenters(){
-  const f=state.renterFilters||{beds:0,pets:false};
-  const items=DB.renterPool.slice().sort((a,b)=>b.score-a.score).filter(r=>r.beds>=f.beds && (!f.pets||r.pets));
-  return `
-  <div class="page-h"><p class="eyebrow">Reverse marketplace</p><h1>Find verified renters</h1>
-    <p>${items.length} pre-verified renters looking now — invite the ones who fit.</p></div>
-  <div class="card p mb"><div class="row wrap" style="gap:0">
-    ${[['Any beds',0],['1+ bd',1],['2+ bd',2],['3+ bd',3]].map(([t,v])=>`<span class="chip ${f.beds===v?'on':''}" onclick="setRFBeds(${v})">${t}</span>`).join('')}
-    <span class="chip ${f.pets?'on':''}" onclick="toggleRFPets()">🐾 Has pets</span>
-  </div></div>
-  ${items.map(renterCard).join('')||'<div class="card p muted center">No renters match — widen your filters.</div>'}
-  <div class="banner legal mt2"><span class="i">§</span><span>Renters appear only if they’ve opted in to be discovered. Matching uses objective criteria — income, history, verification — never protected classes. Fair Housing compliant by design.</span></div>
-  `;
-}
-function setRFBeds(v){state.renterFilters=Object.assign({beds:0,pets:false},state.renterFilters,{beds:v});render();}
-function toggleRFPets(){const f=Object.assign({beds:0,pets:false},state.renterFilters);f.pets=!f.pets;state.renterFilters=f;render();}
-function renterCard(r){const i=DB.renterPool.indexOf(r);
-  return `<div class="card p mb">
-    <div class="row between">
-      <div class="row" style="gap:12px">
-        <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1);font-family:var(--display)">${r.initials}</div>
-        <div><div class="row" style="gap:8px"><span class="b">${r.name}</span><span class="pill green tiny"><span class="dotb"></span>Verified</span></div>
-          <div class="tiny muted">${r.looking} · move-in ${r.moveIn}</div></div>
-      </div>
-      <div class="center"><div class="bb" style="color:var(--a1)">${r.score}%</div><div class="tiny muted">match</div></div>
-    </div>
-    <div class="grid g4 keep mt" style="gap:8px">
-      <div><div class="tiny muted">Income</div><div class="b small">${money(r.income)}/mo</div></div>
-      <div><div class="tiny muted">Credit</div><div class="b small">${r.credit}</div></div>
-      <div><div class="tiny muted">History</div><div class="b small">${r.history}</div></div>
-      <div><div class="tiny muted">Refs</div><div class="b small">${r.refs}</div></div>
-    </div>
-    <div class="row mt" style="gap:8px">
-      <button class="btn block sm" onclick="renterSheet(${i})">View Passport</button>
-      <button class="btn primary block sm" onclick="inviteRenter(${i})">Invite to apply</button>
-    </div>
-  </div>`;
-}
-function inviteRenter(i){toast('Invited '+DB.renterPool[i].name.split(' ')[0]+' to apply (demo)');}
-function renterSheet(i){const r=DB.renterPool[i];
-  modal(`
-   <h3>${r.name}</h3>
-   <p class="muted small" style="margin:-2px 0 0">Verified Rental Passport · ${r.code}</p>
-   <div class="grid g2 keep mt2" style="gap:10px">
-     ${shareStat('Identity','Verified')}
-     ${shareStat('Income',money(r.income)+'/mo · verified')}
-     ${shareStat('References',r.refs+' · positive')}
-     ${shareStat('Rental history',r.history)}
-     ${shareStat('Credit band',r.credit)}
-     ${shareStat('Move-in',r.moveIn)}
-   </div>
-   <div class="mt2" style="font-family:var(--mono);font-size:11px;color:var(--muted)">verified by Tenure · looking for ${r.looking}</div>
-   <button class="btn primary block mt2" onclick="closeModal();inviteRenter(${i})">Invite to apply</button>
-  `);
-}
-
-function pfSpecs(){return {
-  id:{title:'Government ID',fields:[['Verified','id','toggle']]},
-  income:{title:'Income & pay stubs',fields:[['Monthly income ($)','incomeMonthly','num'],['Credit band','creditBand','text'],['Verified','income','toggle']]},
-  employment:{title:'Employment & income',fields:[['Employer','employer','text'],['Job title','jobTitle','text'],['Years employed','employmentYears','num'],['Household size','householdSize','num'],['Desired move-in','moveIn','text'],['Verified','employment','toggle']]},
-  history:{title:'Rental history',fields:[['Verified','history','toggle']]},
-  references:{title:'References',fields:[['Verified','references','toggle']]},
-  pets:{title:'Pets',fields:[['Has pets','pets','toggle']]}
-};}
-function togglePF(b){const on=b.dataset.on!=='true';b.dataset.on=on;b.classList.toggle('primary',on);b.textContent=on?'Verified':'Unverified';}
-function editPassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!spec)return;
-  modal(`<h3>Edit ${spec.title}</h3>
-   ${spec.fields.map(([label,fld,type])=>type==='toggle'
-     ?`<div class="kv"><span class="b">${label}</span><button class="btn sm ${p[fld]?'primary':''}" id="tg_${fld}" data-on="${!!p[fld]}" onclick="togglePF(this)">${p[fld]?'Verified':'Unverified'}</button></div>`
-     :`<div class="field"><label>${label}</label><input class="input" id="pf_${fld}" type="${type==='num'?'number':'text'}" value="${esc(String(p[fld]!=null?p[fld]:''))}"></div>`).join('')}
-   <input type="file" id="itemup" style="display:none" onchange="onItemUpload(this,'${k}')">
-   <button class="btn block mt2" onclick="el('itemup').click()">⬆ Upload ${spec.title} file</button>
-   <button class="btn primary block mt" onclick="savePassportItem('${k}')">Save changes</button>
-   <div class="banner legal mt"><span class="i">§</span><span>Demo only — changes save to this session. Real verification is performed by licensed partners.</span></div>`);
-}
-function savePassportItem(k){const p=me().passport;const spec=pfSpecs()[k];if(!spec)return;
-  spec.fields.forEach(([label,fld,type])=>{if(type==='toggle'){const b=el('tg_'+fld);if(b)p[fld]=b.dataset.on==='true';}else{const inp=el('pf_'+fld);if(inp)p[fld]=type==='num'?(+inp.value||0):inp.value;}});
-  recomputeCompleteness(p);closeModal();toast('Passport updated \u2713');render();}
-function recomputeCompleteness(p){const keys=['id','income','employment','history','references','pets'];p.completeness=Math.round(keys.filter(k=>p[k]).length/keys.length*100);p.verified=!!(p.id&&p.income&&p.employment);return p.completeness;}
-function onDocUpload(input){const f=input.files&&input.files[0];if(!f)return;const p=me().passport;p.docs.push({name:f.name,status:'Verified'});toast('Uploaded '+f.name+' \u2713');render();}
-function onItemUpload(input,k){const f=input.files&&input.files[0];if(!f)return;const p=me().passport;p.docs.push({name:f.name,status:'Verified'});if(k in p)p[k]=true;recomputeCompleteness(p);closeModal();toast('Uploaded '+f.name+' — verified \u2713');render();}
-
-function tabbar(){
-  const defs={
-    tenant:[['home','Home','home'],['search','Search','search'],['apps','Applications','doc'],['messages','Messages','chat'],['passport','Passport','user']],
-    landlord:[['home','Home','home'],['listings','Listings','building'],['applications','Applicants','doc'],['showings','Showings','cal'],['analytics','Insights','chart']],
-    agent:[['home','Home','home'],['showings','Showings','cal'],['messages','Messages','chat'],['account','Profile','user']],
-    vendor:[['home','Home','home'],['leads','Leads','doc'],['profile','Profile','building'],['membership','Plan','cart']],
-    admin:[['home','Overview','chart'],['users','Users','user'],['listings','Listings','building'],['vendors','Vendors','cart'],['subs','Billing','cog']],
-  };
-  const items=defs[state.role]||[];
-  const active=v=>{
-    if(v===state.view)return true;
-    if(state.view==='listing'&&v==='search'&&state.role==='tenant')return true;
-    if(state.view==='thread'&&v==='messages')return true;
-    if(state.view==='appdetail'&&v==='applications')return true;
-    if((state.view==='editlisting')&&v==='listings')return true;
-    return false;
-  };
-  return `<div class="tabbar"><div class="max">${items.map(([v,l,ic])=>
-    `<button class="${active(v)?'on':''}" onclick="go('${v}')">${svg(ic)}<span>${l}</span></button>`).join('')}</div></div>`;
-}
-
-/* small shared UI bits */
-function statCard(n,l,trend,cls){return `<div class="card stat"><div class="n">${n}</div><div class="l">${l}</div>${trend?`<div class="t ${cls||'up'}">${trend}</div>`:''}</div>`;}
-function verifyPill(v){return v?`<span class="pill green"><span class="dotb"></span>Verified</span>`:`<span class="pill amber"><span class="dotb"></span>Unverified</span>`;}
-
-/* ===== PORTABLE PASSPORT — shareable verified profile ===== */
-function _hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
-function shareOpts(){ if(!state.share) state.share={income:true,contact:false}; return state.share; }
-function shareCode(){ return 'HF-'+(1000+_hash(me().name)%9000)+'-092'; }
-function shareURL(){ return 'homeflow.app/p/'+shareCode(); }
-/* QR-style graphic (demo placeholder — encodes nothing; production would use a QR lib to encode the URL) */
-function qrSVG(text,px){
-  px=px||168;const N=25,q=1,total=N+q*2,cell=px/total;
-  let seed=_hash(text);const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
-  const finder=(r,c)=>{const boxes=[[0,0],[0,N-7],[N-7,0]];for(const[br,bc]of boxes){if(r>=br&&r<br+7&&c>=bc&&c<bc+7){const rr=r-br,cc=c-bc;return(rr===0||rr===6||cc===0||cc===6)||(rr>=2&&rr<=4&&cc>=2&&cc<=4);}}return null;};
-  let rects='';
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++){const f=finder(r,c);const on=(f!==null)?f:rnd()>.5;if(on)rects+=`<rect x="${(c+q)*cell}" y="${(r+q)*cell}" width="${cell*1.04}" height="${cell*1.04}" rx="${cell*0.2}"/>`;}
-  return `<svg width="${px}" height="${px}" viewBox="0 0 ${px} ${px}" style="background:#fff;border-radius:14px"><g fill="#0C1424">${rects}</g></svg>`;
-}
-function sharePassport(){
-  const u=me(),p=u.passport,o=shareOpts(),url=shareURL();
-  modal(`
-   <h3>Share your Rental Passport</h3>
-   <p class="muted small" style="margin:-2px 0 0">One link. Any landlord — on Tenure or not — sees your verified profile instantly. No re-uploading documents, ever.</p>
-   <div class="center mt2">${qrSVG(url,180)}</div>
-   <div class="row mt2" style="gap:8px">
-     <div class="input" style="flex:1;display:flex;align-items:center;font-family:var(--mono);font-size:13px;overflow:hidden;white-space:nowrap">${url}</div>
-     <button class="btn primary" onclick="copyShare()">Copy</button>
-   </div>
-   <div class="bb mt2 mb">What landlords can see</div>
-   <div class="kv"><span><span class="b">Exact income amount</span><br><span class="tiny muted">Off shows “Income verified” only</span></span>
-     <button class="btn sm ${o.income?'primary':''}" onclick="toggleShare('income')">${o.income?'On':'Off'}</button></div>
-   <div class="kv"><span><span class="b">Contact details</span><br><span class="tiny muted">Email & phone so landlords can reach you</span></span>
-     <button class="btn sm ${o.contact?'primary':''}" onclick="toggleShare('contact')">${o.contact?'On':'Off'}</button></div>
-   <button class="btn block mt2" onclick="closeModal();go('publicpass')">Preview what landlords see →</button>
-   <div class="banner legal mt2"><span class="i">§</span><span>Identity, income, references and history are verified by Tenure. You choose what’s shown and can revoke this link anytime.</span></div>
-  `);
-}
-function toggleShare(k){const o=shareOpts();o[k]=!o[k];sharePassport();}
-function copyShare(){try{navigator.clipboard.writeText('https://'+shareURL());}catch(e){}toast('Passport link copied');}
-function shareStat(k,v){return `<div class="card p" style="background:rgba(255,255,255,.05);padding:12px 14px">
-  <div class="tiny muted" style="font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase">${k}</div>
-  <div class="b" style="margin-top:2px">${v}</div></div>`;}
-function publicPassport(){
-  const u=me(),p=u.passport,o=shareOpts(),code=shareCode();
-  return `
-  <button class="btn sm" onclick="go('passport')">← Back to my Passport</button>
-  <div class="banner info mt"><span class="i">◎</span><span>This is the public page a landlord opens at <b>${shareURL()}</b> — no account or login needed.</span></div>
-  <div class="card p mt2" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;border:1px solid rgba(var(--a1-rgb),.4);box-shadow:0 0 46px -18px rgba(var(--a1-rgb),.6)">
-    <div class="row between">
-      <div class="row" style="gap:12px">
-        <div class="avatar" style="width:54px;height:54px;background:rgba(var(--a1-rgb),.2);color:var(--a1);font-family:var(--display);font-size:20px">${initialsFor(u.name)}</div>
-        <div><div class="tiny" style="color:var(--a1);font-family:var(--mono);letter-spacing:.14em">RENTAL PASSPORT</div>
-          <div style="font-family:var(--display);font-size:20px;font-weight:700">${u.name}</div>
-          <div class="tiny muted">ID ${code}</div></div>
-      </div>
-      <span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">✓ VERIFIED</span>
-    </div>
-    <div class="grid g2 keep mt2" style="gap:10px">
-      ${shareStat('Identity','Verified')}
-      ${shareStat('Income', o.income?money(p.incomeMonthly)+'/mo · verified':'Verified')}
-      ${shareStat('References', p.references?'Checked · positive':'—')}
-      ${shareStat('Rental history','Clean · on-time')}
-      ${shareStat('Credit band',p.creditBand)}
-      ${shareStat('Move-in',p.moveIn)}
-    </div>
-    <div class="mt2" style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all">
-      verified by Tenure · ${new Date().toLocaleDateString()} · sig 0x${_hash(u.name+code).toString(16)}</div>
-  </div>
-  ${o.contact
-    ?`<div class="card p mt2"><div class="bb mb">Contact</div><div class="kv"><span class="k">Email</span><span class="b">${u.name.split(' ')[0].toLowerCase()}@example.com</span></div><div class="kv"><span class="k">Phone</span><span class="b">(555) 018-2245</span></div></div>`
-    :`<div class="banner legal mt2"><span class="i">§</span><span>This renter has hidden contact details. Invite them to apply to open a conversation.</span></div>`}
-  <div class="row mt2" style="gap:8px">
-    <button class="btn primary block" onclick="toast('Invitation sent (demo)')">Invite to apply</button>
-    <button class="btn block" onclick="toast('Full application requested (demo)')">Request full application</button>
-  </div>
-  <div class="center muted tiny mt2">Powered by Tenure · authenticity verifiable at homeflow.app/verify</div>
-  `;
-}
-
-/* === VIEWS INSERTED BELOW === */
-
-/* =======================================================================
-   TENANT PORTAL
-   ======================================================================= */
-function tenantHome(){
-  const u=me();const p=u.passport;
-  const featured=DB.listings.filter(l=>l.featured);
-  return `
-  <div class="page-h"><p class="eyebrow">Good morning</p><h1>Hi ${u.name.split(' ')[0]} 👋</h1>
-    <p>Your Rental Passport is ready to reuse across every listing.</p></div>
-
-  <div class="card p" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;color:var(--ink);border:1px solid rgba(var(--a1-rgb),.4);box-shadow:0 0 46px -18px rgba(var(--a1-rgb),.6),inset 0 1px 0 rgba(255,255,255,.08)">
-    <div class="row between">
-      <div><div class="tiny" style="opacity:.85;font-weight:700;letter-spacing:.05em">RENTAL PASSPORT</div>
-        <div style="font-size:20px;font-weight:750;margin-top:2px">${p.completeness}% complete</div>
-        <div class="small" style="opacity:.9">${verifyBadgeWhite(p.verified)} · reuse on every application</div></div>
-      <div class="ring" style="--v:${p.completeness};background:conic-gradient(var(--a1) calc(${p.completeness}*1%),rgba(255,255,255,.12) 0)">
-        <span style="background:#0C1424;color:var(--a1);font-family:var(--display)">${p.completeness}%</span></div>
-    </div>
-    <div class="row mt" style="gap:8px">
-      <button class="btn block" style="background:rgba(255,255,255,.16);color:#fff" onclick="go('passport')">View / edit Passport</button>
-      <button class="btn block" style="background:#fff;color:var(--brand-ink)" onclick="go('search')">Find a home</button>
-    </div>
-  </div>
-
-  ${!u.premium?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
-    <div class="avatar" style="background:var(--purple-soft);color:var(--purple)">★</div>
-    <div style="flex:1"><div class="b">Upgrade to Premium — $9/mo</div><div class="muted small">Priority applicant flag, instant match alerts & homebuyer coaching</div></div>
-    <span class="pill purple">Try</span></button>`:''}
-
-  <div class="row between mt2 mb"><div class="bb">Quick actions</div></div>
-  <div class="grid g4 keep">
-    ${quickAction('search','Search homes','search')}
-    ${quickAction('apps','My applications','doc')}
-    ${quickAction('homebuyer','Buy readiness','key')}
-    ${quickAction('messages','Messages','chat')}
-  </div>
-
-  <div class="row between mt2 mb"><div class="bb">Featured for you</div><a onclick="go('search')" class="small b">See all</a></div>
-  <div class="grid g2">${featured.map(listingCard).join('')}</div>
-
-  <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('marketplace')">
-    <div class="avatar" style="background:var(--amber-soft);color:var(--amber)">${svg('cart')}</div>
-    <div style="flex:1"><div class="b">Services marketplace</div><div class="muted small">Movers, inspectors, lenders, insurance & more — members save</div></div>
-    <span class="pill amber">Browse</span></button>
-
-  <div class="row between mt2 mb"><div class="bb">Saved searches</div><a onclick="go('search')" class="small b">Manage</a></div>
-  <div class="card">${DB.savedSearches.map(s=>`<div class="li" style="padding:13px 16px">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('search')}</div>
-    <div style="flex:1"><div class="b">${s.name}</div><div class="muted small">${s.filters}</div></div>
-    ${s.newCount?`<span class="pill green">${s.newCount} new</span>`:''}</div>`).join('')}</div>
-  `;
-}
-function verifyBadgeWhite(v){return v?'✓ Verified':'Unverified';}
-function quickAction(view,label,ic){return `<button class="card p center" style="width:100%" onclick="go('${view}')">
-  <div class="avatar" style="margin:0 auto 6px;background:var(--brand-soft);color:var(--a1)">${svg(ic)}</div>
-  <div class="small b">${label}</div></button>`;}
-
-function listingCard(l){
-  const saved=savedSet().includes(l.id);
-  let match='';
-  if(state.role==='tenant'){const m=criteriaMatch(me(),l);
-    match=m.metCount===4?`<span class="matchbadge ok">✓ You qualify</span>`:`<span class="matchbadge partial">Meets ${m.metCount}/4</span>`;}
-  return `<button class="card listing-card" style="text-align:left;padding:0;width:100%" onclick="go('listing',{id:'${l.id}'})">
-    <div style="position:relative">
-      ${l.featured?`<span class="pill amber featured">★ Featured</span>`:''}
-      <span class="heart ${saved?'on':''}" onclick="toggleSave('${l.id}',event)">${saved?'♥':'♡'}</span>
-      ${match}
-      <img class="thumb" style="border-radius:16px 16px 0 0;aspect-ratio:16/10" src="${listingImg(l)}" alt="">
-    </div>
-    <div class="body">
-      <div class="row between" style="align-items:flex-start">
-        <div class="b" style="line-height:1.25">${l.title}</div>
-        <span class="lid">#${l.id.toUpperCase()}</span>
-      </div>
-      <div class="muted small" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.addr}</div>
-      <div class="cardfoot">
-        <div><div class="tiny muted">Rent</div><div class="price" style="font-size:20px">${money(l.rent)}<span class="muted small bb">/mo</span></div></div>
-        <div><div class="tiny muted">Available</div><div class="b small" style="padding-top:2px">${l.avail}</div></div>
-      </div>
-      <div class="stats">
-        <span>${l.beds===0?'Studio':l.beds+' bd'}</span><span>·</span><span>${l.baths} ba</span><span>·</span><span>${l.sqft} ft²</span><span>·</span><span>🐾 ${l.pets.split('(')[0].trim()}</span>
-      </div>
-    </div></button>`;
-}
-function savedSet(){if(!state.saved)state.saved=[];return state.saved;}
-function toggleSave(id,ev){if(ev)ev.stopPropagation();const s=savedSet();const i=s.indexOf(id);if(i>=0){s.splice(i,1);toast('Removed from saved');}else{s.push(id);toast('Saved to favorites ♥');}render();}
-
-/* ---------- Listings search ---------- */
-function listingsSearch(){
-  const f=_filters();
-  let items=DB.listings.filter(l=>l.status==='Active');
-  if(f.q)items=items.filter(l=>(l.title+l.addr).toLowerCase().includes(f.q.toLowerCase()));
-  if(f.hood)items=items.filter(l=>(l.title+' '+l.addr).toLowerCase().includes(f.hood.toLowerCase()));
-  if(f.moveIn)items=items.filter(l=>{const d=Date.parse(l.avail);return isNaN(d)||d<=Date.parse(f.moveIn);});
-  items=items.filter(l=>l.beds>=f.beds && l.rent<=f.maxRent && (!f.pets||!/no pets/i.test(l.pets)));
-  items.sort((a,b)=>(b.featured-a.featured)||a.rent-b.rent);
-  window._mapItems=items;
-  const hoods=['Hyde Park','Channelside','Bayshore','USF'];
-  const dirty=f.hood||f.moveIn||f.beds||f.pets||f.q||f.maxRent<5000;
-  return `
-  <div class="page-h"><h1>Find your home</h1><p>${items.length} rentals · Tampa Bay area</p></div>
-  <div class="card p mb">
-    <div class="field" style="margin:0">
-      <input class="input" id="q" placeholder="City, neighborhood, or address" value="${esc(f.q)}" oninput="applyFilters()">
-    </div>
-    <div class="row mt" style="gap:8px">
-      <div class="field" style="flex:1;margin:0"><label>Neighborhood</label>
-        <select class="input" onchange="setHood(this.value)">
-          <option value="">Any neighborhood</option>
-          ${hoods.map(h=>`<option ${f.hood===h?'selected':''}>${h}</option>`).join('')}
-        </select></div>
-      <div class="field" style="flex:1;margin:0"><label>Move-in by</label>
-        <input type="date" class="input" value="${f.moveIn||''}" onchange="setMoveIn(this.value)"></div>
-    </div>
-    <div class="row wrap mt" style="gap:0">
-      ${[['Any',0],['1+ bd',1],['2+ bd',2],['3+ bd',3]].map(([t,v])=>`<span class="chip ${f.beds===v?'on':''}" onclick="setBeds(${v})">${t}</span>`).join('')}
-      <span class="chip ${f.pets?'on':''}" onclick="togglePets()">🐾 Pets OK</span>
-      ${dirty?`<span class="chip" onclick="resetFilters()">✕ Reset</span>`:''}
-    </div>
-    <div class="field mt" style="margin:0"><label>Max rent: <span id="rentlbl" class="b">${money(f.maxRent)}</span></label>
-      <input type="range" min="1000" max="5000" step="50" value="${f.maxRent}" style="width:100%" oninput="el('rentlbl').textContent='$'+Number(this.value).toLocaleString()" onchange="setRent(this.value)"></div>
-  </div>
-
-  <div class="seg mb searchtoggle">
-    <button class="${!state.mapView?'on':''}" onclick="setMapView(false)">List</button>
-    <button class="${state.mapView?'on':''}" onclick="setMapView(true)">Map</button>
-  </div>
-
-  <div class="searchsplit ${state.mapView?'showmap':'showlist'}">
-    <div class="searchlist">
-      <div class="grid g2 searchgrid">${items.length?items.map(listingCard).join(''):'<div class="card p muted center">No matches — widen your filters.</div>'}</div>
-      <div class="banner legal mt2"><span class="i">§</span><span>Listings are shown to all users equally. Tenure does not steer, rank, or filter renters or neighborhoods based on any protected class. Fair Housing compliant by design.</span></div>
-    </div>
-    <div class="searchmap"><div id="lmap"></div></div>
-  </div>
-  `;
-}
-function _filters(){return Object.assign({q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''},state.params.filters||{});}
-function applyFilters(){const f=_filters();f.q=el('q').value;state.params.filters=f; // re-render list only
-  go('search',{filters:f});el('q')&&el('q').focus();
-  const q=el('q');if(q){q.selectionStart=q.selectionEnd=q.value.length;}}
-function setBeds(v){const f=_filters();f.beds=v;go('search',{filters:f});}
-function togglePets(){const f=_filters();f.pets=!f.pets;go('search',{filters:f});}
-function setRent(v){const f=_filters();f.maxRent=+v;go('search',{filters:f});}
-function setHood(v){const f=_filters();f.hood=v;go('search',{filters:f});}
-function setMoveIn(v){const f=_filters();f.moveIn=v;go('search',{filters:f});}
-function resetFilters(){go('search',{filters:{q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''}});}
-
-/* ---------- Listing detail ---------- */
-function listingDetail(){
-  const l=listing(state.params.id);if(!l)return '<div class="card p">Listing not found.</div>';
-  const isTenant=state.role==='tenant';
-  const applied=DB.applications.find(a=>a.listing===l.id&&a.tenant===state.tenantId);
-  return `
-  <button class="btn ghost sm" onclick="history.back();go('${state.role==='tenant'?'search':state.role==='landlord'?'listings':'home'}')">← Back</button>
-  <div class="card" style="overflow:hidden;margin-top:10px">
-    <div style="position:relative"><img src="${listingImg(l)}" style="width:100%;aspect-ratio:16/9;object-fit:cover">
-      ${l.featured?`<span class="pill amber" style="position:absolute;top:12px;left:12px">★ Featured</span>`:''}
-      <span class="pill" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92)">${l.status}</span></div>
-    <div class="p">
-      <div class="row between"><div class="price" style="font-size:26px">${money(l.rent)}<span class="muted small bb">/mo</span></div>
-        <span class="pill brand">${l.type}</span></div>
-      <div class="bb" style="font-size:18px;margin-top:6px">${l.title}</div>
-      <div class="muted">${l.addr}</div>
-      <div class="row wrap mt" style="gap:6px">
-        <span class="pill">${l.beds===0?'Studio':l.beds+' beds'}</span><span class="pill">${l.baths} baths</span>
-        <span class="pill">${l.sqft} sqft</span><span class="pill">🐾 ${l.pets}</span></div>
-      <div class="grid g2 keep mt2">
-        <div class="kv"><span class="k">Deposit</span><span class="b">${money(l.deposit)}</span></div>
-        <div class="kv"><span class="k">Available</span><span class="b">${l.avail}</span></div>
-      </div>
-      <p class="mt">${l.desc}</p>
-      <div class="bb mt2 mb">Amenities</div>
-      <div class="row wrap" style="gap:6px">${l.amenities.map(a=>`<span class="pill tiny">${a}</span>`).join('')}</div>
-
-      <div class="bb mt2 mb">Objective screening criteria</div>
-      <div class="banner info" style="margin-bottom:10px"><span class="i">✓</span><span>These are the landlord's published, objective standards — applied equally to every applicant.</span></div>
-      <div class="card p" style="background:var(--surface-2);border:none">
-        ${critRow('Minimum income','≥ '+l.criteria.income+'× monthly rent ('+money(l.rent*l.criteria.income)+'/mo)')}
-        ${critRow('Minimum credit','Score '+l.criteria.credit+'+')}
-        ${critRow('Rental history',l.criteria.history)}
-        ${critRow('Eviction history',l.criteria.evictions)}
-      </div>
-    </div>
-  </div>
-
-  ${isTenant?`
-    ${applied?`<div class="banner info mt"><span class="i">✓</span><span>You applied on ${applied.submitted}. Status: ${statusPill(applied.status)}</span></div>
-      <button class="btn block mt" onclick="go('apps')">View my application</button>`:`
-    <div class="row mt" style="gap:10px">
-      <button class="btn primary block" onclick="openApply('${l.id}')">Apply now — 1 click</button>
-      <button class="btn block" onclick="requestShowing('${l.id}')">Request showing</button>
-    </div>`}
-    <button class="btn ghost block mt" onclick="startThread('${l.id}')">Message landlord</button>
-  `:state.role==='landlord'?`
-    <div class="row mt" style="gap:10px">
-      <button class="btn primary block" onclick="go('editlisting',{id:'${l.id}'})">Edit listing</button>
-      <button class="btn block" onclick="go('applications')">View ${l.apps} applicants</button>
-    </div>
-    <div class="grid g3 keep mt">${statCard(l.views,'Views','')}${statCard(l.leads,'Leads','')}${statCard(l.apps,'Applications','')}</div>
-  `:`
-    <button class="btn primary block mt" onclick="toast('Showing added to your route')">Add to showing route</button>
-  `}
-  `;
-}
-function critRow(k,v){return `<div class="kv"><span class="k">${k}</span><span class="b" style="text-align:right">${v}</span></div>`;}
-
-/* ---------- One-click apply ---------- */
-function openApply(listingId){
-  const l=listing(listingId);const u=me();const p=u.passport;
-  modal(`
-    <h3>Apply — one click</h3>
-    <p class="muted small" style="margin:0 0 12px">${l.title} · ${money(l.rent)}/mo</p>
-    <div class="card p" style="background:var(--surface-2);border:none">
-      <div class="row between"><div class="b">Rental Passport</div>${verifyPill(p.verified)}</div>
-      <div class="bar mt" style="height:6px"><i style="width:${p.completeness}%"></i></div>
-      <div class="muted tiny mt">${p.completeness}% complete — reused instantly, no re-typing.</div>
-    </div>
-    <div class="bb mt2" style="font-size:14px">You'll share with this landlord</div>
-    <div class="list">
-      ${shareRow('Identity & contact',true)}
-      ${shareRow('Income & employment',true)}
-      ${shareRow('Rental history & references',true)}
-      ${shareRow('Documents ('+p.docs.length+' verified)',true)}
-    </div>
-    <label class="row" style="gap:10px;align-items:flex-start;margin-top:6px;cursor:pointer">
-      <input type="checkbox" id="consent" style="margin-top:3px">
-      <span class="small muted">I consent to share my Rental Passport and documents with this landlord for this application, and I've reviewed the <a onclick="event.preventDefault()">privacy & document-sharing terms</a>.</span></label>
-    <button class="btn primary block mt2" id="applyBtn" onclick="submitApply('${listingId}')">Submit application</button>
-    <div class="banner legal mt"><span class="i">§</span><span>You control your data. You can revoke document access anytime from Applications. Tenure never makes tenant-selection decisions.</span></div>
-  `);
-}
-function shareRow(t,on){return `<div class="li"><div class="check ${on?'on':''}">${on?'✓':''}</div><div class="b small">${t}</div></div>`;}
-function submitApply(listingId){
-  if(!el('consent').checked){toast('Please provide sharing consent to continue');return;}
-  const id='ap'+(DB.applications.length+1+Math.floor(Math.random()*90));
-  const now='Jul 4, 2026';
-  DB.applications.unshift({id,listing:listingId,tenant:state.tenantId,status:'submitted',submitted:now,
-    audit:[[now+' · now','Application submitted with Rental Passport'],[now+' · now','Documents shared: ID, income, employment, references']]});
-  const l=listing(listingId);l.apps++;l.leads++;
-  closeModal();go('apps');toast('Application submitted ✓');
-}
-
-/* ---------- Tenant applications ---------- */
-function tenantApps(){
-  const apps=DB.applications.filter(a=>a.tenant===state.tenantId);
-  return `
-  <div class="page-h"><h1>My applications</h1><p>Track status and control document access in one place.</p></div>
-  ${apps.length?apps.map(a=>{const l=listing(a.listing);return `
-    <div class="card p mb">
-      <div class="row"><img src="${listingImg(l)}" class="avatar" style="width:56px;height:56px">
-        <div style="flex:1"><div class="b">${l.title}</div><div class="muted small">${money(l.rent)}/mo · applied ${a.submitted}</div></div>
-        ${statusPill(a.status)}</div>
-      <div class="seg mt"><button onclick="go('thread',{id:openThreadFor('${l.id}')})">Message</button>
-        <button onclick="viewAudit('${a.id}')">Activity</button>
-        <button onclick="revokeDocs('${a.id}')">Manage sharing</button></div>
-    </div>`;}).join(''):'<div class="card p muted center">No applications yet. Browse listings to apply in one click.</div>'}
-  <div class="banner info mt"><span class="i">✓</span><span>Landlords review applicants against their own published criteria. Completeness & verification are shown — never a discriminatory ranking.</span></div>
-  `;
-}
-function viewAudit(appId){
-  const a=DB.applications.find(x=>x.id===appId);
-  modal(`<h3>Application activity</h3><p class="muted small" style="margin:0 0 14px">Full audit trail — visible to you and the landlord.</p>
-    <div class="timeline">${a.audit.map(([t,d])=>`<div class="ev"><div class="tiny muted">${t}</div><div class="small b">${d}</div></div>`).join('')}</div>`);
-}
-function revokeDocs(appId){
-  modal(`<h3>Document sharing</h3><p class="muted small" style="margin:0 0 12px">Control what this landlord can see for this application.</p>
-    <div class="list">${me().passport.docs.map(d=>`<div class="li"><div style="flex:1"><div class="b small">${d.name}</div><div class="tiny muted">${d.status}</div></div>
-      <div class="seg" style="width:150px"><button class="on">Shared</button><button onclick="toast('Access revoked for '+'${d.name}')">Revoke</button></div></div>`).join('')}</div>
-    <button class="btn block mt2" onclick="closeModal()">Done</button>`);
-}
-
-/* ---------- Rental Passport ---------- */
-function rentalPassport(){
-  const u=me();const p=u.passport;
-  const items=[['id','Government ID','Uploaded & verified'],['income','Income & pay stubs','2 months verified'],
-    ['employment','Employment','Verified with employer'],['history','Rental history','1 residence verified'],
-    ['references','References','1 reference'],['pets','Pets','1 pet on file']];
-  return `
-  <div class="page-h"><p class="eyebrow">Reusable profile</p><h1>Rental Passport</h1>
-    <p>Fill it once. Apply anywhere. ${verifyPill(p.verified)}</p></div>
-
-  <div class="card p mb"><div class="row between"><div class="b">Profile completeness</div><div class="bb">${p.completeness}%</div></div>
-    <div class="bar mt"><i style="width:${p.completeness}%"></i></div>
-    <div class="muted small mt">A complete, verified Passport helps landlords review you faster — and lets you apply in one click.</div></div>
-
-  <button class="btn primary block mb" onclick="sharePassport()" style="display:flex;align-items:center;justify-content:center;gap:8px">${svg('search')?'':''}↗ Share Passport — apply anywhere</button>
-
-  <div class="grid g2 keep">
-    ${statCard(money(p.incomeMonthly),'Monthly income','','')}
-    ${statCard(p.creditBand,'Credit band','','')}
-  </div>
-
-  <div class="card mt2"><div class="p"><div class="bb">Your information</div></div>
-    <div style="padding:0 16px">${items.map(([k,t,s])=>`<div class="kv">
-      <span class="row" style="gap:10px"><span class="check ${p[k]?'on':''}">${p[k]?'✓':''}</span><span><span class="b">${t}</span><br><span class="tiny muted">${s}</span></span></span>
-      <button class="btn sm" onclick="editPassportItem('${k}')">Edit</button></div>`).join('')}</div></div>
-
-  <div class="card p mt2"><div class="row between mb"><div class="bb">Employment & income</div><button class="btn sm" onclick="editPassportItem('employment')">Edit</button></div>
-    <div class="kv"><span class="k">Employer</span><span class="b">${p.employer}</span></div>
-    <div class="kv"><span class="k">Title</span><span class="b">${p.jobTitle}</span></div>
-    <div class="kv"><span class="k">Tenure</span><span class="b">${p.employmentYears} yrs</span></div>
-    <div class="kv"><span class="k">Household size</span><span class="b">${p.householdSize}</span></div>
-    <div class="kv"><span class="k">Desired move-in</span><span class="b">${p.moveIn}</span></div>
-  </div>
-
-  <div class="card p mt2"><div class="bb mb">Verified documents</div>
-    ${p.docs.map(d=>`<div class="kv"><span class="row" style="gap:8px">${svg('doc')} <span class="b">${d.name}</span></span><span class="pill green"><span class="dotb"></span>${d.status}</span></div>`).join('')}
-    <input type="file" id="docup" style="display:none" onchange="onDocUpload(this)"><button class="btn block mt" onclick="el('docup').click()">+ Upload document</button>
-  </div>
-
-  ${p.petList.length?`<div class="card p mt2"><div class="bb mb">Pets</div>${p.petList.map(pet=>`<div class="kv"><span class="k">${pet.type} · ${pet.breed}</span><span class="b">${pet.weight}</span></div>`).join('')}</div>`:''}
-
-  <div class="card p mt2"><div class="bb mb">Rental history</div>${p.rentalHistory.map(h=>`
-    <div class="li"><div class="avatar" style="background:var(--green-soft);color:var(--green)">${svg('home')}</div>
-    <div style="flex:1"><div class="b small">${h.addr}</div><div class="tiny muted">${h.years} · ${money(h.rent)}/mo</div></div>
-    <span class="pill green tiny">${h.landlord}</span></div>`).join('')}</div>
-
-  <div class="banner legal mt2"><span class="i">§</span><span>You own your Passport. Data is shared only with landlords you choose, only when you apply, and can be revoked anytime. Tenure does not sell personal data.</span></div>
-  `;
-}
-
-/* ---------- Homebuyer readiness ---------- */
-function homebuyerDash(){
-  const u=me();const h=u.homebuyer;hbInit(h);
-  const sc=readinessScore(u);
-  const pct=Math.round(h.savedForDown/h.downTarget*100);
-  const monthsToGoal=h.autoSave>0?Math.ceil(Math.max(0,h.downTarget-h.savedForDown)/h.autoSave):null;
-  return `
-  <div class="page-h"><p class="eyebrow">From renting to owning</p><h1>Homebuyer readiness</h1>
-    <p>The only rental platform that carries you all the way to owning.</p></div>
-
-  <div class="card p" style="background:linear-gradient(155deg,rgba(61,224,160,.16),transparent 60%),#0C1424;color:var(--ink);border:1px solid rgba(61,224,160,.4)">
-    <div class="row between"><div><div class="tiny bb" style="opacity:.85;letter-spacing:.05em">READINESS SCORE</div>
-      <div style="font-size:34px;font-weight:800;line-height:1">${sc}<span style="font-size:18px;opacity:.8">/100</span></div>
-      <div class="small" style="opacity:.9">${sc>=80?'Mortgage-ready — get pre-approved':sc>=65?'On track — a few steps to go':'Building — keep going'}</div></div>
-      <div class="ring" style="--v:${sc};background:conic-gradient(var(--green) calc(${sc}*1%),rgba(255,255,255,.12) 0)">
-        <span style="background:#0C1424;color:var(--green);font-family:var(--display)">${sc}</span></div></div>
-  </div>
-
-  <div class="card p mt2" style="border:1px solid ${h.rentReporting?'rgba(61,224,160,.5)':'var(--line)'}">
-    <div class="row between">
-      <div style="flex:1"><div class="row" style="gap:8px"><span class="bb">Rent reporting</span>${h.rentReporting?'<span class="pill green tiny"><span class="dotb"></span>Active</span>':'<span class="pill amber tiny">Off</span>'}</div>
-        <div class="muted small mt" style="max-width:36ch">Report your on-time rent to all three credit bureaus. Build the credit and history that get you approved to buy — from payments you already make.</div></div>
-      <button class="btn ${h.rentReporting?'':'primary'} sm" onclick="toggleRentReporting()">${h.rentReporting?'Turn off':'Turn on'}</button>
-    </div>
-    ${h.rentReporting?`<div class="grid g3 keep mt" style="gap:8px">
-      <div><div class="tiny muted">Months reported</div><div class="b">${h.reportedMonths}</div></div>
-      <div><div class="tiny muted">On-time rate</div><div class="b" style="color:var(--green)">100%</div></div>
-      <div><div class="tiny muted">Est. credit lift</div><div class="b" style="color:var(--green)">+18 pts</div></div>
-    </div>`:''}
-  </div>
-
-  <div class="card p mt2"><div class="row between"><div class="b">Down-payment vault</div><div class="bb">${money(h.savedForDown)} / ${money(h.downTarget)}</div></div>
-    <div class="bar mt"><i style="width:${pct}%;background:linear-gradient(90deg,var(--green),var(--a1))"></i></div>
-    <div class="muted small mt">${pct}% of target.${h.autoSave>0?` Auto-saving ${money(h.autoSave)}/mo → on track in ~${monthsToGoal} mo.`:` Save ${money(Math.max(0,h.downTarget-h.savedForDown))} more to reach your 20% goal.`}</div>
-    <div class="row mt" style="gap:8px">
-      <button class="btn block sm" onclick="vaultSheet()">${h.autoSave>0?'Adjust auto-save':'Set up auto-save'}</button>
-      <button class="btn block sm" onclick="addDeposit(500)">+ Add $500</button>
-    </div>
-  </div>
-
-  <div class="grid g3 keep mt2">
-    ${statCard(h.creditBand,'Credit band','','')}
-    ${statCard(h.dti+'%','Debt-to-income',h.dti<36?'Healthy':'Watch',h.dti<36?'up':'down')}
-    ${statCard(h.preapproved?'Yes':'Not yet','Pre-approved','','')}
-  </div>
-
-  ${h.preapproved&&h.preapproval?`
-  <div class="card p mt2" style="background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;border:1px solid rgba(var(--a1-rgb),.4)">
-    <div class="row between"><div class="bb">Pre-approved</div><span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">Anchor Mortgage</span></div>
-    <div class="grid g3 keep mt" style="gap:8px">
-      <div><div class="tiny muted">Buying power</div><div class="bb" style="color:var(--a1)">${money(h.preapproval.amount)}</div></div>
-      <div><div class="tiny muted">Est. rate</div><div class="b">${h.preapproval.rate}%</div></div>
-      <div><div class="tiny muted">Est. payment</div><div class="b">${money(h.preapproval.monthly)}/mo</div></div>
-    </div>
-    <button class="btn block mt2" onclick="go('search')">Browse homes in your range →</button>
-  </div>`:`
-  <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid rgba(var(--a1-rgb),.4)" onclick="preapproveSheet()">
-    <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1)">${svg('key')}</div>
-    <div style="flex:1"><div class="b">Get pre-approved</div><div class="muted small">Anchor Mortgage · uses your verified Passport · results in minutes</div></div>
-    <span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">Start</span></button>`}
-
-  <div class="card mt2"><div class="p bb">Your path to ownership</div>
-    <div style="padding:0 16px 8px">
-      ${stepRow('Build a verified rental history',true,'Your on-time payments strengthen your file')}
-      ${stepRow('Report rent to bureaus',h.rentReporting,h.rentReporting?h.reportedMonths+' months reported':'Turn on rent reporting above')}
-      ${stepRow('Reach 720+ credit',h.creditBand==='760+'||h.creditBand==='720–759','Currently '+h.creditBand)}
-      ${stepRow('Save 10–20% down payment',pct>=50,money(h.savedForDown)+' saved')}
-      ${stepRow('Get pre-approved',h.preapproved,h.preapproved?'Completed':'Connect with a lender partner')}
-    </div>
-  </div>
-
-  <div class="banner legal mt2"><span class="i">§</span><span>Educational readiness estimate only — not a credit decision, loan offer, or financial advice. Rent reporting and lending are provided by independent licensed partners.</span></div>
-  `;
-}
-function hbInit(h){if(h.rentReporting===undefined)h.rentReporting=false;if(h.reportedMonths===undefined)h.reportedMonths=0;if(h.autoSave===undefined)h.autoSave=0;if(h.preapproval===undefined)h.preapproval=null;}
-function readinessScore(u){const h=u.homebuyer;let s=40;if(u.passport.verified)s+=8;if(h.rentReporting)s+=12;const cb=h.creditBand;s+=(cb==='760+'?18:cb==='720–759'?14:cb==='700–719'?10:5);s+=(h.dti<30?8:h.dti<36?5:2);s+=Math.round(Math.min(h.savedForDown/h.downTarget,1)*12);if(h.preapproved)s+=6;return Math.min(100,s);}
-function toggleRentReporting(){const h=me().homebuyer;hbInit(h);h.rentReporting=!h.rentReporting;if(h.rentReporting){h.reportedMonths=Math.max(h.reportedMonths,12);toast('Rent reporting on — 12 months backfilled');}else{toast('Rent reporting turned off');}render();}
-function vaultSheet(){const h=me().homebuyer;hbInit(h);
-  modal(`<h3>Auto-save to your vault</h3><p class="muted small" style="margin:-2px 0 0">Move money to your down-payment vault automatically each month. Adjust or pause anytime.</p>
-   <div class="row wrap mt2" style="gap:0">${[0,200,400,600].map(a=>`<span class="chip ${h.autoSave===a?'on':''}" onclick="setAutoSave(${a})">${a?money(a)+'/mo':'Off'}</span>`).join('')}</div>
-   <div class="banner legal mt2"><span class="i">§</span><span>Demo only — no funds move. Vaults would be held by an independent partner bank.</span></div>`);}
-function setAutoSave(a){const h=me().homebuyer;h.autoSave=a;closeModal();toast(a?('Auto-saving '+money(a)+'/mo'):'Auto-save off');render();}
-function addDeposit(a){const h=me().homebuyer;h.savedForDown=Math.min(h.downTarget,h.savedForDown+a);toast('Added '+money(a)+' to your vault');render();}
-function preapproveSheet(){const u=me();const h=u.homebuyer;const inc=u.passport.incomeMonthly;const maxPay=Math.round(inc*0.28);const loan=Math.round(maxPay/0.00653/1000)*1000;const price=Math.round((loan+h.savedForDown)/1000)*1000;
-  modal(`<h3>Get pre-approved</h3><p class="muted small" style="margin:-2px 0 0">Anchor Mortgage reads your verified Passport — income, employment and history are already confirmed. Soft check, no score impact.</p>
-   <div class="card p mt2" style="background:rgba(var(--a1-rgb),.06)"><div class="tiny muted">Estimated buying power</div><div style="font-family:var(--display);font-size:30px;font-weight:700;color:var(--a1)">${money(price)}</div>
-     <div class="grid g2 keep mt" style="gap:8px"><div><div class="tiny muted">Est. rate</div><div class="b">6.8%</div></div><div><div class="tiny muted">Est. payment</div><div class="b">${money(maxPay)}/mo</div></div></div></div>
-   <button class="btn primary block mt2" onclick="doPreapprove(${price},${maxPay})">Request pre-approval</button>
-   <div class="banner legal mt2"><span class="i">§</span><span>Estimate only — not a commitment to lend. Anchor Mortgage is an independent licensed partner (demo).</span></div>`);}
-function doPreapprove(amount,monthly){const h=me().homebuyer;h.preapproved=true;h.preapproval={amount:amount,rate:6.8,monthly:monthly};closeModal();toast('Pre-approved for '+money(amount)+' (demo)');render();}
-function stepRow(t,done,sub){return `<div class="li"><div class="check ${done?'on':''}">${done?'✓':''}</div>
-  <div style="flex:1"><div class="b small">${t}</div><div class="tiny muted">${sub}</div></div>${done?'<span class="pill green tiny">Done</span>':'<span class="pill amber tiny">To do</span>'}</div>`;}
-
-/* ---------- Alerts ---------- */
-function alertsView(){
-  return `<div class="page-h"><h1>Alerts & matches</h1><p>Instant notifications when a home fits your saved searches.</p></div>
-  <div class="row between mb"><div class="bb">Recent</div><a class="small b" onclick="markAlertsRead()">Mark all read</a></div>
-  <div class="card">${DB.alerts.map(a=>`<div class="li" style="padding:14px 16px">
-    <div class="avatar" style="background:${a.unread?'var(--brand-soft)':'var(--surface-2)'};color:${a.unread?'var(--brand-ink)':'var(--muted)'}">${svg('bell')}</div>
-    <div style="flex:1"><div class="b small">${a.t}</div><div class="tiny muted">${a.sub} · ${a.at}</div></div>
-    ${a.unread?'<span class="dotb" style="color:var(--brand);width:9px;height:9px"></span>':''}</div>`).join('')}</div>
-  <div class="row between mt2 mb"><div class="bb">Saved searches</div></div>
-  <div class="card">${DB.savedSearches.map(s=>`<div class="li" style="padding:13px 16px">
-    <div style="flex:1"><div class="b small">${s.name}</div><div class="tiny muted">${s.filters}</div></div>
-    <div class="seg" style="width:150px"><button class="on">Alerts on</button><button onclick="toast('Alerts paused')">Pause</button></div></div>`).join('')}</div>
-  <button class="btn block mt2" onclick="go('search')">+ Create new saved search</button>`;
-}
-function markAlertsRead(){DB.alerts.forEach(a=>a.unread=false);go('alerts');toast('All caught up');}
-
-/* ---------- Tenant account ---------- */
-function tenantAccount(){
-  const u=me();
-  return `<div class="page-h"><h1>Account</h1></div>
-  <div class="card p"><div class="row"><div class="avatar" style="width:56px;height:56px;font-size:18px">${u.initials}</div>
-    <div style="flex:1"><div class="bb">${u.name}</div><div class="muted small">${u.email}</div></div>
-    ${u.premium?'<span class="pill purple">★ Premium</span>':'<span class="pill">Free</span>'}</div></div>
-  <div class="card mt2"><div class="list" style="padding:0 16px">
-    ${acctRow('Rental Passport','passport')}${acctRow('Homebuyer readiness','homebuyer')}
-    ${acctRow('Membership & billing','membership')}${acctRow('Alerts & saved searches','alerts')}</div></div>
-  <button class="btn block mt2" onclick="logout()">Sign out</button>`;
-}
-function acctRow(t,view){return `<button class="li" style="width:100%;background:none;text-align:left" onclick="go('${view}')"><div style="flex:1" class="b small">${t}</div><span class="muted">›</span></button>`;}
-
-/* =======================================================================
-   SHARED — MESSAGING
-   ======================================================================= */
-function threadsFor(uid){return DB.threads.filter(t=>t.parties.includes(uid));}
-function otherParty(th,uid){const o=th.parties.find(p=>p!==uid);return nameFor(o);}
-function nameFor(id){
-  if(id==='l1')return DB.landlord.name; if(id==='a1')return DB.agent.name;
-  const t=tenant(id); if(t)return t.name; const v=DB.vendors.find(v=>v.id===id); if(v)return v.name; return id;}
-function initialsFor(id){return nameFor(id).split(' ').map(w=>w[0]).slice(0,2).join('');}
-function myId(){return state.role==='tenant'?state.tenantId:state.role==='landlord'?'l1':state.role==='agent'?'a1':'v9';}
-
-function messagesList(){
-  const uid=myId();const ths=threadsFor(uid);
-  return `<div class="page-h"><h1>Messages</h1><p>All conversations, organized by property & application.</p></div>
-  ${ths.length?`<div class="card">${ths.map(th=>{const last=th.msgs[th.msgs.length-1];const l=listing(th.listing);
-    return `<button class="li" style="width:100%;text-align:left;background:none;padding:14px 16px" onclick="go('thread',{id:'${th.id}'})">
-      <div class="avatar round">${initialsFor(th.parties.find(p=>p!==uid))}</div>
-      <div style="flex:1;min-width:0"><div class="row between"><div class="b">${otherParty(th,uid)}</div><div class="tiny muted">${last.at.split('·')[0]}</div></div>
-      <div class="tiny muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l?l.title+' · ':''}${last.t}</div></div></button>`;}).join('')}</div>`
-    :'<div class="card p muted center">No messages yet.</div>'}`;
-}
-function threadView(){
-  const th=DB.threads.find(t=>t.id===state.params.id);if(!th)return '<div class="card p">Conversation not found.</div>';
-  const uid=myId();const l=listing(th.listing);
-  return `<button class="btn ghost sm" onclick="go('messages')">← Messages</button>
-  <div class="card p mt" style="display:flex;gap:12px;align-items:center">
-    <div class="avatar round">${initialsFor(th.parties.find(p=>p!==uid))}</div>
-    <div style="flex:1"><div class="bb">${otherParty(th,uid)}</div>${l?`<div class="muted tiny">${l.title}</div>`:''}</div>
-    ${l?`<button class="btn sm" onclick="go('listing',{id:'${l.id}'})">Listing</button>`:''}</div>
-  <div style="display:flex;flex-direction:column;gap:8px;margin:14px 0">
-    ${th.msgs.map(m=>{const mine=m.from===uid;return `<div style="align-self:${mine?'flex-end':'flex-start'};max-width:80%">
-      <div class="card" style="padding:10px 13px;border-radius:16px;${mine?'background:var(--brand);color:#fff;border:none':''}">${esc(m.t)}</div>
-      <div class="tiny muted" style="text-align:${mine?'right':'left'};margin-top:3px">${m.at}</div></div>`;}).join('')}</div>
-  <div class="card p" style="position:sticky;bottom:96px;display:flex;gap:8px;align-items:center">
-    <input class="input" id="msgInput" placeholder="Write a message…" onkeydown="if(event.key==='Enter')sendMsg('${th.id}')">
-    <button class="btn primary sm" onclick="sendMsg('${th.id}')">Send</button></div>
-  <div class="banner legal mt"><span class="i">§</span><span>Messages are stored per property/application for a clear audit trail. Keep communication objective and Fair-Housing compliant.</span></div>`;
-}
-function sendMsg(thId){const inp=el('msgInput');const v=inp.value.trim();if(!v)return;
-  const th=DB.threads.find(t=>t.id===thId);th.msgs.push({from:myId(),t:v,at:'Jul 4 · now'});go('thread',{id:thId});
-  setTimeout(()=>{const i=el('msgInput');if(i)i.focus();},30);}
-function openThreadFor(listingId){
-  const uid=myId();let th=DB.threads.find(t=>t.listing===listingId&&t.parties.includes(uid));
-  if(!th){th={id:'th'+(DB.threads.length+1),parties:[uid,'l1'],listing:listingId,subject:listing(listingId).title,msgs:[]};DB.threads.push(th);}
-  return th.id;
-}
-function startThread(listingId){go('thread',{id:openThreadFor(listingId)});}
-
-/* =======================================================================
-   MEMBERSHIP / PAYMENTS (shared)
-   ======================================================================= */
-function membershipView(planRole){
-  const plans=DB.plans[planRole];
-  const currentPlanName = planRole==='tenant'?(me().premium?'Premium':'Free')
-    : planRole==='landlord'?DB.landlord.plan : DB.vendorUser.plan;
-  return `<div class="page-h"><p class="eyebrow">Recurring membership</p><h1>${planRole==='tenant'?'Tenant plans':planRole==='landlord'?'Landlord plans':'Vendor & advertiser plans'}</h1>
-    <p>Cancel anytime. Tenure's revenue comes from memberships & placements — not commissions.</p></div>
-  <div class="grid ${plans.length>2?'g3':'g2'} keep">
-    ${plans.map(pl=>{const cur=pl.name===currentPlanName;return `
-      <div class="card p" style="${pl.tag==='Most popular'||pl.tag==='Recommended'?'border:2px solid var(--brand)':''}">
-        ${pl.tag?`<span class="pill ${pl.tag==='Most popular'||pl.tag==='Recommended'?'brand':''}" style="margin-bottom:8px">${pl.tag}</span>`:''}
-        <div class="bb" style="font-size:16px">${pl.name}</div>
-        <div style="margin:4px 0 10px"><span style="font-size:28px;font-weight:800;letter-spacing:-.03em">${pl.price?money(pl.price):(pl.name==='Enterprise'?'Custom':'$0')}</span>${pl.price?'<span class="muted small">/mo</span>':''}</div>
-        <div class="list" style="margin-bottom:12px">${pl.feats.map(f=>`<div class="row" style="gap:8px;padding:5px 0;border:none"><span class="check on" style="width:17px;height:17px">✓</span><span class="small">${f}</span></div>`).join('')}</div>
-        ${cur?'<button class="btn block" disabled>Current plan</button>'
-          :`<button class="btn ${pl.tag==='Most popular'||pl.tag==='Recommended'?'primary':''} block" onclick="openCheckout('${planRole}','${pl.name}',${pl.price})">${pl.price?'Choose '+pl.name:(pl.name==='Enterprise'?'Contact sales':'Downgrade')}</button>`}
-      </div>`;}).join('')}
-  </div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Prototype checkout — no real payment is processed. Production uses Stripe for PCI-compliant billing, invoices, and subscription management.</span></div>`;
-}
-function openCheckout(planRole,planName,price){
-  if(price===0){applyPlan(planRole,planName);return;}
-  modal(`<h3>Checkout</h3><p class="muted small" style="margin:0 0 12px">${planName} · ${money(price)}/mo</p>
-    <div class="row between card p" style="background:var(--surface-2);border:none;margin-bottom:12px">
-      <div><div class="b">${planName} membership</div><div class="tiny muted">Billed monthly · cancel anytime</div></div><div class="bb">${money(price)}/mo</div></div>
-    <div class="field"><label>Card number</label><input class="input" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242"></div>
-    <div class="row" style="gap:10px"><div class="field" style="flex:1"><label>Expiry</label><input class="input" placeholder="12 / 28" value="12 / 28"></div>
-      <div class="field" style="flex:1"><label>CVC</label><input class="input" placeholder="123" value="123"></div></div>
-    <div class="row" style="gap:8px;align-items:center;margin:2px 0 10px"><span class="pill">🔒 Powered by Stripe</span><span class="tiny muted">Test mode</span></div>
-    <button class="btn primary block" onclick="applyPlan('${planRole}','${planName}')">Pay ${money(price)} & subscribe</button>`);
-}
-function applyPlan(planRole,planName){
-  if(planRole==='tenant')me().premium=(planName==='Premium');
-  if(planRole==='landlord')DB.landlord.plan=planName;
-  if(planRole==='vendor')DB.vendorUser.plan=planName;
-  closeModal();go('membership',{role:planRole});toast(planName+' plan active ✓');
-}
-
-/* =======================================================================
-   LANDLORD PORTAL
-   ======================================================================= */
-function landlordHome(){
-  const ll=DB.landlord;const mine=DB.listings.filter(l=>l.landlord==='l1');
-  const totV=mine.reduce((s,l)=>s+l.views,0),totL=mine.reduce((s,l)=>s+l.leads,0),totA=mine.reduce((s,l)=>s+l.apps,0);
-  const pending=DB.applications.filter(a=>a.status==='submitted').length;
-  return `
-  <div class="page-h"><p class="eyebrow">${ll.company}</p><h1>Welcome, ${ll.name.split(' ')[0]}</h1>
-    <p>Find qualified renters faster — with verified Passports and lower fees.</p></div>
-
-  <button class="card p mb" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;background:linear-gradient(155deg,rgba(var(--a1-rgb),.16),rgba(var(--a2-rgb),.08) 60%,transparent),#0C1424;border:1px solid rgba(var(--a1-rgb),.4);box-shadow:0 0 40px -20px rgba(var(--a1-rgb),.6)" onclick="go('findrenters')">
-    <div class="avatar" style="background:rgba(var(--a1-rgb),.2);color:var(--a1)">${svg('user')}</div>
-    <div style="flex:1"><div class="b">Find verified renters</div><div class="muted small">Browse pre-verified Passport holders who match your criteria — and invite them to apply</div></div>
-    <span class="pill" style="background:linear-gradient(135deg,var(--a1),var(--a2));color:#04060C;font-weight:700">New</span></button>
-
-  <div class="grid g4 keep">
-    ${statCard(mine.length,'Active listings','')}
-    ${statCard(totV.toLocaleString(),'Total views','+12% wk','up')}
-    ${statCard(totL,'Leads','+8 new','up')}
-    ${statCard(totA,'Applications',pending?pending+' to review':'','')}
-  </div>
-
-  ${pending?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid var(--brand)" onclick="go('applications')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('doc')}</div>
-    <div style="flex:1"><div class="b">${pending} application${pending>1?'s':''} awaiting review</div><div class="muted small">Verified Rental Passports ready to compare</div></div>
-    <span class="pill brand">Review</span></button>`:''}
-
-  <div class="row between mt2 mb"><div class="bb">Quick actions</div></div>
-  <div class="grid g4 keep">
-    ${quickActionL('editlisting','Add listing','building',true)}
-    ${quickActionL('applications','Applicants','doc')}
-    ${quickActionL('showings','Showings','cal')}
-    ${quickActionL('analytics','Insights','chart')}
-  </div>
-
-  <div class="row between mt2 mb"><div class="bb">Your listings</div><a class="small b" onclick="go('listings')">Manage</a></div>
-  ${mine.slice(0,3).map(landlordListingRow).join('')}
-
-  <button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('marketplace')">
-    <div class="avatar" style="background:var(--amber-soft);color:var(--amber)">${svg('cart')}</div>
-    <div style="flex:1"><div class="b">Vendor marketplace</div><div class="muted small">Book turnover cleans, inspections, HVAC, locksmiths & more</div></div>
-    <span class="pill amber">Browse</span></button>
-
-  <button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
-    <div class="avatar" style="background:var(--green-soft);color:var(--green)">${svg('cart')}</div>
-    <div style="flex:1"><div class="b">You're on the ${ll.plan} plan</div><div class="muted small">Featured credits, agent assignment & analytics included</div></div>
-    <span class="pill green">Manage</span></button>
-  `;
-}
-function quickActionL(view,label,ic,add){return `<button class="card p center" style="width:100%" onclick="${add?"go('editlisting',{id:null})":`go('${view}')`}">
-  <div class="avatar" style="margin:0 auto 6px;background:var(--green-soft);color:var(--green)">${svg(ic)}</div>
-  <div class="small b">${label}</div></button>`;}
-
-function landlordListingRow(l){
-  return `<button class="card p mb" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('listing',{id:'${l.id}'})">
-    <img src="${listingImg(l)}" class="avatar" style="width:56px;height:56px">
-    <div style="flex:1;min-width:0"><div class="row" style="gap:6px"><span class="b">${l.title}</span>${l.featured?'<span class="pill amber tiny">★</span>':''}</div>
-      <div class="muted tiny">${money(l.rent)}/mo · ${l.views} views · ${l.leads} leads · ${l.apps} apps</div></div>
-    <span class="pill ${l.status==='Active'?'green':''}"><span class="dotb"></span>${l.status}</span></button>`;
-}
-function landlordListings(){
-  const mine=DB.listings.filter(l=>l.landlord==='l1');
-  return `<div class="page-h"><h1>My listings</h1><p>${mine.length} properties · ${mine.filter(l=>l.featured).length} featured</p></div>
-  <button class="btn primary block mb" onclick="go('editlisting',{id:null})">+ Add new listing</button>
-  ${mine.map(landlordListingRow).join('')}`;
-}
-function landlordEditListing(){
-  const l=state.params.id?listing(state.params.id):null;const nw=!l;
-  return `<button class="btn ghost sm" onclick="go('listings')">← Back</button>
-  <div class="page-h" style="margin-top:8px"><h1>${nw?'Add listing':'Edit listing'}</h1></div>
-  <div class="card p">
-    <div class="field"><label>Listing title</label><input class="input" id="f_title" value="${esc(l?l.title:'')}" placeholder="Sunlit 2BR in Hyde Park"></div>
-    <div class="field"><label>Address</label><input class="input" id="f_addr" value="${esc(l?l.addr:'')}" placeholder="Street, City, State ZIP"></div>
-    <div class="row" style="gap:10px">
-      <div class="field" style="flex:1"><label>Rent /mo</label><input class="input" id="f_rent" type="number" value="${l?l.rent:''}" placeholder="2450"></div>
-      <div class="field" style="flex:1"><label>Deposit</label><input class="input" id="f_dep" type="number" value="${l?l.deposit:''}" placeholder="2450"></div>
-    </div>
-    <div class="row" style="gap:10px">
-      <div class="field" style="flex:1"><label>Beds</label><input class="input" id="f_beds" type="number" value="${l?l.beds:''}" placeholder="2"></div>
-      <div class="field" style="flex:1"><label>Baths</label><input class="input" id="f_baths" type="number" value="${l?l.baths:''}" placeholder="2"></div>
-      <div class="field" style="flex:1"><label>Sqft</label><input class="input" id="f_sqft" type="number" value="${l?l.sqft:''}" placeholder="1120"></div>
-    </div>
-    <div class="field"><label>Pet policy</label><input class="input" id="f_pets" value="${esc(l?l.pets:'')}" placeholder="Cats & dogs OK (≤50 lb)"></div>
-    <div class="field"><label>Available date</label><input class="input" id="f_avail" value="${esc(l?l.avail:'')}" placeholder="Aug 1, 2026"></div>
-    <div class="field"><label>Description</label><textarea class="input" id="f_desc" placeholder="Describe the home…">${esc(l?l.desc:'')}</textarea></div>
-  </div>
-
-  <div class="card p mt2">
-    <div class="bb mb">Objective screening criteria</div>
-    <div class="banner info" style="margin-bottom:12px"><span class="i">✓</span><span>Set neutral, measurable standards applied equally to every applicant. This protects you under Fair Housing law.</span></div>
-    <div class="field"><label>Minimum income (× rent)</label><input class="input" id="f_income" type="number" step="0.5" value="${l?l.criteria.income:'3'}"></div>
-    <div class="field"><label>Minimum credit score</label><input class="input" id="f_credit" type="number" value="${l?l.criteria.credit:'640'}"></div>
-    <div class="field"><label>Rental history requirement</label><input class="input" id="f_hist" value="${esc(l?l.criteria.history:'12+ mo verified')}"></div>
-    <div class="field" style="margin:0"><label>Eviction policy</label><input class="input" id="f_evict" value="${esc(l?l.criteria.evictions:'None in 5 yrs')}"></div>
-  </div>
-
-  <label class="row card p mt2" style="gap:10px;align-items:flex-start;cursor:pointer">
-    <input type="checkbox" id="f_feat" ${l&&l.featured?'checked':''} style="margin-top:3px">
-    <span><span class="b small">Promote as Featured listing</span><br><span class="tiny muted">Priority placement in search & homepage — uses 1 featured credit ($25 value)</span></span></label>
-
-  <button class="btn primary block mt2" onclick="saveListing('${l?l.id:''}')">${nw?'Publish listing':'Save changes'}</button>
-  <div class="banner legal mt"><span class="i">§</span><span>Advertising must comply with Fair Housing — avoid language expressing preference or limitation based on protected class. Tenure scans listings for risky terms in production.</span></div>`;
-}
-function saveListing(id){
-  const g=k=>el('f_'+k)?el('f_'+k).value:'';
-  const title=g('title').trim();if(!title){toast('Add a listing title');return;}
-  const data={title,addr:g('addr'),rent:+g('rent')||0,deposit:+g('dep')||0,beds:+g('beds')||0,baths:+g('baths')||1,sqft:+g('sqft')||0,
-    pets:g('pets')||'Contact for policy',avail:g('avail')||'Now',desc:g('desc')||'',featured:el('f_feat').checked,
-    criteria:{income:+g('income')||3,credit:+g('credit')||640,history:g('hist')||'12+ mo verified',evictions:g('evict')||'None in 5 yrs'}};
-  if(id){Object.assign(listing(id),data);}
-  else{DB.listings.push({id:'p'+(DB.listings.length+1+Math.floor(Math.random()*50)),status:'Active',landlord:'l1',
-    type:data.beds===0?'Studio':'Apartment',views:0,leads:0,apps:0,color:'#dbeafe',amenities:['In-unit laundry','Central A/C'],...data});}
-  go('listings');toast(id?'Listing updated ✓':'Listing published ✓');
-}
-
-/* ---------- Applications (landlord) ---------- */
-function landlordApplications(){
-  const apps=DB.applications.filter(a=>listing(a.listing)&&listing(a.listing).landlord==='l1');
-  return `<div class="page-h"><h1>Applicants</h1><p>Compare verified Rental Passports against your published criteria.</p></div>
-  <div class="banner info mb"><span class="i">✓</span><span>Tenure shows completeness & criteria-match — it never ranks or selects applicants for you. The decision is always yours.</span></div>
-  ${apps.length?apps.map(a=>{const t=tenant(a.tenant);const l=listing(a.listing);const m=criteriaMatch(t,l);
-    return `<button class="card p mb" style="width:100%;text-align:left" onclick="go('appdetail',{id:'${a.id}'})">
-      <div class="row"><div class="avatar round">${t.initials}</div>
-        <div style="flex:1"><div class="row" style="gap:6px"><span class="b">${t.name}</span>${verifyPill(t.passport.verified)}</div>
-          <div class="muted small">${l.title}</div></div>${statusPill(a.status)}</div>
-      <div class="row wrap mt" style="gap:6px">
-        <span class="pill tiny">Passport ${t.passport.completeness}%</span>
-        <span class="pill ${m.income?'green':'red'} tiny">Income ${m.income?'meets':'below'}</span>
-        <span class="pill ${m.credit?'green':'amber'} tiny">Credit ${t.passport.creditBand}</span>
-        <span class="pill tiny">Applied ${a.submitted}</span></div>
-      <div class="muted tiny mt">${m.metCount}/4 objective criteria met · tap to review</div>
-    </button>`;}).join(''):'<div class="card p muted center">No applications yet.</div>'}`;
-}
-function criteriaMatch(t,l){
-  const p=t.passport;const income=p.incomeMonthly>=l.rent*l.criteria.income;
-  const credMin=l.criteria.credit;const band=p.creditBand;const credNum=band==='760+'?770:band==='720–759'?740:band.includes('680')?690:650;
-  const credit=credNum>=credMin;const history=p.history;const evict=true;
-  const metCount=[income,credit,history,evict].filter(Boolean).length;
-  return {income,credit,history,evict,metCount};
-}
-function landlordAppDetail(){
-  const a=DB.applications.find(x=>x.id===state.params.id);if(!a)return '<div class="card p">Not found.</div>';
-  const t=tenant(a.tenant);const p=t.passport;const l=listing(a.listing);const m=criteriaMatch(t,l);
-  return `<button class="btn ghost sm" onclick="go('applications')">← Applicants</button>
-  <div class="card p mt"><div class="row"><div class="avatar round" style="width:52px;height:52px">${t.initials}</div>
-    <div style="flex:1"><div class="row" style="gap:6px"><span class="bb" style="font-size:17px">${t.name}</span>${verifyPill(p.verified)}</div>
-      <div class="muted small">Applied to ${l.title} · ${a.submitted}</div></div>${statusPill(a.status)}</div></div>
-
-  <div class="card p mt2"><div class="bb mb">Objective criteria check</div>
-    <div class="banner legal" style="margin-bottom:10px"><span class="i">§</span><span>Match is computed only against your published, neutral criteria. You make the final decision.</span></div>
-    ${matchRow('Income ≥ '+l.criteria.income+'× rent',money(p.incomeMonthly)+'/mo vs '+money(l.rent*l.criteria.income),m.income)}
-    ${matchRow('Credit ≥ '+l.criteria.credit,p.creditBand,m.credit)}
-    ${matchRow('Rental history: '+l.criteria.history,p.rentalHistory.length+' verified residence(s)',m.history)}
-    ${matchRow('Eviction: '+l.criteria.evictions,'None reported',m.evict)}
-    <div class="kv" style="border-top:2px solid var(--line);margin-top:6px"><span class="bb">Criteria met</span><span class="bb">${m.metCount} / 4</span></div>
-  </div>
-
-  <div class="card p mt2"><div class="bb mb">Verified Passport summary</div>
-    <div class="kv"><span class="k">Employer</span><span class="b">${p.employer}</span></div>
-    <div class="kv"><span class="k">Title · tenure</span><span class="b">${p.jobTitle} · ${p.employmentYears}y</span></div>
-    <div class="kv"><span class="k">Household</span><span class="b">${p.householdSize} · ${p.petList.length?p.petList[0].type:'No pets'}</span></div>
-    <div class="kv"><span class="k">Desired move-in</span><span class="b">${p.moveIn}</span></div>
-    <div class="bb mt mb">Shared documents</div>
-    ${p.docs.map(d=>`<div class="kv"><span class="row" style="gap:8px">${svg('doc')}<span class="b">${d.name}</span></span><span class="pill green tiny">${d.status}</span></div>`).join('')}
-  </div>
-
-  <div class="card p mt2"><div class="bb mb">Application activity</div>
-    <div class="timeline">${a.audit.map(([tm,d])=>`<div class="ev"><div class="tiny muted">${tm}</div><div class="small b">${d}</div></div>`).join('')}</div></div>
-
-  <div class="row mt2" style="gap:8px">
-    <button class="btn green block" onclick="setAppStatus('${a.id}','approved')">Approve to lease</button>
-    <button class="btn block" onclick="setAppStatus('${a.id}','reviewed')">Mark reviewed</button>
-    <button class="btn danger block" onclick="setAppStatus('${a.id}','denied')">Decline</button>
-  </div>
-  <button class="btn ghost block mt" onclick="go('thread',{id:openThreadWith('${t.id}','${l.id}')})">Message applicant</button>
-  <div class="banner warn mt"><span class="i">!</span><span>If you decline, provide the objective reason (e.g., "income below 3× rent"). Adverse-action notices may be required when screening data is used.</span></div>`;
-}
-function matchRow(label,detail,ok){return `<div class="kv"><span class="row" style="gap:9px"><span class="check ${ok?'on':''}" style="${ok?'':'background:var(--red);border-color:transparent;color:#fff'}">${ok?'✓':'!'}</span>
-  <span><span class="b small">${label}</span><br><span class="tiny muted">${detail}</span></span></span></div>`;}
-function setAppStatus(id,status){
-  const a=DB.applications.find(x=>x.id===id);a.status=status;
-  a.audit.push(['Jul 4, 2026 · now','Landlord set status: '+status]);
-  if(status==='approved'){a.status='approved';}
-  go('applications');toast('Applicant marked '+status);
-}
-function openThreadWith(otherId,listingId){
-  let th=DB.threads.find(t=>t.listing===listingId&&t.parties.includes(otherId)&&t.parties.includes(myId()));
-  if(!th){th={id:'th'+(DB.threads.length+1),parties:[myId(),otherId],listing:listingId,subject:listing(listingId).title,msgs:[]};DB.threads.push(th);}
-  return th.id;
-}
-
-/* ---------- Landlord analytics ---------- */
-function landlordAnalytics(){
-  const mine=DB.listings.filter(l=>l.landlord==='l1');
-  const totV=mine.reduce((s,l)=>s+l.views,0),totL=mine.reduce((s,l)=>s+l.leads,0),totA=mine.reduce((s,l)=>s+l.apps,0);
-  const conv=totV?((totL/totV)*100).toFixed(1):0, appConv=totL?((totA/totL)*100).toFixed(0):0;
-  const max=Math.max(...mine.map(l=>l.views));
-  return `<div class="page-h"><h1>Insights</h1><p>Track views, leads, applications & vacancy activity.</p></div>
-  <div class="grid g2 keep">
-    ${statCard(totV.toLocaleString(),'Total views','+12% this week','up')}
-    ${statCard(totL,'Leads captured','+8 this week','up')}
-    ${statCard(conv+'%','View → lead','','')}
-    ${statCard(appConv+'%','Lead → application','','')}
-  </div>
-  <div class="card p mt2"><div class="bb mb">Views by listing</div>
-    ${mine.map(l=>`<div style="margin-bottom:12px"><div class="row between small b" style="margin-bottom:4px"><span>${l.title}</span><span class="muted">${l.views}</span></div>
-      <div class="bar"><i style="width:${Math.round(l.views/max*100)}%"></i></div></div>`).join('')}</div>
-  <div class="card p mt2"><div class="bb mb">Funnel this month</div>
-    ${funnelRow('Listing views',totV,totV,max)}${funnelRow('Leads',totL,totV,max)}${funnelRow('Applications',totA,totV,max)}${funnelRow('Approved',1,totV,max)}</div>
-  <div class="card p mt2"><div class="bb mb">Vacancy activity</div>
-    <div class="kv"><span class="k">Avg. days to first lead</span><span class="b">2.4 days</span></div>
-    <div class="kv"><span class="k">Avg. days to lease</span><span class="b">11 days</span></div>
-    <div class="kv"><span class="k">Est. vacancy cost avoided</span><span class="b green">${money(3200)}</span></div></div>`;
-}
-function funnelRow(label,val,total,max){const pct=total?Math.round(val/total*100):0;
-  return `<div style="margin-bottom:12px"><div class="row between small b" style="margin-bottom:4px"><span>${label}</span><span class="muted">${val} · ${pct}%</span></div>
-    <div class="bar"><i style="width:${Math.max(4,pct)}%"></i></div></div>`;}
-
-function simpleAccount(u){
-  return `<div class="page-h"><h1>Profile</h1></div>
-  <div class="card p"><div class="row"><div class="avatar" style="width:56px;height:56px;font-size:18px">${u.initials}</div>
-    <div style="flex:1"><div class="bb">${u.name}</div><div class="muted small">${u.email}</div>
-    ${u.license?`<div class="tiny muted">License ${u.license} · ${u.brokerage}</div>`:''}${u.company?`<div class="tiny muted">${u.company}</div>`:''}</div></div></div>
-  ${u.license?`<div class="banner legal mt2"><span class="i">§</span><span>Licensed brokerage services are provided by ${esc(u.brokerage)} and kept separate from Tenure's technology platform. Tenure is not a brokerage.</span></div>`:''}
-  <button class="btn block mt2" onclick="logout()">Sign out</button>`;
-}
-
-/* =======================================================================
-   AGENT PORTAL
-   ======================================================================= */
-function agentHome(){
-  const a=DB.agent;const myShowings=DB.showings.filter(s=>s.agent==='a1'||s.status==='requested');
-  return `<div class="page-h"><p class="eyebrow">${a.brokerage} · ${a.license}</p><h1>Hi ${a.name.split(' ')[0]}</h1>
-    <p>Cover showings and assist landlords — brokerage services kept separate & compliant.</p></div>
-  <div class="grid g3 keep">
-    ${statCard(DB.showings.filter(s=>s.agent==='a1').length,'Assigned','')}
-    ${statCard(DB.showings.filter(s=>s.status==='requested').length,'Open requests','')}
-    ${statCard('4.9★','Rating','')}
-  </div>
-  <div class="row between mt2 mb"><div class="bb">Upcoming & open showings</div><a class="small b" onclick="go('showings')">All</a></div>
-  ${myShowings.map(showingRow).join('')||'<div class="card p muted center">No showings.</div>'}
-  <div class="banner legal mt2"><span class="i">§</span><span>Showing agents must hold an active real estate license. Agent services are provided under the agent's brokerage — not by Tenure.</span></div>`;
-}
-
-/* =======================================================================
-   SHOWINGS
-   ======================================================================= */
-function requestShowing(listingId){
-  const l=listing(listingId);
-  const slots=['Sat Jul 11 · 10:30 AM','Sat Jul 11 · 2:00 PM','Sun Jul 12 · 11:00 AM','Mon Jul 13 · 5:30 PM'];
-  modal(`<h3>Request a showing</h3><p class="muted small" style="margin:0 0 12px">${l.title} · ${l.addr}</p>
-    <div class="bb mb" style="font-size:14px">Pick preferred times</div>
-    <div class="row wrap" style="gap:0">${slots.map((s,i)=>`<span class="chip ${i===0?'on':''}" onclick="[...this.parentNode.children].forEach(c=>c.classList.remove('on'));this.classList.add('on');window._slot='${s}'">${s}</span>`).join('')}</div>
-    <div class="field mt"><label>Note to landlord (optional)</label><textarea class="input" id="showNote" placeholder="e.g., Flexible on timing, moving Aug 15."></textarea></div>
-    <button class="btn primary block mt" onclick="submitShowing('${listingId}')">Request showing</button>
-    <div class="banner legal mt"><span class="i">§</span><span>The landlord will approve, propose a new time, or assign a licensed showing agent.</span></div>`);
-  window._slot=slots[0];
-}
-function submitShowing(listingId){
-  const slot=(window._slot||'').split('·');
-  DB.showings.unshift({id:'sh'+(DB.showings.length+1+Math.floor(Math.random()*50)),listing:listingId,tenant:state.tenantId,
-    date:(slot[0]||'TBD').trim(),time:(slot[1]||'').trim(),status:'requested',agent:null});
-  closeModal();toast('Showing requested ✓');go('apps');
-}
-function showingRow(s){
-  const l=listing(s.listing);const t=tenant(s.tenant);
-  return `<div class="card p mb"><div class="row"><div class="avatar" style="background:var(--purple-soft);color:var(--purple)">${svg('cal')}</div>
-    <div style="flex:1"><div class="b">${l.title}</div><div class="muted small">${s.date} · ${s.time}</div>
-      <div class="tiny muted">${t?t.name:'Tenant'}${s.agent?' · Agent: '+nameFor(s.agent):''}</div></div>
-    ${statusPill(s.status)}</div>
-    ${showingActions(s)}</div>`;
-}
-function showingActions(s){
-  if(state.role==='landlord'){
-    if(s.status==='requested')return `<div class="row mt" style="gap:8px">
-      <button class="btn green block sm" onclick="confirmShowing('${s.id}')">Approve</button>
-      <button class="btn block sm" onclick="assignAgent('${s.id}')">Assign agent</button></div>`;
-    if(s.status==='confirmed')return `<div class="row mt" style="gap:8px"><button class="btn block sm" onclick="toast('Rescheduled (demo)')">Reschedule</button>
-      <button class="btn block sm" onclick="setShowing('${s.id}','completed')">Mark complete</button></div>`;
+  const root = document.documentElement;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const hash = document.getElementById('hash');
+  const HASH = "0xHF · sig 4471092·7HF2601 · VERIFIED · READY";
+  if(reduce){ hash.textContent = HASH; }
+  else { let i=0; (function t(){ hash.textContent=HASH.slice(0,i); if(i++<=HASH.length) setTimeout(t,26); })(); }
+
+  const stage=document.getElementById('credStage'), card=document.getElementById('cred');
+  const fine=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(stage&&card&&fine&&!reduce){
+    stage.addEventListener('mousemove',e=>{const r=stage.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`rotateY(${x*15}deg) rotateX(${-y*15}deg) translateZ(12px)`;});
+    stage.addEventListener('mouseleave',()=>{card.style.transform='';});
   }
-  if(state.role==='agent'){
-    if(s.status==='requested')return `<button class="btn primary block sm mt" onclick="claimShowing('${s.id}')">Accept & cover this showing</button>`;
-    if(s.agent==='a1'&&s.status==='confirmed')return `<button class="btn block sm mt" onclick="setShowing('${s.id}','completed')">Mark complete</button>`;
+
+  const FORM_ENDPOINT = "";
+  const form=document.getElementById('waitlistForm'),email=document.getElementById('wlEmail'),role=document.getElementById('wlRole'),
+        submit=document.getElementById('wlSubmit'),status=document.getElementById('wlStatus'),done=document.getElementById('wlDone'),
+        doneMsg=document.getElementById('wlDoneMsg'),hp=document.getElementById('hp');
+  const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  const setStatus=(m,k)=>{status.textContent=m;status.className='wl-status'+(k?' '+k:'');};
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(hp.value)return;
+    if(!validEmail(email.value)){email.setAttribute('aria-invalid','true');setStatus('Please enter a valid email address.','err');email.focus();return;}
+    email.removeAttribute('aria-invalid');submit.disabled=true;submit.textContent='Reserving…';setStatus('','');
+    const payload={email:email.value.trim(),role:role.value,source:'landing-waitlist'};
+    try{
+      if(FORM_ENDPOINT){const res=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});if(!res.ok)throw 0;}
+      else{await new Promise(r=>setTimeout(r,650));}
+      doneMsg.textContent={renter:"Your Rental Passport is reserved. We'll email you the moment Tenure opens near you.",
+        landlord:"You're on the landlord list. We'll reach out when listings go live in your area.",
+        agent:"You're on the agent list. We'll be in touch as we open professional access.",
+        vendor:"You're on the vendor list. We'll email you when marketplace spots open."}[role.value]||doneMsg.textContent;
+      form.hidden=true;done.hidden=false;done.scrollIntoView({behavior:'smooth',block:'center'});
+    }catch(err){submit.disabled=false;submit.textContent='Reserve my spot';setStatus("Something went wrong — please try again, or email hello@gettenure.com.",'err');}
+  });
+  email.addEventListener('input',()=>{if(email.getAttribute('aria-invalid')){email.removeAttribute('aria-invalid');setStatus('','');}});
+
+  /* ===== scrollytelling: renting -> owning ===== */
+  const STAGE_STATUS=['Building your Passport…','Verified — reusable anywhere','Reporting rent — credit rising','Pre-approved to buy ✓'];
+  function updateScrolly(p){
+    const ring=Math.round(45+p*55);
+    const rEl=document.getElementById('scRing'); if(!rEl)return;
+    rEl.style.background=`conic-gradient(var(--a1) ${ring}%, rgba(130,140,160,.2) 0)`;
+    document.getElementById('scRv').textContent=ring;
+    const stage=p>=0.985?3:Math.min(3,Math.floor(p*4));
+    document.querySelectorAll('#scSteps .ss').forEach(s=>s.classList.toggle('on',+s.dataset.i===stage));
+    const nCheck=stage>=1?4:Math.min(4,Math.round(p*8));
+    document.querySelectorAll('#scFields .sc-f').forEach((fx,i)=>fx.classList.toggle('ok',i<nCheck));
+    document.getElementById('scChip').style.opacity=stage>=1?1:0;
+    document.getElementById('scRent').style.opacity=stage>=2?1:0;
+    document.getElementById('scPre').classList.toggle('on',stage>=3);
+    document.getElementById('scStatus').textContent=STAGE_STATUS[stage];
   }
-  return '';
-}
-function showingsView(role){
-  let list=DB.showings.slice();
-  return `<div class="page-h"><h1>Showings</h1><p>${role==='agent'?'Accept requests and manage your showing route.':'Approve requests, assign agents, and track status.'}</p></div>
-  <div class="tabs mb" id="showtabs">
-    <button class="on" onclick="filterShow(this,'all')">All</button>
-    <button onclick="filterShow(this,'requested')">Requested</button>
-    <button onclick="filterShow(this,'confirmed')">Confirmed</button>
-    <button onclick="filterShow(this,'completed')">Completed</button></div>
-  <div id="showlist">${list.map(showingRow).join('')||'<div class="card p muted center">No showings.</div>'}</div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Optional licensed-agent workflow keeps brokerage activity separate from Tenure's platform services.</span></div>`;
-}
-function filterShow(btn,f){
-  [...btn.parentNode.children].forEach(b=>b.classList.remove('on'));btn.classList.add('on');
-  const list=f==='all'?DB.showings:DB.showings.filter(s=>s.status===f);
-  el('showlist').innerHTML=list.map(showingRow).join('')||'<div class="card p muted center">None in this status.</div>';
-}
-function confirmShowing(id){setShowing(id,'confirmed');}
-function setShowing(id,status){DB.showings.find(s=>s.id===id).status=status;go('showings');toast('Showing '+status);}
-function claimShowing(id){const s=DB.showings.find(s=>s.id===id);s.agent='a1';s.status='confirmed';go('showings');toast('Showing accepted ✓');}
-function assignAgent(id){const s=DB.showings.find(s=>s.id===id);
-  modal(`<h3>Assign showing agent</h3><p class="muted small" style="margin:0 0 12px">Choose a licensed agent to cover this showing.</p>
-    <button class="li" style="width:100%;text-align:left;background:none" onclick="closeModal();doAssign('${id}','a1')">
-      <div class="avatar round">${DB.agent.initials}</div><div style="flex:1"><div class="b">${DB.agent.name}</div><div class="tiny muted">${DB.agent.brokerage} · ${DB.agent.license}</div></div>
-      <span class="pill green">Available</span></button>`);
-}
-function doAssign(id,agentId){const s=DB.showings.find(s=>s.id===id);s.agent=agentId;s.status='confirmed';go('showings');toast('Agent assigned & showing confirmed ✓');}
+  const scrollyEl=document.getElementById('journey');
+  function onScrollScrolly(){
+    if(!scrollyEl)return;
+    const r=scrollyEl.getBoundingClientRect();
+    const total=r.height-window.innerHeight;
+    const p=Math.min(1,Math.max(0,-r.top/(total||1)));
+    updateScrolly(p);
+  }
+  if(reduce){updateScrolly(1);}
+  else{
+    let ticking=false;
+    window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{onScrollScrolly();ticking=false;});ticking=true;}},{passive:true});
+    onScrollScrolly();
+  }
 
-/* =======================================================================
-   VENDOR MARKETPLACE  (browse — shared for tenant/landlord)
-   ======================================================================= */
-function vendorMarketplace(){
-  const cat=state.params.cat||'All';
-  let vs=DB.vendors.filter(v=>cat==='All'||v.category===cat);
-  vs.sort((a,b)=>(b.featured-a.featured)||(b.preferred-a.preferred)||b.rating-a.rating);
-  return `<button class="btn ghost sm" onclick="go('home')">← Back</button>
-  <div class="page-h" style="margin-top:8px"><p class="eyebrow">Marketplace</p><h1>Trusted home services</h1>
-    <p>Book vetted vendors for every step — moving, inspection, lending, insurance & more.</p></div>
-  <div class="scrollx mb" style="white-space:nowrap;margin:0 -16px;padding:0 16px">
-    ${DB.vendorCats.map(c=>`<span class="chip ${c===cat?'on':''}" onclick="go('marketplace',{cat:'${c}'})">${c}</span>`).join('')}</div>
-  ${vs.filter(v=>v.featured).length&&cat==='All'?`<div class="pill amber mb">★ Featured partners</div>`:''}
-  <div class="grid g2 keep">${vs.map(vendorCardBig).join('')}</div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Vendors are independent third parties. Featured & Preferred placements are paid advertising and are labeled as such. Tenure does not endorse or guarantee vendor services.</span></div>`;
-}
-function vendorCardBig(v){
-  return `<div class="card p" style="${v.featured?'border:1.5px solid var(--amber)':''}">
-    <div class="row"><div class="avatar" style="background:${v.color};color:#0b1220">${v.initials}</div>
-      <div style="flex:1;min-width:0"><div class="row" style="gap:5px"><span class="b" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${v.name}</span></div>
-        <div class="tiny muted">${v.category} · ${v.city}</div></div></div>
-    <div class="row wrap mt" style="gap:6px">
-      <span class="pill tiny">★ ${v.rating} (${v.reviews})</span>
-      ${v.preferred?'<span class="pill brand tiny">Preferred</span>':''}${v.featured?'<span class="pill amber tiny">Featured ad</span>':''}</div>
-    <div class="small muted mt">${v.blurb}</div>
-    <button class="btn primary block sm mt" onclick="openLead('${v.id}')">Request quote</button></div>`;
-}
-function openLead(vendorId){
-  const v=DB.vendors.find(x=>x.id===vendorId);
-  modal(`<h3>Request a quote</h3><p class="muted small" style="margin:0 0 12px">${v.name} · ${v.category}</p>
-    <div class="field"><label>Your name</label><input class="input" id="lead_name" value="${state.role==='tenant'?esc(me().name):state.role==='landlord'?esc(DB.landlord.name):''}"></div>
-    <div class="field"><label>What do you need?</label><textarea class="input" id="lead_need" placeholder="e.g., 2BR move on Aug 15, need packing help"></textarea></div>
-    <div class="field"><label>City</label><input class="input" id="lead_city" value="Tampa"></div>
-    <label class="row" style="gap:10px;align-items:flex-start;cursor:pointer"><input type="checkbox" id="lead_consent" style="margin-top:3px">
-      <span class="small muted">I agree to share my contact info with this vendor so they can reach me with a quote.</span></label>
-    <button class="btn primary block mt2" onclick="submitLead('${vendorId}')">Send request</button>`);
-}
-function submitLead(vendorId){
-  if(!el('lead_consent').checked){toast('Please provide consent to share your info');return;}
-  DB.leads.unshift({id:'ld'+(DB.leads.length+1+Math.floor(Math.random()*50)),vendor:vendorId,
-    name:el('lead_name').value||'Anonymous',need:el('lead_need').value||'—',city:el('lead_city').value||'—',at:'Jul 4, 2026',status:'New'});
-  closeModal();toast('Quote request sent ✓');
-}
-
-/* =======================================================================
-   VENDOR PORTAL
-   ======================================================================= */
-function vendorHome(){
-  const v=DB.vendors.find(x=>x.id==='v9');const vu=DB.vendorUser;
-  const myLeads=DB.leads.filter(l=>l.vendor==='v9');const nw=myLeads.filter(l=>l.status==='New').length;
-  return `<div class="page-h"><p class="eyebrow">${v.category} · ${vu.plan} partner</p><h1>${v.name}</h1>
-    <p>Reach tenants, landlords & buyers across the housing lifecycle.</p></div>
-  <div class="grid g3 keep">
-    ${statCard(myLeads.length,'Total leads','+3 this wk','up')}
-    ${statCard(nw,'New leads','','')}
-    ${statCard(v.rating+'★','Rating','('+v.reviews+')','')}
-  </div>
-  ${nw?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:1px solid var(--brand)" onclick="go('leads')">
-    <div class="avatar" style="background:var(--brand-soft);color:var(--a1)">${svg('doc')}</div>
-    <div style="flex:1"><div class="b">${nw} new lead${nw>1?'s':''} to respond</div><div class="muted small">Respond fast to win the booking</div></div>
-    <span class="pill brand">View</span></button>`:''}
-  <div class="card p mt2"><div class="row between"><div class="bb">Marketplace visibility</div>${v.featured?'<span class="pill amber">★ Featured</span>':'<span class="pill">Standard</span>'}</div>
-    <div class="kv mt"><span class="k">Profile views (30d)</span><span class="b">1,940</span></div>
-    <div class="kv"><span class="k">Category rank (Moving)</span><span class="b">#1</span></div>
-    <div class="kv"><span class="k">Lead conversion</span><span class="b green">18%</span></div>
-    <button class="btn block mt" onclick="go('membership')">Boost visibility →</button></div>
-  <div class="row between mt2 mb"><div class="bb">Recent leads</div><a class="small b" onclick="go('leads')">All</a></div>
-  ${myLeads.slice(0,3).map(leadRow).join('')||'<div class="card p muted center">No leads yet.</div>'}`;
-}
-function leadRow(l){
-  const v=DB.vendors.find(x=>x.id===l.vendor);
-  return `<div class="card p mb"><div class="row"><div class="avatar round">${l.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
-    <div style="flex:1"><div class="b">${l.name}</div><div class="muted small">${l.need}</div><div class="tiny muted">${l.city} · ${l.at}</div></div>
-    ${statusPill(l.status)}</div>
-    ${l.status==='New'?`<div class="row mt" style="gap:8px"><button class="btn primary block sm" onclick="setLead('${l.id}','Contacted')">Send quote</button>
-      <button class="btn block sm" onclick="toast('Lead archived')">Archive</button></div>`:''}</div>`;
-}
-function vendorLeads(){
-  const myLeads=DB.leads.filter(l=>l.vendor==='v9');
-  return `<div class="page-h"><h1>Leads</h1><p>Requests from tenants, landlords & buyers.</p></div>
-  ${myLeads.length?myLeads.map(leadRow).join(''):'<div class="card p muted center">No leads yet. Upgrade your plan to boost lead volume.</div>'}
-  <div class="banner info mt2"><span class="i">✓</span><span>Preferred & Featured partners receive up to 3× more leads and priority routing.</span></div>`;
-}
-function setLead(id,status){DB.leads.find(l=>l.id===id).status=status;go('leads');toast('Marked '+status);}
-function vendorProfile(){
-  const v=DB.vendors.find(x=>x.id==='v9');
-  return `<div class="page-h"><h1>Business profile</h1></div>
-  <div class="card p"><div class="row"><div class="avatar" style="width:56px;height:56px;font-size:18px;background:${v.color};color:#0b1220">${v.initials}</div>
-    <div style="flex:1"><div class="bb">${v.name}</div><div class="muted small">${v.category} · ${v.city}</div>
-      <div class="tiny">★ ${v.rating} (${v.reviews} reviews)</div></div></div></div>
-  <div class="card p mt2">
-    <div class="field"><label>Business name</label><input class="input" value="${esc(v.name)}"></div>
-    <div class="field"><label>Category</label><select class="input">${DB.vendorCats.filter(c=>c!=='All').map(c=>`<option ${c===v.category?'selected':''}>${c}</option>`).join('')}</select></div>
-    <div class="field"><label>Service area</label><input class="input" value="${esc(v.city)}"></div>
-    <div class="field" style="margin:0"><label>Tagline</label><textarea class="input">${esc(v.blurb)}</textarea></div>
-    <button class="btn primary block mt2" onclick="toast('Profile saved ✓')">Save profile</button></div>
-  <button class="card p mt2" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
-    <div class="avatar" style="background:var(--amber-soft);color:var(--amber)">★</div>
-    <div style="flex:1"><div class="b">Upgrade to Featured — max exposure</div><div class="muted small">Homepage + checkout placement, sponsored alerts</div></div>
-    <span class="pill amber">See plans</span></button>`;
-}
-
-/* =======================================================================
-   ADMIN CONSOLE
-   ======================================================================= */
-function adminHome(){
-  const users=DB.users.length+3, mrr=DB.users.filter(u=>u.premium).length*9 + 29 + DB.vendors.filter(v=>v.preferred).length*99;
-  return `<div class="page-h"><p class="eyebrow">Platform operations</p><h1>Admin overview</h1>
-    <p>Manage the ecosystem, billing, featured placements & analytics.</p></div>
-  <div class="grid g4 keep">
-    ${statCard(users,'Total users','+18% mo','up')}
-    ${statCard(DB.listings.length,'Active listings','','')}
-    ${statCard(DB.vendors.length,'Vendors','','')}
-    ${statCard(money(mrr),'Est. MRR','+9% mo','up')}
-  </div>
-  <div class="card p mt2"><div class="bb mb">Revenue mix (recurring-first)</div>
-    ${funnelRow('Tenant Premium',DB.users.filter(u=>u.premium).length*9,mrr,mrr)}
-    ${funnelRow('Landlord subscriptions',29,mrr,mrr)}
-    ${funnelRow('Vendor / advertiser',DB.vendors.filter(v=>v.preferred).length*99,mrr,mrr)}
-    ${funnelRow('Featured placements',75,mrr,mrr)}</div>
-  <div class="row between mt2 mb"><div class="bb">Manage</div></div>
-  <div class="grid g2 keep">
-    ${adminTile('users','Users','user','Manage & verify accounts')}
-    ${adminTile('listings','Listings','building','Approve featured & moderate')}
-    ${adminTile('vendors','Vendors','cart','Approve preferred partners')}
-    ${adminTile('subs','Billing','cog','Plans & subscription status')}
-    ${adminTile('leads','Leads','doc','View & export marketplace leads')}
-  </div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Admin actions are logged. Platform enforces Fair Housing, privacy consent, and separation of brokerage services from technology services.</span></div>`;
-}
-function adminTile(view,t,ic,sub){return `<button class="card p" style="text-align:left;width:100%" onclick="go('${view}')">
-  <div class="avatar" style="background:var(--surface-2);color:var(--a1);margin-bottom:8px">${svg(ic)}</div>
-  <div class="b">${t}</div><div class="tiny muted">${sub}</div></button>`;}
-
-function adminUsers(){
-  const rows=[...DB.users.map(u=>({name:u.name,role:'Tenant',plan:u.premium?'Premium':'Free',status:'Active',v:u.passport.verified})),
-    {name:DB.landlord.name,role:'Landlord',plan:DB.landlord.plan,status:'Active',v:true},
-    {name:DB.agent.name,role:'Agent',plan:'—',status:'Licensed',v:true},
-    {name:DB.vendorUser.name,role:'Vendor',plan:DB.vendorUser.plan,status:'Active',v:true}];
-  return adminBack('Users','Manage & verify accounts across all roles')+
-  `<div class="card p scrollx"><table class="tbl"><thead><tr><th>Name</th><th>Role</th><th>Plan</th><th>Status</th><th></th></tr></thead><tbody>
-    ${rows.map(r=>`<tr><td><div class="row" style="gap:8px"><div class="avatar round" style="width:30px;height:30px;font-size:12px">${r.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div><span class="b">${r.name}</span></div></td>
-      <td>${r.role}</td><td>${r.plan}</td><td>${r.v?'<span class="pill green tiny">✓ '+r.status+'</span>':'<span class="pill tiny">'+r.status+'</span>'}</td>
-      <td><button class="btn sm" onclick="toast('Opened ${r.name} (demo)')">Manage</button></td></tr>`).join('')}</tbody></table></div>`;
-}
-function adminListings(){
-  return adminBack('Listings','Moderate listings & approve featured placements')+
-  `<div class="card p scrollx"><table class="tbl"><thead><tr><th>Listing</th><th>Rent</th><th>Apps</th><th>Featured</th><th></th></tr></thead><tbody>
-    ${DB.listings.map(l=>`<tr><td class="b">${l.title}</td><td>${money(l.rent)}</td><td>${l.apps}</td>
-      <td>${l.featured?'<span class="pill amber tiny">★ Featured</span>':'<span class="pill tiny">Standard</span>'}</td>
-      <td><button class="btn sm" onclick="toggleFeat('${l.id}')">${l.featured?'Unfeature':'Approve featured'}</button></td></tr>`).join('')}</tbody></table></div>
-  <div class="banner info mt2"><span class="i">✓</span><span>Featured approvals are a paid placement revenue stream. Each listing is scanned for Fair-Housing-risky ad language before going live.</span></div>`;
-}
-function toggleFeat(id){const l=listing(id);l.featured=!l.featured;go('listings');toast(l.featured?'Listing featured ✓':'Featured removed');}
-function adminVendors(){
-  return adminBack('Vendors','Approve preferred & featured partners')+
-  `<div class="card p scrollx"><table class="tbl"><thead><tr><th>Vendor</th><th>Category</th><th>Tier</th><th></th></tr></thead><tbody>
-    ${DB.vendors.map(v=>`<tr><td class="b">${v.name}</td><td>${v.category}</td>
-      <td>${v.featured?'<span class="pill amber tiny">Featured</span>':v.preferred?'<span class="pill brand tiny">Preferred</span>':'<span class="pill tiny">Listed</span>'}</td>
-      <td><button class="btn sm" onclick="cycleVendor('${v.id}')">Change tier</button></td></tr>`).join('')}</tbody></table></div>`;
-}
-function cycleVendor(id){const v=DB.vendors.find(x=>x.id===id);
-  if(!v.preferred){v.preferred=true;}else if(v.preferred&&!v.featured){v.featured=true;}else{v.preferred=false;v.featured=false;}
-  go('vendors');toast('Vendor tier updated');}
-function adminSubs(){
-  const subs=[['Tenant Premium','$9/mo',DB.users.filter(u=>u.premium).length,'Active'],
-    ['Landlord Pro','$29/mo',1,'Active'],['Landlord Enterprise','Custom',0,'—'],
-    ['Vendor Preferred','$99/mo',DB.vendors.filter(v=>v.preferred&&!v.featured).length,'Active'],
-    ['Vendor Featured','$249/mo',DB.vendors.filter(v=>v.featured).length,'Active']];
-  return adminBack('Billing & subscriptions','Manage plans and subscription status (Stripe)')+
-  `<div class="card p scrollx"><table class="tbl"><thead><tr><th>Plan</th><th>Price</th><th>Subscribers</th><th>Status</th></tr></thead><tbody>
-    ${subs.map(s=>`<tr><td class="b">${s[0]}</td><td>${s[1]}</td><td>${s[2]}</td><td>${s[3]==='Active'?'<span class="pill green tiny">Active</span>':'<span class="pill tiny">'+s[3]+'</span>'}</td></tr>`).join('')}</tbody></table></div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Production billing runs on Stripe — PCI-compliant, with dunning, proration, invoices & tax handling. No card data touches Tenure servers.</span></div>`;
-}
-function adminLeads(){
-  return adminBack('Marketplace leads','View & export vendor lead activity')+
-  `<div class="row between mb"><div class="muted small">${DB.leads.length} leads</div><button class="btn sm primary" onclick="exportLeads()">⬇ Export CSV</button></div>
-  <div class="card p scrollx"><table class="tbl"><thead><tr><th>Lead</th><th>Vendor</th><th>Need</th><th>Status</th></tr></thead><tbody>
-    ${DB.leads.map(l=>{const v=DB.vendors.find(x=>x.id===l.vendor);return `<tr><td class="b">${l.name}</td><td>${v?v.name:l.vendor}</td><td class="muted">${l.need}</td><td>${statusPill(l.status)}</td></tr>`;}).join('')}</tbody></table></div>`;
-}
-function exportLeads(){
-  const rows=[['Name','Vendor','Category','Need','City','Date','Status'],
-    ...DB.leads.map(l=>{const v=DB.vendors.find(x=>x.id===l.vendor)||{};return [l.name,v.name||l.vendor,v.category||'',l.need,l.city,l.at,l.status];})];
-  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='homeflow-leads.csv';a.click();
-  toast('Leads exported ✓');
-}
-function adminBack(title,sub){return `<button class="btn ghost sm" onclick="go('home')">← Overview</button>
-  <div class="page-h" style="margin-top:8px"><h1>${title}</h1><p>${sub}</p></div>`;}
-
-/* === END VIEWS === */
-
-/* ---------------- BOOT ---------------- */
-render();
 </script>
-
 </body>
 </html>
