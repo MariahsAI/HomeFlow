@@ -269,9 +269,25 @@ a{color:var(--a1)}
 .leaflet-control-attribution{background:rgba(0,0,0,.45)!important;color:var(--muted)!important;font-size:10px}
 .leaflet-control-attribution a{color:var(--muted)!important}
 .leaflet-bar a{background:var(--surface-2)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.searchmap #lmap{height:64vh;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.searchsplit.showlist .searchmap{display:none}
+.searchsplit.showmap .searchlist{display:none}
+.mapcluster{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;color:#04060C;background:linear-gradient(135deg,var(--a1),var(--a2));border:2px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.marker-cluster,.marker-cluster div{background:transparent!important}
+@media(min-width:900px){
+  .searchtoggle{display:none}
+  .searchsplit{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:start}
+  .searchsplit.showlist .searchlist,.searchsplit.showmap .searchlist{display:block}
+  .searchsplit.showlist .searchmap,.searchsplit.showmap .searchmap{display:block;position:sticky;top:88px}
+  .searchsplit .searchgrid{grid-template-columns:1fr}
+  .searchmap #lmap{height:calc(100vh - 120px)}
+}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
 <div id="app"><!-- rendered by JS --></div>
@@ -478,7 +494,7 @@ function listingImg(l){
 function render(){
   if(!state.role){el('app').innerHTML=renderLanding();return;}
   el('app').innerHTML = topbar() + `<div class="view">${routeView()}</div>` + tabbar();
-  if(state.role==='tenant'&&state.view==='search'&&state.mapView)setTimeout(initSearchMap,30);
+  if(state.role==='tenant'&&state.view==='search')setTimeout(initSearchMap,40);
 }
 
 function routeView(){
@@ -623,19 +639,24 @@ function openRoleSwitch(){
 function setMapView(b){state.mapView=b;render();}
 function coordFor(l){const h=_hash(l.id+(l.addr||''));const dx=((h%1000)/1000-.5)*.09;const dy=(((h>>>10)%1000)/1000-.5)*.07;return [27.95+dy,-82.46+dx];}
 function initSearchMap(){
-  const c=document.getElementById('lmap'); if(!c) return;
+  const c=document.getElementById('lmap'); if(!c||c.offsetParent===null) return;
   if(!window.L){c.innerHTML='<div class="muted center" style="padding:60px 20px">Map loads on the live site (Leaflet + OpenStreetMap).</div>';return;}
   if(c._map){c._map.remove();c._map=null;}
   const items=window._mapItems||[];
   const light=document.documentElement.dataset.theme==='light';
   const tiles=light?'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  const map=L.map(c,{scrollWheelZoom:false}).setView([27.95,-82.46],12); c._map=map;
-  L.tileLayer(tiles,{maxZoom:19,attribution:'© OpenStreetMap © CARTO'}).addTo(map);
+  const map=L.map(c,{scrollWheelZoom:false}).setView([27.95,-82.46],11); c._map=map;
+  L.tileLayer(tiles,{maxZoom:19,attribution:'\u00a9 OpenStreetMap \u00a9 CARTO'}).addTo(map);
+  const useCluster=typeof L.markerClusterGroup==='function';
+  const layer=useCluster?L.markerClusterGroup({showCoverageOnHover:false,maxClusterRadius:48,
+    iconCreateFunction:function(cl){return L.divIcon({html:'<div class="mapcluster">'+cl.getChildCount()+'</div>',className:'',iconSize:[38,38]});}}):L.layerGroup();
   const b=[];
   items.forEach(l=>{const co=coordFor(l);b.push(co);
     const icon=L.divIcon({html:`<div class="mappin">${money(l.rent)}</div>`,className:'',iconSize:[54,24],iconAnchor:[27,24]});
-    L.marker(co,{icon}).addTo(map).on('click',()=>go('listing',{id:l.id}));});
+    layer.addLayer(L.marker(co,{icon}).on('click',()=>go('listing',{id:l.id})));});
+  layer.addTo(map);
   if(b.length){try{map.fitBounds(b,{padding:[42,42],maxZoom:14});}catch(e){}}
+  setTimeout(()=>{try{map.invalidateSize();}catch(e){}},60);
 }
 
 /* ===== REVERSE MARKETPLACE — landlords browse & invite verified renters ===== */
@@ -871,41 +892,64 @@ function listingCard(l){
 
 /* ---------- Listings search ---------- */
 function listingsSearch(){
-  const f=state.params.filters||{q:'',beds:0,maxRent:5000,pets:false};
+  const f=_filters();
   let items=DB.listings.filter(l=>l.status==='Active');
   if(f.q)items=items.filter(l=>(l.title+l.addr).toLowerCase().includes(f.q.toLowerCase()));
+  if(f.hood)items=items.filter(l=>(l.title+' '+l.addr).toLowerCase().includes(f.hood.toLowerCase()));
+  if(f.moveIn)items=items.filter(l=>{const d=Date.parse(l.avail);return isNaN(d)||d<=Date.parse(f.moveIn);});
   items=items.filter(l=>l.beds>=f.beds && l.rent<=f.maxRent && (!f.pets||!/no pets/i.test(l.pets)));
   items.sort((a,b)=>(b.featured-a.featured)||a.rent-b.rent);
+  window._mapItems=items;
+  const hoods=['Hyde Park','Channelside','Bayshore','USF'];
+  const dirty=f.hood||f.moveIn||f.beds||f.pets||f.q||f.maxRent<5000;
   return `
   <div class="page-h"><h1>Find your home</h1><p>${items.length} rentals · Tampa Bay area</p></div>
-  <div class="seg mb">
-    <button class="${!state.mapView?'on':''}" onclick="setMapView(false)">List</button>
-    <button class="${state.mapView?'on':''}" onclick="setMapView(true)">Map</button>
-  </div>
   <div class="card p mb">
-    <div class="field" style="margin:0"><div class="row" style="gap:8px">
+    <div class="field" style="margin:0">
       <input class="input" id="q" placeholder="City, neighborhood, or address" value="${esc(f.q)}" oninput="applyFilters()">
-    </div></div>
+    </div>
+    <div class="row mt" style="gap:8px">
+      <div class="field" style="flex:1;margin:0"><label>Neighborhood</label>
+        <select class="input" onchange="setHood(this.value)">
+          <option value="">Any neighborhood</option>
+          ${hoods.map(h=>`<option ${f.hood===h?'selected':''}>${h}</option>`).join('')}
+        </select></div>
+      <div class="field" style="flex:1;margin:0"><label>Move-in by</label>
+        <input type="date" class="input" value="${f.moveIn||''}" onchange="setMoveIn(this.value)"></div>
+    </div>
     <div class="row wrap mt" style="gap:0">
       ${[['Any',0],['1+ bd',1],['2+ bd',2],['3+ bd',3]].map(([t,v])=>`<span class="chip ${f.beds===v?'on':''}" onclick="setBeds(${v})">${t}</span>`).join('')}
       <span class="chip ${f.pets?'on':''}" onclick="togglePets()">🐾 Pets OK</span>
+      ${dirty?`<span class="chip" onclick="resetFilters()">✕ Reset</span>`:''}
     </div>
     <div class="field mt" style="margin:0"><label>Max rent: <span id="rentlbl" class="b">${money(f.maxRent)}</span></label>
-      <input type="range" min="1000" max="5000" step="50" value="${f.maxRent}" style="width:100%" oninput="el('rentlbl').textContent='$'+Number(this.value).toLocaleString();this._v=this.value" onchange="setRent(this.value)"></div>
+      <input type="range" min="1000" max="5000" step="50" value="${f.maxRent}" style="width:100%" oninput="el('rentlbl').textContent='$'+Number(this.value).toLocaleString()" onchange="setRent(this.value)"></div>
   </div>
-  ${(window._mapItems=items)&&''}
-  ${state.mapView?`<div id="lmap" class="mb" style="height:440px;border-radius:16px;overflow:hidden;border:1px solid var(--line)"></div>`:''}
-  <div class="grid g2">${items.length?items.map(listingCard).join(''):'<div class="card p muted center">No matches — widen your filters.</div>'}</div>
-  <div class="banner legal mt2"><span class="i">§</span><span>Listings are shown to all users equally. HomeFlow does not steer, rank, or filter renters or neighborhoods based on any protected class. Fair Housing compliant by design.</span></div>
+
+  <div class="seg mb searchtoggle">
+    <button class="${!state.mapView?'on':''}" onclick="setMapView(false)">List</button>
+    <button class="${state.mapView?'on':''}" onclick="setMapView(true)">Map</button>
+  </div>
+
+  <div class="searchsplit ${state.mapView?'showmap':'showlist'}">
+    <div class="searchlist">
+      <div class="grid g2 searchgrid">${items.length?items.map(listingCard).join(''):'<div class="card p muted center">No matches — widen your filters.</div>'}</div>
+      <div class="banner legal mt2"><span class="i">§</span><span>Listings are shown to all users equally. HomeFlow does not steer, rank, or filter renters or neighborhoods based on any protected class. Fair Housing compliant by design.</span></div>
+    </div>
+    <div class="searchmap"><div id="lmap"></div></div>
+  </div>
   `;
 }
-function _filters(){return state.params.filters||{q:'',beds:0,maxRent:5000,pets:false};}
+function _filters(){return Object.assign({q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''},state.params.filters||{});}
 function applyFilters(){const f=_filters();f.q=el('q').value;state.params.filters=f; // re-render list only
   go('search',{filters:f});el('q')&&el('q').focus();
   const q=el('q');if(q){q.selectionStart=q.selectionEnd=q.value.length;}}
 function setBeds(v){const f=_filters();f.beds=v;go('search',{filters:f});}
 function togglePets(){const f=_filters();f.pets=!f.pets;go('search',{filters:f});}
 function setRent(v){const f=_filters();f.maxRent=+v;go('search',{filters:f});}
+function setHood(v){const f=_filters();f.hood=v;go('search',{filters:f});}
+function setMoveIn(v){const f=_filters();f.moveIn=v;go('search',{filters:f});}
+function resetFilters(){go('search',{filters:{q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''}});}
 
 /* ---------- Listing detail ---------- */
 function listingDetail(){
