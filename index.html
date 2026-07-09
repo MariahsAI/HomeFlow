@@ -597,7 +597,17 @@
     stage.addEventListener('mouseleave',()=>{card.style.transform='';});
   }
 
+  /* ┌─────────────────────────────────────────────────────────────────────┐
+     │  TO START COLLECTING EMAILS: paste your form endpoint on the line     │
+     │  below, between the quotes. Free options (pick one, ~2 min):          │
+     │    • Formspree → https://formspree.io  (recommended)                  │
+     │    • Getform   → https://getform.io                                   │
+     │    • Basin     → https://usebasin.com                                 │
+     │  Example:  const FORM_ENDPOINT = "https://formspree.io/f/abcdwxyz";   │
+     │  Until it's set, the form shows success but does NOT save emails.     │
+     └─────────────────────────────────────────────────────────────────────┘ */
   const FORM_ENDPOINT = "";
+  if(!FORM_ENDPOINT)console.warn("Tenure waitlist: FORM_ENDPOINT is empty — emails are NOT being saved yet. Paste your Formspree (or similar) URL to go live.");
   const form=document.getElementById('waitlistForm'),email=document.getElementById('wlEmail'),role=document.getElementById('wlRole'),
         submit=document.getElementById('wlSubmit'),status=document.getElementById('wlStatus'),done=document.getElementById('wlDone'),
         doneMsg=document.getElementById('wlDoneMsg'),hp=document.getElementById('hp');
