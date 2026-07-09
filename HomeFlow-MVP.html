@@ -345,6 +345,9 @@ const DB = {
   vendorUser:{id:'v9',role:'vendor',name:'BrightMove Movers',category:'Moving',email:'ops@brightmove.com',initials:'BM',plan:'Preferred'},
 
   listings:[
+    {id:'s1',title:'Restored Craftsman near Hyde Park',addr:'214 S Bungalow Ter, Tampa, FL 33606',sale:true,source:'mls',mlsId:'T3512204',type:'House',price:615000,beds:3,baths:2,sqft:1740,brokerage:'Coastline Realty',license:'FL BK#3487201',dom:12,priceHistory:'Listed $629,000 \u2192 $615,000',status:'Active',featured:true,color:'#dbeafe',avail:'For sale',pets:'\u2014',landlord:null,views:0,leads:0,apps:0,desc:'Restored 1920s craftsman with a modern kitchen and detached studio, steps from Hyde Park Village.',amenities:['Detached studio','Renovated kitchen','Fenced yard','2-car parking']},
+    {id:'s2',title:'Channelside High-Rise Condo',addr:'1155 Water St #1204, Tampa, FL 33602',sale:true,source:'mls',mlsId:'T3519880',type:'Condo',price:489000,beds:2,baths:2,sqft:1180,brokerage:'Bay Harbor Realty',license:'FL BK#3301145',dom:34,priceHistory:'Listed $489,000',status:'Active',featured:false,color:'#e0e7ff',avail:'For sale',pets:'\u2014',landlord:null,views:0,leads:0,apps:0,desc:'Corner condo with skyline views, floor-to-ceiling glass, and resort amenities on Water Street.',amenities:['Pool + gym','Concierge','Parking','Skyline views']},
+    {id:'s3',title:'Bayshore Townhome',addr:'2803 Bayshore Blvd #4, Tampa, FL 33629',sale:true,source:'mls',mlsId:'T3520771',type:'Townhome',price:775000,beds:3,baths:3,sqft:2100,brokerage:'Coastline Realty',license:'FL BK#3487201',dom:6,priceHistory:'Listed $775,000',status:'Active',featured:false,color:'#dbeafe',avail:'For sale',pets:'\u2014',landlord:null,views:0,leads:0,apps:0,desc:'Three-story townhome a block from Bayshore with a rooftop terrace and two-car garage.',amenities:['Rooftop terrace','2-car garage','Elevator-ready','Bayshore access']},
     {id:'p1',title:'Sunlit 2BR in Hyde Park',addr:'318 W Azeele St, Tampa, FL 33606',rent:2450,deposit:2450,beds:2,baths:2,sqft:1120,
      type:'Apartment',pets:'Cats & dogs OK (≤50 lb)',avail:'Aug 1, 2026',featured:true,status:'Active',landlord:'l1',
      views:1284,leads:34,apps:6,color:'#dbeafe',
@@ -470,6 +473,9 @@ function money(n){return '$'+Number(n).toLocaleString('en-US');}
 function listing(id){return DB.listings.find(l=>l.id===id);}
 function tenant(id){return DB.users.find(u=>u.id===id);}
 function me(){return tenant(state.tenantId);}
+/* Spec §3.5 — Passport required before a showing (objective, Fair-Housing-safe threshold) */
+const SHOWING_MIN_COMPLETENESS=60;
+function passportReady(u){return !!(u&&u.passport&&u.passport.verified&&u.passport.completeness>=SHOWING_MIN_COMPLETENESS);}
 function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function toast(msg){const t=el('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2400);}
 function go(view,params){state.view=view;state.params=params||{};render();window.scrollTo({top:0,behavior:'instant'});}
@@ -512,9 +518,104 @@ function listingImg(l){
    ======================================================================= */
 function render(){
   if(!state.role){el('app').innerHTML=renderLanding();return;}
-  el('app').innerHTML = topbar() + `<div class="view">${routeView()}</div>` + tabbar();
+  el('app').innerHTML = topbar() + `<div class="view">${routeView()}</div>` + globalFooter() + tabbar();
   if(state.role==='tenant'&&state.view==='search')setTimeout(initSearchMap,40);
 }
+
+function architectureView(){
+  const phases=[
+    ['1a','Rental search on your own / FRBO listings + Rental Passport apply','No','Now'],
+    ['1b','Buyer / for-sale + agent-listed rentals via MLS (IDX/VOW)','Yes — broker','Broker Participant secured'],
+    ['2','Landlord listings + subscriptions (marketplace)','No','With / after 1a'],
+    ['3','Property mgmt + payments + vendor ads + tenant→buyer','No (tech entity)','Rental-subscription volume met'],
+  ];
+  const guards=[
+    ['MLS module isolated','Attribution, refresh cadence, opt-outs, VOW registration + audit trail — contained so the broker\u2019s exposure stays on the listing feed only.'],
+    ['Fair Housing by design','Neutral search on objective attributes only; no protected-class signals or proxies; uniform ranking; site-wide Fair Housing notice.'],
+    ['Payments: landlord-as-merchant','Stripe Connect with the landlord as merchant; the platform never custodies rent as an agent — keeps it software, not licensed PM or money transmission.'],
+    ['Leases: templates only','Selectable attorney/state forms + e-sign; no custom drafting or advice (avoids UPL).'],
+    ['Revenue: non-contingent','Vendor/lead fees are flat subscription/placement — never tied to a closed transaction or commission (RESPA-safe).'],
+    ['Entity wall','Brokerage touches only the listing-display feed; payments, leases, PM, vendors all sit in Tenure Tech, Inc.'],
+  ];
+  return `
+  <div class="page-h"><p class="eyebrow">Architecture</p><h1>How Tenure is built</h1>
+    <p>Two legal entities, one seamless experience — structured so the strict broker relationship never blocks launch or the revenue engine.</p></div>
+
+  <div class="bb mb">The entity wall</div>
+  <div class="grid g2">
+    <div class="card p" style="border:1px solid rgba(var(--a1-rgb),.4)">
+      <div class="pill" style="background:rgba(var(--a1-rgb),.16);color:var(--a1)">TECH ENTITY</div>
+      <div class="b mt" style="font-size:16px">Tenure Tech, Inc. <span class="muted small">· SaaS, not a brokerage</span></div>
+      <div class="muted small mt">Marketplace listings · Applications / Rental Passport · Property management · Rent payments · Vendor marketplace · Tenant→buyer readiness</div>
+      <div class="tiny muted mt2" style="font-family:var(--mono)">Main app + (later) manage. subdomain</div>
+    </div>
+    <div class="card p" style="border:1px solid rgba(201,162,75,.45)">
+      <div class="pill" style="background:rgba(201,162,75,.16);color:#C9A24B">BROKERAGE</div>
+      <div class="b mt" style="font-size:16px">Broker / Participant</div>
+      <div class="muted small mt">Sponsors the MLS <b>IDX/VOW listing-display feed only</b>. Brokerage name shown on MLS listings, exactly as MLS rules require. Involvement ends there.</div>
+      <div class="tiny muted mt2" style="font-family:var(--mono)">Isolated search / listings module</div>
+    </div>
+  </div>
+  <div class="banner info mt2"><span class="i">↔</span><span>The wall is <b>operational + contractual + module-level</b>: the broker is attributed on, and responsible for, only the isolated listing feed. Nothing in payments, leases, vendors, or referrals reflects onto the broker\u2019s license.</span></div>
+
+  <div class="bb mb mt3">Phased rollout</div>
+  <div class="card" style="overflow:hidden">
+    ${phases.map((p,i)=>`<div style="display:flex;gap:12px;padding:14px 16px;${i?'border-top:1px solid var(--line)':''}">
+      <div class="avatar" style="background:rgba(var(--a1-rgb),.16);color:var(--a1);flex:none;font-weight:800">${p[0]}</div>
+      <div style="flex:1"><div class="b small">${p[1]}</div>
+        <div class="tiny muted mt" style="font-family:var(--mono)">Broker needed: <b style="color:${p[2].startsWith('Yes')?'#C9A24B':'var(--ink)'}">${p[2]}</b> · Trigger: ${p[3]}</div></div>
+    </div>`).join('')}
+  </div>
+  <div class="banner legal mt2"><span class="i">§</span><span><b>Key insight:</b> the broker is required only for Phase 1b. Everything else is broker-independent SaaS — so it never blocks launch. Rental search can soft-launch on your own listings alone.</span></div>
+
+  <div class="bb mb mt3">Compliance guardrails</div>
+  <div class="list">
+    ${guards.map(g=>`<div class="li" style="align-items:flex-start"><div style="flex:1"><div class="b small">${g[0]}</div><div class="tiny muted mt">${g[1]}</div></div></div>`).join('')}
+  </div>
+
+  <div class="banner legal mt2"><span class="i">§</span><span>This is a demonstration prototype. The final entity structure, agreements, and indemnification are to be confirmed with a Florida real estate attorney before launch.</span></div>
+  `;
+}
+function globalFooter(){return `<div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--muted);opacity:.75;padding:20px 20px 6px">Tenure Tech, Inc. \u00b7 Technology services only \u2014 not a brokerage</div>`;}
+
+function paymentsView(){
+  const rent=2450;
+  return `
+  <div class="page-h"><p class="eyebrow">Rent &amp; payments</p><h1>Pay rent</h1><p>Paid directly to your landlord \u2014 Tenure is just the rails.</p></div>
+  <div class="card p">
+    <div class="row between"><div><div class="tiny muted">Current lease</div><div class="b">Sunlit 2BR \u00b7 Hyde Park</div></div><span class="pill">Active</span></div>
+    <div class="row between mt2" style="align-items:flex-end"><div><div class="tiny muted">Monthly rent</div><div class="price" style="font-size:26px">${money(rent)}</div></div>
+      <div style="text-align:right"><div class="tiny muted">Due</div><div class="b">Aug 1, 2026</div></div></div>
+    <button class="btn primary block mt2" onclick="payRent(${rent})">Pay ${money(rent)} \u2192</button>
+    <div class="kv mt2"><span class="muted small">Paid to</span><span class="b small">Nair Property Holdings (merchant)</span></div>
+    <div class="kv"><span class="muted small">Rails</span><span class="b small">Stripe Connect \u00b7 landlord-as-merchant</span></div>
+    <div class="banner legal mt2"><span class="i">\u00a7</span><span>Rent is paid <b>directly to your landlord</b> as merchant of record via Stripe Connect. <b>Tenure Tech, Inc.</b> provides the software and never holds your rent as an agent \u2014 no trust/escrow, no brokerage in the money flow.</span></div>
+  </div>
+  <div class="card p mt2">
+    <div class="bb mb">On-time payments build your readiness</div>
+    <div class="muted small">Every on-time rent payment is recorded to your readiness profile toward buying. <span onclick="go('homebuyer')" style="color:var(--a1);cursor:pointer">See your readiness \u2192</span></div>
+  </div>`;
+}
+function payRent(amt){modal(`<h3>Confirm payment</h3>
+  <div class="row between mt"><span class="muted">Rent to Nair Property Holdings</span><span class="b">${money(amt)}</span></div>
+  <div class="row between"><span class="muted">Tenure software fee</span><span class="b">$0 \u00b7 paid by landlord</span></div>
+  <button class="btn primary block mt2" onclick="closeModal();toast('Rent paid to landlord \u2713 \u00b7 recorded to readiness')">Pay now</button>
+  <div class="banner legal mt2"><span class="i">\u00a7</span><span>Funds settle to the landlord\u2019s connected Stripe account. Tenure Tech, Inc. never custodies rent.</span></div>`);}
+
+function leaseView(){
+  const templates=[['FL Residential Lease (standard)','Florida Bar / FR standard form'],['Month-to-Month Agreement','Short-term / rolling'],['Room Rental Agreement','Single-room occupancy']];
+  return `
+  <div class="page-h"><p class="eyebrow">Leases</p><h1>Lease &amp; e-sign</h1><p>Pick a pre-approved template, fill, and sign. Tenure doesn\u2019t draft custom leases.</p></div>
+  <div class="list">
+    ${templates.map((t,i)=>`<div class="li"><div style="flex:1"><div class="b small">${t[0]}</div><div class="tiny muted">${t[1]}</div></div><button class="btn sm ${i===0?'primary':''}" onclick="signLease('${t[0].replace(/'/g,'')}')">Use &amp; sign</button></div>`).join('')}
+  </div>
+  <div class="banner legal mt2"><span class="i">\u00a7</span><span>Templates are attorney/state-approved forms. <b>Not legal advice</b> \u2014 consult an attorney. The landlord fills and executes; <b>Tenure Tech, Inc.</b> provides the software only (no custom drafting).</span></div>`;
+}
+function signLease(name){modal(`<h3>e-Sign</h3><p class="muted small" style="margin:0 0 10px">${name}</p>
+  <div class="field"><label>Type your full name to adopt an e-signature</label><input class="input" placeholder="Maya Chen"></div>
+  <div class="field"><label>Date</label><input class="input" value="Jul 9, 2026" readonly></div>
+  <button class="btn primary block mt" onclick="closeModal();toast('Lease signed \u2713')">Adopt e-signature &amp; sign</button>
+  <div class="banner legal mt2"><span class="i">\u00a7</span><span>Not legal advice \u2014 consult an attorney. E-signature demonstration only.</span></div>`);}
 
 function routeView(){
   const v=state.view;
@@ -533,6 +634,9 @@ function routeView(){
       if(v==='alerts')return alertsView();
       if(v==='membership')return membershipView('tenant');
       if(v==='publicpass')return publicPassport();
+      if(v==='architecture')return architectureView();
+      if(v==='payments')return paymentsView();
+      if(v==='lease')return leaseView();
       if(v==='account')return tenantAccount();
     }
     if(R==='landlord'){
@@ -887,6 +991,19 @@ function tenantHome(){
     </div>
   </div>
 
+  <div class="grid g2" style="margin-top:12px">
+    <button class="card p" style="text-align:left;display:flex;gap:10px;align-items:center" onclick="go('payments')">
+      <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1)">$</div>
+      <div style="flex:1"><div class="b small">Pay rent</div><div class="tiny muted">Direct to landlord</div></div></button>
+    <button class="card p" style="text-align:left;display:flex;gap:10px;align-items:center" onclick="go('lease')">
+      <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1)">\u270e</div>
+      <div style="flex:1"><div class="b small">Lease &amp; e-sign</div><div class="tiny muted">Templates</div></div></button>
+  </div>
+  <button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('architecture')">
+    <div class="avatar" style="background:rgba(var(--a1-rgb),.18);color:var(--a1)">▤</div>
+    <div style="flex:1"><div class="b">How Tenure is built</div><div class="muted small">Two-entity structure, phased rollout &amp; compliance guardrails</div></div>
+    <span class="pill">View</span></button>
+
   ${!u.premium?`<button class="card p mt" style="width:100%;text-align:left;display:flex;gap:12px;align-items:center" onclick="go('membership')">
     <div class="avatar" style="background:var(--purple-soft);color:var(--purple)">★</div>
     <div style="flex:1"><div class="b">Upgrade to Premium — $9/mo</div><div class="muted small">Priority applicant flag, instant match alerts & homebuyer coaching</div></div>
@@ -922,13 +1039,24 @@ function quickAction(view,label,ic){return `<button class="card p center" style=
 
 function listingCard(l){
   const saved=savedSet().includes(l.id);
+  const isSale=!!l.sale, isMls=l.source==='mls';
   let match='';
-  if(state.role==='tenant'){const m=criteriaMatch(me(),l);
-    match=m.metCount===4?`<span class="matchbadge ok">✓ You qualify</span>`:`<span class="matchbadge partial">Meets ${m.metCount}/4</span>`;}
-  return `<button class="card listing-card" style="text-align:left;padding:0;width:100%" onclick="go('listing',{id:'${l.id}'})">
+  if(state.role==='tenant' && !isSale){const m=criteriaMatch(me(),l);
+    match=m.metCount===4?`<span class="matchbadge ok">\u2713 You qualify</span>`:`<span class="matchbadge partial">Meets ${m.metCount}/4</span>`;}
+  const foot=isSale
+    ? `<div><div class="tiny muted">Price</div><div class="price" style="font-size:20px">${money(l.price)}</div></div><div><div class="tiny muted">On market</div><div class="b small" style="padding-top:2px">${l.dom||0} days</div></div>`
+    : `<div><div class="tiny muted">Rent</div><div class="price" style="font-size:20px">${money(l.rent)}<span class="muted small bb">/mo</span></div></div><div><div class="tiny muted">Available</div><div class="b small" style="padding-top:2px">${l.avail}</div></div>`;
+  const stats=isSale
+    ? `<span>${l.beds===0?'Studio':l.beds+' bd'}</span><span>\u00b7</span><span>${l.baths} ba</span><span>\u00b7</span><span>${l.sqft} ft\u00b2</span>`
+    : `<span>${l.beds===0?'Studio':l.beds+' bd'}</span><span>\u00b7</span><span>${l.baths} ba</span><span>\u00b7</span><span>${l.sqft} ft\u00b2</span><span>\u00b7</span><span>\ud83d\udc3e ${l.pets.split('(')[0].trim()}</span>`;
+  const attrib=isMls
+    ? `<div style="font-family:var(--mono);font-size:10px;color:var(--muted);border-top:1px solid var(--line);margin-top:8px;padding-top:7px">Listing courtesy of <b style="color:var(--ink)">${esc(l.brokerage)}</b> \u00b7 ${l.license} \u00b7 <span style="color:#C9A24B">MLS ${l.mlsId}</span></div>`
+    : `<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:7px">Direct listing \u00b7 posted by owner</div>`;
+  const click=isSale?`contactAgent('${l.id}')`:`go('listing',{id:'${l.id}'})`;
+  return `<button class="card listing-card" style="text-align:left;padding:0;width:100%" onclick="${click}">
     <div style="position:relative">
-      ${l.featured?`<span class="pill amber featured">★ Featured</span>`:''}
-      <span class="heart ${saved?'on':''}" onclick="toggleSave('${l.id}',event)">${saved?'♥':'♡'}</span>
+      ${l.featured?`<span class="pill amber featured">\u2605 Featured</span>`:''}
+      <span class="heart ${saved?'on':''}" onclick="toggleSave('${l.id}',event)">${saved?'\u2665':'\u2661'}</span>
       ${match}
       <img class="thumb" style="border-radius:16px 16px 0 0;aspect-ratio:16/10" src="${listingImg(l)}" alt="">
     </div>
@@ -938,32 +1066,41 @@ function listingCard(l){
         <span class="lid">#${l.id.toUpperCase()}</span>
       </div>
       <div class="muted small" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.addr}</div>
-      <div class="cardfoot">
-        <div><div class="tiny muted">Rent</div><div class="price" style="font-size:20px">${money(l.rent)}<span class="muted small bb">/mo</span></div></div>
-        <div><div class="tiny muted">Available</div><div class="b small" style="padding-top:2px">${l.avail}</div></div>
-      </div>
-      <div class="stats">
-        <span>${l.beds===0?'Studio':l.beds+' bd'}</span><span>·</span><span>${l.baths} ba</span><span>·</span><span>${l.sqft} ft²</span><span>·</span><span>🐾 ${l.pets.split('(')[0].trim()}</span>
-      </div>
+      <div class="cardfoot">${foot}</div>
+      <div class="stats">${stats}</div>
+      ${attrib}
     </div></button>`;
 }
 function savedSet(){if(!state.saved)state.saved=[];return state.saved;}
 function toggleSave(id,ev){if(ev)ev.stopPropagation();const s=savedSet();const i=s.indexOf(id);if(i>=0){s.splice(i,1);toast('Removed from saved');}else{s.push(id);toast('Saved to favorites ♥');}render();}
 
+function contactAgent(id){
+  const l=listing(id);
+  modal(`<h3>Request info</h3><p class="muted small" style="margin:0 0 10px">${l.title} \u00b7 ${l.addr}</p>
+    <div class="row between" style="margin:0 0 10px;align-items:center"><div class="price" style="font-size:22px">${money(l.price)}</div><span class="pill" style="background:rgba(201,162,75,.16);color:#C9A24B">MLS ${l.mlsId}</span></div>
+    <div class="banner info" style="margin:0 0 10px"><span class="i">\u2713</span><span><b>Price history (VOW):</b> ${l.priceHistory} \u00b7 ${l.dom} days on market. <span class="muted">Shown because you\u2019re a registered user.</span></span></div>
+    <div class="field"><label>Message to the listing agent</label><textarea class="input" placeholder="I\u2019d like to schedule a tour."></textarea></div>
+    <button class="btn primary block mt" onclick="closeModal();toast('Inquiry sent to listing agent \u2713')">Send inquiry</button>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:10px;border-top:1px solid var(--line);padding-top:8px">Listing courtesy of <b style="color:var(--ink)">${esc(l.brokerage)}</b> \u00b7 ${l.license}</div>
+    <div class="banner legal mt2"><span class="i">\u00a7</span><span>Buyer inquiry routes as a <b>non-contingent lead</b> \u2014 no fee is tied to any closing. Tenure is a technology platform, not a brokerage.</span></div>`);
+}
 /* ---------- Listings search ---------- */
 function listingsSearch(){
   const f=_filters();
-  let items=DB.listings.filter(l=>l.status==='Active');
+  const buy=f.mode==='buy';
+  let items=DB.listings.filter(l=>l.status==='Active' && (buy?!!l.sale:!l.sale));
   if(f.q)items=items.filter(l=>(l.title+l.addr).toLowerCase().includes(f.q.toLowerCase()));
   if(f.hood)items=items.filter(l=>(l.title+' '+l.addr).toLowerCase().includes(f.hood.toLowerCase()));
-  if(f.moveIn)items=items.filter(l=>{const d=Date.parse(l.avail);return isNaN(d)||d<=Date.parse(f.moveIn);});
-  items=items.filter(l=>l.beds>=f.beds && l.rent<=f.maxRent && (!f.pets||!/no pets/i.test(l.pets)));
-  items.sort((a,b)=>(b.featured-a.featured)||a.rent-b.rent);
+  if(!buy && f.moveIn)items=items.filter(l=>{const d=Date.parse(l.avail);return isNaN(d)||d<=Date.parse(f.moveIn);});
+  items=items.filter(l=> l.beds>=f.beds && (buy || (l.rent<=f.maxRent && (!f.pets||!/no pets/i.test(l.pets)))));
+  items.sort((a,b)=>(b.featured-a.featured)||((buy?a.price:a.rent)-(buy?b.price:b.rent)));
   window._mapItems=items;
   const hoods=['Hyde Park','Channelside','Bayshore','USF'];
   const dirty=f.hood||f.moveIn||f.beds||f.pets||f.q||f.maxRent<5000;
   return `
-  <div class="page-h"><h1>Find your home</h1><p>${items.length} rentals · Tampa Bay area</p></div>
+  <div class="page-h"><h1>${buy?'Find a home to buy':'Find your home'}</h1><p>${items.length} ${buy?'for-sale listings · via MLS':'rentals'} · Tampa Bay area</p></div>
+  <div class="row wrap mb" style="gap:0"><span class="chip ${!buy?'on':''}" onclick="setMode('rent')">Rent</span><span class="chip ${buy?'on':''}" onclick="setMode('buy')">Buy</span></div>
+  ${buy?`<div class="banner legal mb"><span class="i">§</span><span>For-sale listings come via the MLS and display under <b>IDX</b> rules with brokerage attribution. Price history &amp; days-on-market (<b>VOW</b>) require a registered account. Sources are disclosed on every card — no silent commingling.</span></div>`:''}
   <div class="card p mb">
     <div class="field" style="margin:0">
       <input class="input" id="q" placeholder="City, neighborhood, or address" value="${esc(f.q)}" oninput="applyFilters()">
@@ -974,16 +1111,16 @@ function listingsSearch(){
           <option value="">Any neighborhood</option>
           ${hoods.map(h=>`<option ${f.hood===h?'selected':''}>${h}</option>`).join('')}
         </select></div>
-      <div class="field" style="flex:1;margin:0"><label>Move-in by</label>
-        <input type="date" class="input" value="${f.moveIn||''}" onchange="setMoveIn(this.value)"></div>
+      ${buy?'':`<div class="field" style="flex:1;margin:0"><label>Move-in by</label>
+        <input type="date" class="input" value="${f.moveIn||''}" onchange="setMoveIn(this.value)"></div>`}
     </div>
     <div class="row wrap mt" style="gap:0">
       ${[['Any',0],['1+ bd',1],['2+ bd',2],['3+ bd',3]].map(([t,v])=>`<span class="chip ${f.beds===v?'on':''}" onclick="setBeds(${v})">${t}</span>`).join('')}
-      <span class="chip ${f.pets?'on':''}" onclick="togglePets()">🐾 Pets OK</span>
+      ${buy?'':`<span class="chip ${f.pets?'on':''}" onclick="togglePets()">🐾 Pets OK</span>`}
       ${dirty?`<span class="chip" onclick="resetFilters()">✕ Reset</span>`:''}
     </div>
-    <div class="field mt" style="margin:0"><label>Max rent: <span id="rentlbl" class="b">${money(f.maxRent)}</span></label>
-      <input type="range" min="1000" max="5000" step="50" value="${f.maxRent}" style="width:100%" oninput="el('rentlbl').textContent='$'+Number(this.value).toLocaleString()" onchange="setRent(this.value)"></div>
+    ${buy?'':`<div class="field mt" style="margin:0"><label>Max rent: <span id="rentlbl" class="b">${money(f.maxRent)}</span></label>
+      <input type="range" min="1000" max="5000" step="50" value="${f.maxRent}" style="width:100%" oninput="el('rentlbl').textContent='$'+Number(this.value).toLocaleString()" onchange="setRent(this.value)"></div>`}
   </div>
 
   <div class="seg mb searchtoggle">
@@ -1000,7 +1137,7 @@ function listingsSearch(){
   </div>
   `;
 }
-function _filters(){return Object.assign({q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''},state.params.filters||{});}
+function _filters(){return Object.assign({q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:'',mode:'rent'},state.params.filters||{});}
 function applyFilters(){const f=_filters();f.q=el('q').value;state.params.filters=f; // re-render list only
   go('search',{filters:f});el('q')&&el('q').focus();
   const q=el('q');if(q){q.selectionStart=q.selectionEnd=q.value.length;}}
@@ -1009,6 +1146,7 @@ function togglePets(){const f=_filters();f.pets=!f.pets;go('search',{filters:f})
 function setRent(v){const f=_filters();f.maxRent=+v;go('search',{filters:f});}
 function setHood(v){const f=_filters();f.hood=v;go('search',{filters:f});}
 function setMoveIn(v){const f=_filters();f.moveIn=v;go('search',{filters:f});}
+function setMode(m){const f=_filters();f.mode=m;go('search',{filters:f});}
 function resetFilters(){go('search',{filters:{q:'',beds:0,maxRent:5000,pets:false,hood:'',moveIn:''}});}
 
 /* ---------- Listing detail ---------- */
@@ -1645,9 +1783,19 @@ function agentHome(){
    SHOWINGS
    ======================================================================= */
 function requestShowing(listingId){
-  const l=listing(listingId);
+  const l=listing(listingId); const u=me(); const p=u.passport;
+  if(!passportReady(u)){
+    modal(`<h3>Finish your Rental Passport first</h3>
+    <p class="muted small" style="margin:0 0 10px">To request a showing, your Passport must be <b>verified</b> and at least <b>${SHOWING_MIN_COMPLETENESS}% complete</b>. Yours is <b>${p.completeness}%</b>${p.verified?'':' · <b>not yet verified</b>'}.</p>
+    <div style="height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:0 0 4px"><div style="height:100%;width:${p.completeness}%;background:linear-gradient(90deg,var(--a1),var(--a2))"></div></div>
+    <div class="tiny muted" style="margin-bottom:12px">Minimum to request a showing: ${SHOWING_MIN_COMPLETENESS}%</div>
+    <button class="btn primary block" onclick="closeModal();go('passport')">Complete my Passport →</button>
+    <div class="banner legal mt2"><span class="i">§</span><span>The same objective bar applies to every renter — a completeness &amp; verification threshold, never a subjective or protected-class judgment. Fair Housing by design.</span></div>`);
+    return;
+  }
   const slots=['Sat Jul 11 · 10:30 AM','Sat Jul 11 · 2:00 PM','Sun Jul 12 · 11:00 AM','Mon Jul 13 · 5:30 PM'];
   modal(`<h3>Request a showing</h3><p class="muted small" style="margin:0 0 12px">${l.title} · ${l.addr}</p>
+    <div class="banner info" style="margin:0 0 12px"><span class="i">✓</span><span>Passport ready — verified &amp; ${p.completeness}% complete. It'll be attached so the landlord can approve faster.</span></div>
     <div class="bb mb" style="font-size:14px">Pick preferred times</div>
     <div class="row wrap" style="gap:0">${slots.map((s,i)=>`<span class="chip ${i===0?'on':''}" onclick="[...this.parentNode.children].forEach(c=>c.classList.remove('on'));this.classList.add('on');window._slot='${s}'">${s}</span>`).join('')}</div>
     <div class="field mt"><label>Note to landlord (optional)</label><textarea class="input" id="showNote" placeholder="e.g., Flexible on timing, moving Aug 15."></textarea></div>
