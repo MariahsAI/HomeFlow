@@ -775,8 +775,8 @@ function initSearchMap(){
     iconCreateFunction:function(cl){return L.divIcon({html:'<div class="mapcluster">'+cl.getChildCount()+'</div>',className:'',iconSize:[38,38]});}}):L.layerGroup();
   const b=[];
   items.forEach(l=>{const co=coordFor(l);b.push(co);
-    const icon=L.divIcon({html:`<div class="mappin">${money(l.rent)}</div>`,className:'',iconSize:[54,24],iconAnchor:[27,24]});
-    layer.addLayer(L.marker(co,{icon}).on('click',()=>go('listing',{id:l.id})));});
+    const icon=L.divIcon({html:`<div class="mappin">${l.sale?'$'+Math.round(l.price/1000)+'k':money(l.rent)}</div>`,className:'',iconSize:[54,24],iconAnchor:[27,24]});
+    layer.addLayer(L.marker(co,{icon}).on('click',()=>l.sale?contactAgent(l.id):go('listing',{id:l.id})));});
   layer.addTo(map);
   if(b.length){try{map.fitBounds(b,{padding:[42,42],maxZoom:14});}catch(e){}}
   setTimeout(()=>{try{map.invalidateSize();}catch(e){}},60);
